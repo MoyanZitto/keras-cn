@@ -1,0 +1,21 @@
+site_name: keras-cn
+pages:
+- 主页: index.md
+- 快速开始: getting_started.md
+- 模型: models.md
+- 网络层: layers.md
+- 预处理: preprocessing.md
+- 目标函数: objectives.md
+- 优化器: optimizers.md
+- 激活函数: activations.md
+- 回调函数: callbacks.md
+- 常用数据库: datasets.md
+- 初始化方法: initializations.md
+- 正则项: regularizers.md
+- 约束项: constraints.md
+- 可视化: visualization.md
+- keras后端: backend.md
+- scikit-learn接口: scikit-learn_API.md
+- 致谢: acknowlegement.md
+theme: readthedocs
+site_author: BigMoyan
