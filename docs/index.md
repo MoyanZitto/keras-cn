@@ -25,7 +25,7 @@ Keras适用的Python版本是：Python 2.7-3.5
 
 ##快速开始：30s上手Keras
 
-Keras的核心数据结构是“模型”，模型是一种组织网络层的方式。Keras中主要的模型是Sequential模型，Sequential是一系列网络层按顺序构成的栈。你也可以查看[<font color=#FF0000>Keras function API</font>]()来查看更复杂的模型
+Keras的核心数据结构是“模型”，模型是一种组织网络层的方式。Keras中主要的模型是Sequential模型，Sequential是一系列网络层按顺序构成的栈。你也可以查看[<font color=#FF0000>Keras function API</font>](getting_started/functional_API.md)来查看更复杂的模型
 
 Sequential模型如下
 
@@ -105,7 +105,7 @@ Keras使用了下面的依赖包：
 	
 ##在Theano和TensorFlow间切换
 
-Keras默认使用Theano作为后端来进行张量操作，如需切换到TensorFlow，请查看[<font color=FF0000>这里</font>]()
+Keras默认使用Theano作为后端来进行张量操作，如需切换到TensorFlow，请查看[<font color=FF0000>这里</font>](backend.md)
 
 ##技术支持
 

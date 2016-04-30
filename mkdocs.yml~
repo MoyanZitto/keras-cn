@@ -1,6 +1,6 @@
 site_name: keras-cn
 pages:
-- ['index.md','主页']
+- ['index.md','主页: index.md']
 - ['getting_started/sequential_model.md','快速开始','快速开始Sequential模型']
 - ['getting_started/functional_API.md','快速开始','快速开始泛型模型']
 - ['getting_started/FAQ.md','快速开始','FAQ']
