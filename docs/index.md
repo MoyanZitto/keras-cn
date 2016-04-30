@@ -13,10 +13,6 @@ Keras是一个极简和高度模块化的神经网络库，Keras由纯Python编�
 
 Keras适用的Python版本是：Python 2.7-3.5
 
-本文档是Keras文档的中文版，包括[<font color=#FF0000>keras.io</font>](http://keras.io/)的全部内容，以及更多的例子、解释和建议
-
-文档由下列贡献者贡献：BigMoyan
-
 ## 设计原则
 
 * 模块性：模型可理解为一个独立的序列或图，完全可配置的模块以最少的代价自由组合在一起。具体而言，网络层、损失函数、优化器、初始化策略、激活函数、正则化方法都是独立的模块，你可以使用它们来构建自己的模型。
@@ -77,7 +73,7 @@ Sequential模型如下
 为了更深入的了解Keras，我们建议你查看一下下面的两个tutorial
 
 * [<font color=#FF0000>快速开始Sequntial模型</font>]()
-* [<font color=#FF0000>快速开始Keras函数接口</font>]()
+* [<font color=#FF0000>快速开始泛型模型</font>]()
 
 在Keras代码包的examples文件夹里，我们提供了一些更高级的模型：基于记忆网络的问答系统、基于LSTM的文本的文本生成等。
 
@@ -119,7 +115,20 @@ Keras默认使用Theano作为后端来进行张量操作，如需切换到Tensor
 
 同时，我们也欢迎同学们加我们的QQ群119427073进行讨论（潜水和灌水会被T哦）
 
-##为什么叫Keras
+## 关于Keras-CN
 
-Keras (κέρας)是希腊语中号角的意思，它的来源……好吧你真的感兴趣的话请去[<font color=FF0000>keras.io</font>](keras.io)相应页面的最后方查看，我就不翻译这些神话故事了。
+本文档是Keras文档的中文版，包括[<font color=#FF0000>keras.io</font>](http://keras.io/)的全部内容，以及更多的例子、解释和建议，目前，文档的计划是：
+
+1.现有keras.io文档的中文翻译
+2.添加更多的example和更详细的代码说明
+3.添加深度学习的一些FAQ，帮助新手更快入坑
+
+欢迎各位指出错漏、不足之处，以便我们改进。
+
+文档由下列贡献者贡献：BigMoyan
+
+
+## 为什么叫Keras
+
+Keras (κέρας)是希腊语中号角的意思，它的来源……好吧你真的感兴趣的话请去[<font color=FF0000>keras.io</font>](http://keras.io/)相应页面的最后方查看，我就不翻译这些神话故事了。
 
