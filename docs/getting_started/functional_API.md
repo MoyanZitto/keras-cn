@@ -35,6 +35,8 @@ Keras泛型模型接口是用户定义多输出模型、非循环有向模型或
 				  metrics=['accuracy'])
 	model.fit(data, labels)  # starts training
 
+***
+	
 ## 所有的模型都是可以调用的，就像层一样
 
 利用泛型模型的接口，我们可以很容易的重用已经训练好的模型：你可以把模型当作一个层一样，通过提供一个tensor来调用它。注意当你调用一个模型时，你不仅仅重用了它的结构，也重用了它的权重。
@@ -55,6 +57,8 @@ Keras泛型模型接口是用户定义多输出模型、非循环有向模型或
 	# the output of the previous model was a 10-way softmax,
 	# so the output of the layer below will be a sequence of 20 vectors of size 10.
 	processed_sequences = TimeDistributed(model)(input_sequences)
+
+***	
 
 ## 多输入和多输出模型
 
@@ -125,6 +129,8 @@ Keras泛型模型接口是用户定义多输出模型、非循环有向模型或
 			  {'main_output': labels, 'aux_output': labels},
 			  nb_epoch=50, batch_size=32)
 
+***
+			  
 ## 共享层
 
 另一个使用泛型模型的场合是使用共享层的时候。
@@ -172,6 +178,8 @@ Keras泛型模型接口是用户定义多输出模型、非循环有向模型或
 	model.fit([data_a, data_b], labels, nb_epoch=10)
 	
 先暂停一下，看看共享层到底输出了什么，它的输出数据形状又是什么
+
+***
 
 ## 层“节点”的概念
 
@@ -227,6 +235,8 @@ Keras泛型模型接口是用户定义多输出模型、非循环有向模型或
 	# now the `.input_shape` property wouldn't work, but this does:
 	assert conv.get_input_shape_at(0) == (None, 3, 32, 32)
 	assert conv.get_input_shape_at(1) == (None, 3, 64, 64)
+
+***
 	
 ## 更多的例子
 

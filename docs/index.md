@@ -13,6 +13,8 @@ Keras是一个极简和高度模块化的神经网络库，Keras由纯Python编�
 
 Keras适用的Python版本是：Python 2.7-3.5
 
+***
+
 ## 设计原则
 
 * 模块性：模型可理解为一个独立的序列或图，完全可配置的模块以最少的代价自由组合在一起。具体而言，网络层、损失函数、优化器、初始化策略、激活函数、正则化方法都是独立的模块，你可以使用它们来构建自己的模型。
@@ -22,6 +24,8 @@ Keras适用的Python版本是：Python 2.7-3.5
 * 易扩展性：添加新模块超级简单的容易，只需要仿照现有的模块编写新的类或函数即可。创建新模块的便利性使得Keras更适合于先进的研究工作。
 
 * 与Python协作：Keras没有单独的模型配置文件类型（作为对比，caffe有），模型由python代码描述，使其更紧凑和更易debug，并提供了扩展的便利性。
+
+***
 
 ##快速开始：30s上手Keras
 
@@ -77,6 +81,8 @@ Sequential模型如下
 
 在Keras代码包的examples文件夹里，我们提供了一些更高级的模型：基于记忆网络的问答系统、基于LSTM的文本的文本生成等。
 
+***
+
 ##安装
 
 Keras使用了下面的依赖包：
@@ -102,10 +108,14 @@ Keras使用了下面的依赖包：
 你也可以使用PyPI来安装Keras
 
 	sudo pip install keras
+
+***
 	
 ##在Theano和TensorFlow间切换
 
 Keras默认使用Theano作为后端来进行张量操作，如需切换到TensorFlow，请查看[<font color=FF0000>这里</font>](backend.md)
+
+***
 
 ##技术支持
 
@@ -114,6 +124,9 @@ Keras默认使用Theano作为后端来进行张量操作，如需切换到Tensor
 你也可以在[<font color=FF0000>Github issues</font>](https://github.com/fchollet/keras/issues)里提问。在提问之前请确保你阅读过我们的[<font color=FF0000>指导</font>](https://github.com/fchollet/keras/blob/master/CONTRIBUTING.md)
 
 同时，我们也欢迎同学们加我们的QQ群119427073进行讨论（潜水和灌水会被T哦）
+
+
+***
 
 ## 关于Keras-CN
 
@@ -125,10 +138,11 @@ Keras默认使用Theano作为后端来进行张量操作，如需切换到Tensor
 
 * 添加深度学习的一些FAQ，帮助新手更快入坑
 
-欢迎各位指出错漏、不足之处，以便我们改进。
+欢迎各位指出错漏、不足之处，以便我们改进。欢迎发送邮件到moyan_work@foxmail.com与我取得联系。
 
 文档由下列贡献者贡献：BigMoyan
 
+***
 
 ## 为什么叫Keras
 

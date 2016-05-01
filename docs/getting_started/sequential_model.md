@@ -18,6 +18,8 @@
 	model = Sequential()
 	model.add(Dense(32, input_dim=784))
 	model.add(Activation('relu'))
+
+***
 	
 ## 指定输入数据的形状
 
@@ -46,8 +48,10 @@ model.add(LSTM(32, input_shape=(10, 64)))</pre></code>
 model.add(LSTM(32, batch_input_shape=(None, 10, 64)))</pre></code>
 <pre><code>	model = Sequential()
 model.add(LSTM(32, input_length=10, input_dim=64))</pre></code>
+
+***
 	
-# Merge层
+## Merge层
 
 多个<code>Sequential</code>可经由一个Merge层合并到一个输出。Merge层的输出是一个可以被添加到新<code>Sequential</code>的层对象。下面这个例子将两个Sequential合并到一起：
 
@@ -81,6 +85,8 @@ Merge层支持一些预定义的合并模式，包括：
 	
 现在你已经学会定义几乎任何Keras的模型了，对于不能通过Sequential和Merge组合生成的复杂模型，可以参考[<font color=#FF0000>泛型模型API</font>](functional_API.md)
 
+***
+
 ## 编译
 
 在训练模型之前，我们需要通过<code>compile</code>来对学习过程进行配置。<code>compile</code>接收三个参数：
@@ -106,6 +112,8 @@ metrics=['accuracy'])
 model.compile(optimizer='rmsprop',
 loss='mse')
 </code></pre>
+
+***
 
 ## 训练
 
@@ -163,6 +171,8 @@ labels = to_categorical(labels, 10)
 # since the model has 2 inputs
 model.fit([data_1, data_2], labels, nb_epoch=10, batch_size=32)
 </code></pre>
+
+***
 
 ## 例子
 
