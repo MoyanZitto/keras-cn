@@ -34,15 +34,15 @@ model.add(Dense(32))
 
 * weights：权值，为numpy array的list。该list应含有一个形如（input_dim,output_dim）的权重矩阵和一个形如(output_dim,)的偏置向量。
 
-* W_regularizer：施加在权重上的正则项，为[WeightRegularizer](../other/regularizers)对象
+* W_regularizer：施加在权重上的正则项，为[<font color='FF0000'>WeightRegularizer</font>](../other/regularizers)对象
 
-* b_regularizer：施加在偏置向量上的正则项，为[WeightRegularizer](../other/regularizers)对象
+* b_regularizer：施加在偏置向量上的正则项，为[<font color='FF0000'>WeightRegularizer</font>](../other/regularizers)对象
 
-* activity_regularizer：施加在输出上的正则项，为[ActivityRegularizer](../other/regularizers)对象
+* activity_regularizer：施加在输出上的正则项，为[<font color='FF0000'>ActivityRegularizer</font>](../other/regularizers)对象
 
-* W_constraints：施加在权重上的正则项，为[constraints](../other/constraints)对象
+* W_constraints：施加在权重上的正则项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
-* b_constraints：施加在偏置上的正则项，为[constraints](../other/constraints)对象
+* b_constraints：施加在偏置上的正则项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
 * bias：布尔值，是否包含偏置向量（即层对输入做线性变换还是仿射变换）
 
@@ -92,7 +92,7 @@ keras.layers.core.Dropout(p)
 
 ### 参考文献
 
-* [Dropout: A Simple Way to Prevent Neural Networks from Overfitting](http://www.cs.toronto.edu/~rsalakhu/papers/srivastava14a.pdf)
+* [<font color='FF0000'>Dropout: A Simple Way to Prevent Neural Networks from Overfitting</font>](http://www.cs.toronto.edu/~rsalakhu/papers/srivastava14a.pdf)
 
 ***
 
@@ -364,15 +364,15 @@ Highway层建立全连接的Highway网络，这是LSTM在前馈神经网络中�
 
 * weights：权值，为numpy array的list。该list应含有一个形如（input_dim,output_dim）的权重矩阵和一个形如(output_dim,)的偏置向量。
 
-* W_regularizer：施加在权重上的正则项，为[WeightRegularizer](../other/regularizers)对象
+* W_regularizer：施加在权重上的正则项，为[<font color='FF0000'>WeightRegularizer</font>](../other/regularizers)对象
 
-* b_regularizer：施加在偏置向量上的正则项，为[WeightRegularizer](../other/regularizers)对象
+* b_regularizer：施加在偏置向量上的正则项，为[<font color='FF0000'>WeightRegularizer</font>](../other/regularizers)对象
 
-* activity_regularizer：施加在输出上的正则项，为[ActivityRegularizer](../other/regularizers)对象
+* activity_regularizer：施加在输出上的正则项，为[<font color='FF0000'>ActivityRegularizer</font>](../other/regularizers)对象
 
-* W_constraints：施加在权重上的正则项，为[constraints](../other/constraints)对象
+* W_constraints：施加在权重上的正则项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
-* b_constraints：施加在偏置上的正则项，为[constraints](../other/constraints)对象
+* b_constraints：施加在偏置上的正则项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
 * bias：布尔值，是否包含偏置向量（即层对输入做线性变换还是仿射变换）
 
@@ -390,7 +390,7 @@ Highway层建立全连接的Highway网络，这是LSTM在前馈神经网络中�
 
 ### 参考文献
 
-* [Highway Networks](http://arxiv.org/pdf/1505.00387v2.pdf)
+* [<font color='FF0000'>Highway Networks</font>](http://arxiv.org/pdf/1505.00387v2.pdf)
 
 ***
 
@@ -414,7 +414,7 @@ Highway层建立全连接的Highway网络，这是LSTM在前馈神经网络中�
 
 ### 参考文献
 
-* [Maxout Networks](http://arxiv.org/pdf/1302.4389.pdf)
+* [<font color='FF0000'>Maxout Networks</font>](http://arxiv.org/pdf/1302.4389.pdf)
 
 ***
 
@@ -440,15 +440,15 @@ model.add(TimeDistributed(Dense(32)))
 
 * weights：权值，为numpy array的list。该list应含有一个形如（input_dim,output_dim）的权重矩阵和一个形如(output_dim,)的偏置向量。
 
-* W_regularizer：施加在权重上的正则项，为[WeightRegularizer](../other/regularizers)对象
+* W_regularizer：施加在权重上的正则项，为[<font color='FF0000'>WeightRegularizer</font>](../other/regularizers)对象
 
-* b_regularizer：施加在偏置向量上的正则项，为[WeightRegularizer](../other/regularizers)对象
+* b_regularizer：施加在偏置向量上的正则项，为[<font color='FF0000'>WeightRegularizer</font>](../other/regularizers)对象
 
-* activity_regularizer：施加在输出上的正则项，为[ActivityRegularizer](../other/regularizers)对象
+* activity_regularizer：施加在输出上的正则项，为[<font color='FF0000'>ActivityRegularizer</font>](../other/regularizers)对象
 
-* W_constraints：施加在权重上的正则项，为[constraints](../other/constraints)对象
+* W_constraints：施加在权重上的正则项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
-* b_constraints：施加在偏置上的正则项，为[constraints](../other/constraints)对象
+* b_constraints：施加在偏置上的正则项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
 * bias：布尔值，是否包含偏置向量（即层对输入做线性变换还是仿射变换）
 

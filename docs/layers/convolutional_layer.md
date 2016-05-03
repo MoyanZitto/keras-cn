@@ -23,21 +23,21 @@ keras.layers.convolutional.Convolution1D(nb_filter, filter_length, init='uniform
 
 * subsample_length：输出对输入的下采样因子
 
-* W_regularizer：施加在权重上的正则项，为[WeightRegularizer](../other/regularizers)对象
+* W_regularizer：施加在权重上的正则项，为[<font color='FF0000'>WeightRegularizer</font>](../other/regularizers)对象
 
-* b_regularizer：施加在偏置向量上的正则项，为[WeightRegularizer](../other/regularizers)对象
+* b_regularizer：施加在偏置向量上的正则项，为[<font color='FF0000'>WeightRegularizer</font>](../other/regularizers)对象
 
-* activity_regularizer：施加在输出上的正则项，为[ActivityRegularizer](../other/regularizers)对象
+* activity_regularizer：施加在输出上的正则项，为[<font color='FF0000'>ActivityRegularizer</font>](../other/regularizers)对象
 
-* W_constraints：施加在权重上的正则项，为[constraints](../other/constraints)对象
+* W_constraints：施加在权重上的正则项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
-* b_constraints：施加在偏置上的正则项，为[constraints](../other/constraints)对象
+* b_constraints：施加在偏置上的正则项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
 * bias：布尔值，是否包含偏置向量（即层对输入做线性变换还是仿射变换）
 
 * input_dim：整数，输入数据的维度。当该层作为网络的第一层时，必须指定该参数或```input_shape```参数。
 
-* input_length：当输入序列的长度固定时，该参数为输入序列的长度。当需要将```Flatten```层连在该层之后，然后又要连接```Dense```层时，需要指定该参数，否则全连接的输出无法计算出来。
+* input_length：当输入序列的长度固定时，该参数为输入序列的长度。当需要在该层后连接```Flatten```层，然后又要连接```Dense```层时，需要指定该参数，否则全连接的输出无法计算出来。
 
 ### 输入形状
 
@@ -88,15 +88,15 @@ keras.layers.convolutional.Convolution2D(nb_filter, nb_row, nb_col, init='glorot
 
 * subsample：长为2的tuple，输出对输入的下采样因子，更普遍的称呼是“strides”
 
-* W_regularizer：施加在权重上的正则项，为[WeightRegularizer](../other/regularizers)对象
+* W_regularizer：施加在权重上的正则项，为[<font color='FF0000'>WeightRegularizer</font>](../other/regularizers)对象
 
-* b_regularizer：施加在偏置向量上的正则项，为[WeightRegularizer](../other/regularizers)对象
+* b_regularizer：施加在偏置向量上的正则项，为[<font color='FF0000'>WeightRegularizer</font>](../other/regularizers)对象
 
-* activity_regularizer：施加在输出上的正则项，为[ActivityRegularizer](../other/regularizers)对象
+* activity_regularizer：施加在输出上的正则项，为[<font color='FF0000'>ActivityRegularizer</font>](../other/regularizers)对象
 
-* W_constraints：施加在权重上的正则项，为[constraints](../other/constraints)对象
+* W_constraints：施加在权重上的正则项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
-* b_constraints：施加在偏置上的正则项，为[constraints](../other/constraints)对象
+* b_constraints：施加在偏置上的正则项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
 * dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第3个位置。例如128*128的三通道彩色图片，在‘th’模式中```input_shape```应写为（3，128，128），而在‘tf’模式中应写为（128，128，3），注意这里3出现在低0个位置，因为```input_shape```不包含样本数的维度，在其内部实现中，实际上是（None，3，128，128）和（None，128，128，3）。默认是‘th’模式。
 
@@ -163,15 +163,15 @@ keras.layers.convolutional.Convolution3D(nb_filter, kernel_dim1, kernel_dim2, ke
 	
 	*注意，subsample通过对3D卷积的结果以strides=（1，1，1）切片实现
 
-* W_regularizer：施加在权重上的正则项，为[WeightRegularizer](../other/regularizers)对象
+* W_regularizer：施加在权重上的正则项，为[<font color='FF0000'>WeightRegularizer</font>](../other/regularizers)对象
 
-* b_regularizer：施加在偏置向量上的正则项，为[WeightRegularizer](../other/regularizers)对象
+* b_regularizer：施加在偏置向量上的正则项，为[<font color='FF0000'>WeightRegularizer</font>](../other/regularizers)对象
 
-* activity_regularizer：施加在输出上的正则项，为[ActivityRegularizer](../other/regularizers)对象
+* activity_regularizer：施加在输出上的正则项，为[<font color='FF0000'>ActivityRegularizer</font>](../other/regularizers)对象
 
-* W_constraints：施加在权重上的正则项，为[constraints](../other/constraints)对象
+* W_constraints：施加在权重上的正则项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
-* b_constraints：施加在偏置上的正则项，为[constraints](../other/constraints)对象
+* b_constraints：施加在偏置上的正则项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
 * dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第4个位置，```Convolution2D```有较详细的类似说明。默认是‘th’模式。
 
