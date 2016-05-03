@@ -120,7 +120,7 @@ keras.layers.core.Reshape(target_shape)
 ```
 Reshape层用来将输入形状转换为特定的形状
 
-## 参数
+### 参数
 
 * target_shape：目标形状，为整数的tuple，不包含样本数目的维度（batch大小）
 
@@ -430,7 +430,7 @@ keras.layers.core.TimeDistributedDense(output_dim, init='glorot_uniform', activa
 model.add(TimeDistributed(Dense(32)))
 ```
 
-## 参数
+### 参数
 
 * output_dim：大于0的整数，代表该层的输出维度。模型中非首层的全连接层其输入维度可以自动推断，因此非首层的全连接定义时不需要指定输入维度。
 
@@ -456,11 +456,11 @@ model.add(TimeDistributed(Dense(32)))
 
 * input_length：输入序列的长度，为整数或None，若为None则代表输入序列是变长序列
 
-## 输入形状
+### 输入形状
 
 形如 ```(nb_sample, time_dimension, input_dim)```的3D张量
 
-## 输出形状
+### 输出形状
 
 形如 ```(nb_sample, time_dimension, output_dim)```的3D张量
 
