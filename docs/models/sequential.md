@@ -2,7 +2,7 @@
 
 如果刚开始学习Sequential模型，请首先移步[<font color='#FF0000'>这里</font>](../getting_started/sequential_model.md)阅读文档
 
-## 常用模型属性
+## 常用Sequential属性
 
 * ```model.layers```是添加到模型上的层的list
 
@@ -55,9 +55,9 @@ fit(self, x, y, batch_size=32, nb_epoch=10, verbose=1, callbacks=[], validation_
 
 * callbacks：list，其中的元素是```keras.callbacks.Callback```的对象。这个list中的回调函数将会在训练过程中的适当时机被调用，参考[<font color='#FF0000'>回调函数</font>](../other/callbacks.md)
 
-* validation_split：0~1之间的浮点数，用来指定训练集的一定比例数据作为验证集。
+* validation_split：0~1之间的浮点数，用来指定训练集的一定比例数据作为验证集。验证集将不参与训练，并在每个epoch结束后测试的模型的指标，如损失函数、精确度等。
 
-* validation_data：形式为（X,y）的tuple，是指定的验证集。此参数将覆盖validation_spilt
+* validation_data：形式为（X，y）的tuple，是指定的验证集。此参数将覆盖validation_spilt。
 
 * shuffle：布尔值或字符串，一般为布尔值，表示是否在训练过程中随机打乱输入样本的顺序。若为字符串“batch”，则是用来处理HDF5数据的特殊情况，它将在batch内部将数据打乱。
 
@@ -102,8 +102,6 @@ evaluate(self, x, y, batch_size=32, verbose=1, sample_weight=None)
 predict(self, x, batch_size=32, verbose=0)
 ```
 本函数按batch获得输入数据对应的输出，其参数有：
-
-* verbose：含义同```fit```的同名参数，但只能取0或1
 
 函数的返回值是预测值的numpy array
 
@@ -174,6 +172,8 @@ fit_generator(self, generator, samples_per_epoch, nb_epoch, verbose=1, callbacks
 	* 一个形如（inputs, targets,sample_weight）的tuple。所有的返回值都应该包含相同数目的样本。生成器将无限在数据集上循环。每个epoch以经过模型的样本数达到```samples_per_epoch```时，记一个epoch结束
 
 * samples_per_epoch：整数，当模型处理的样本达到此数目时计一个epoch结束，执行下一个epoch
+
+* verbose：日志显示，0为不在标准输出流输出日志信息，1为输出进度条记录，2为每个epoch输出一行记录
 
 * validation_data：具有以下三种形式之一
 	* 生成验证集的生成器
