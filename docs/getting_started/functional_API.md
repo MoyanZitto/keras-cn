@@ -148,7 +148,9 @@ model.fit({'main_input': headline_data, 'aux_input': additional_data},
 ```
 
 ***
-			  
+
+<a name='node'>
+<font color='#404040'>		  
 ## 共享层
 
 另一个使用泛型模型的场合是使用共享层的时候。
@@ -247,6 +249,8 @@ Use `get_output_at(node_index)` instead.
 assert lstm.get_output_at(0) == encoded_a
 assert lstm.get_output_at(1) == encoded_b
 ```
+</font>
+</a>
 
 够简单吧？
 
