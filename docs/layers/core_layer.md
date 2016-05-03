@@ -220,7 +220,249 @@ Merge层根据给定的模式，将一个张量列表中的若干张量合并为
 * mode：合并模式，为预定义合并模式名的字符串或lambda函数或普通函数，如果为lambda函数或普通函数，则该函数必须接受一个张量的list作为输入，并返回一个张量。如果为字符串，则必须是下列值之一：
 	* “sum”，“mul”，“concat”，“ave”，“cos”，“dot”
 
+* concat_axis：整数，当```mode=concat```时指定需要串联的轴
 
+* dot_axes：整数或整数tuple，当```mode=dot```时，指定要消去的轴
+
+* output_shape：整数tuple或lambda函数/普通函数（当mode为函数时）。如果output_shape是函数时，该函数的输入值应为输入张量形状的list，并返回一个一一对应的输出张量形状的tuple。
+
+* node_indices：可选，为整数list，如果有些层具有多个输出节点（node）的话，该参数可以指定需要merge的那些节点的下标。如果没有提供，该参数的默认值为全0向量，即合并输入层0号节点的输出值。
+
+* tensor_indices：可选，为整数list，如果有些层返回多个输出张量的话，该参数用以指定需要合并的那些张量。
+
+### 例子
+```python
+model1 = Sequential()
+model1.add(Dense(32))
+
+model2 = Sequential()
+model2.add(Dense(32))
+
+merged_model = Sequential()
+merged_model.add(Merge([model1, model2], mode='concat', concat_axis=1)
+- ____TODO__: would this actually work? it needs to.__
+
+# achieve this with get_source_inputs in Sequential.
+```
+
+***
+
+## Lambda层
+```python
+keras.layers.core.Lambda(function, output_shape=None, arguments={})
+```
+本函数用以对上一层的输入实现任何Theano/TensorFlow表达式
+
+### 参数
+
+* function：要实现的函数，该函数仅接受一个变量，即上一层的输出
+
+* output_shape：函数应该返回的值的形状，可以是一个tuple，也可以是一个根据输入形状计算输出形状的函数
+
+* arguments：可选，字典，用来记录向函数中传递的其他关键字参数
+
+### 例子
+```python
+# add a x -> x^2 layer
+model.add(Lambda(lambda x: x ** 2))
+```
+
+```python
+# add a layer that returns the concatenation
+# of the positive part of the input and
+# the opposite of the negative part
+
+def antirectifier(x):
+    x -= K.mean(x, axis=1, keepdims=True)
+    x = K.l2_normalize(x, axis=1)
+    pos = K.relu(x)
+    neg = K.relu(-x)
+    return K.concatenate([pos, neg], axis=1)
+
+def antirectifier_output_shape(input_shape):
+    shape = list(input_shape)
+    assert len(shape) == 2  # only valid for 2D tensors
+    shape[-1] *= 2
+    return tuple(shape)
+
+model.add(Lambda(antirectifier, output_shape=antirectifier_output_shape))
+```
+### 输入形状
+
+任意，当使用该层作为第一层时，要指定```input_shape```
+
+### 输出形状
+
+由```output_shape```参数指定的输出形状
+
+***
+
+## ActivityRegularizer层
+```python
+keras.layers.core.ActivityRegularization(l1=0.0, l2=0.0)
+```
+
+经过本层的数据不会有任何变化，但会基于其激活值更新损失函数值
+
+### 参数
+
+* l1：1范数正则因子（正浮点数）
+
+* l2：2范数正则因子（正浮点数）
+
+### 输入形状
+
+任意，当使用该层作为第一层时，要指定```input_shape```
+
+### 输出形状
+
+与输入形状相同
+
+***
+
+## Masking层
+```python
+keras.layers.core.Masking(mask_value=0.0)
+```
+
+使用给定的值对输入的序列信号进行“掩盖”，用以定位需要跳过的时间步
+
+对于输入张量的时间步，即输入张量的第1维度（维度从0开始算，见例子），如果输入张量在该时间步上都等于```mask_value```，则该时间步将在模型接下来的所有层（只要支持masking）被跳过。
+
+如果模型接下来的一些层不支持masking，却收到这样一个输入掩膜，则抛出异常。
+
+### 例子
+
+考虑输入数据```x```是一个形如(samples,timesteps,features)的张量，现将其送入LSTM层。因为你缺少时间步为3和5的信号，所以你希望将其掩盖。这时候应该：
+
+* 赋值```x[:,3:,:] = 0.```，```x[:,5,:] = 0.```
+
+* 在LSTM层之前插入```mask_value=0.```的```Masking```层
+
+```python
+model = Sequential()
+model.add(Masking(mask_value=0., input_shape=(timesteps, features)))
+model.add(LSTM(32))
+```
+
+***
+
+## Highway层
+```python
+keras.layers.core.Highway(init='glorot_uniform', transform_bias=-2, activation='linear', weights=None, W_regularizer=None, b_regularizer=None, activity_regularizer=None, W_constraint=None, b_constraint=None, bias=True, input_dim=None)
+```
+
+Highway层建立全连接的Highway网络，这是LSTM在前馈神经网络中的推广
+
+### 参数：
+
+* output_dim：大于0的整数，代表该层的输出维度。模型中非首层的全连接层其输入维度可以自动推断，因此非首层的全连接定义时不需要指定输入维度。
+
+* init：初始化方法，为预定义初始化方法名的字符串，或用于初始化权重的Theano函数。该参数仅在不传递```weights```参数时有意义。
+
+* activation：激活函数，为预定义的激活函数名（参考[<font color='#FF0000'>激活函数</font>](../other/activations)），或逐元素（element-wise）的Theano函数。如果不指定该参数，将不会使用任何激活函数（即使用线性激活函数：a(x)=x）
+
+* weights：权值，为numpy array的list。该list应含有一个形如（input_dim,output_dim）的权重矩阵和一个形如(output_dim,)的偏置向量。
+
+* W_regularizer：施加在权重上的正则项，为[WeightRegularizer](../other/regularizers)对象
+
+* b_regularizer：施加在偏置向量上的正则项，为[WeightRegularizer](../other/regularizers)对象
+
+* activity_regularizer：施加在输出上的正则项，为[ActivityRegularizer](../other/regularizers)对象
+
+* W_constraints：施加在权重上的正则项，为[constraints](../other/constraints)对象
+
+* b_constraints：施加在偏置上的正则项，为[constraints](../other/constraints)对象
+
+* bias：布尔值，是否包含偏置向量（即层对输入做线性变换还是仿射变换）
+
+* input_dim：整数，输入数据的维度。当该层作为网络的第一层时，必须指定该参数或```input_shape```参数。
+
+* transform_bias：用以初始化传递参数，默认为-2（请参考文献理解本参数的含义）
+
+### 输入形状
+
+形如（nb_samples, input_dim）的2D张量
+
+### 输出形状
+
+形如（nb_samples, output_dim）的2D张量
+
+### 参考文献
+
+* [Highway Networks](http://arxiv.org/pdf/1505.00387v2.pdf)
+
+***
+
+## MaxoutDense层
+
+全连接的Maxout层
+
+```MaxoutDense```层以```nb_features```个```Dense(input_dim,output_dim)```线性层的输出的最大值为输出。```MaxoutDense```可对输入学习出一个凸的、分段线性的激活函数。
+
+### 参数
+
+* nb_features：内部使用的全连接层的数目
+
+### 输入形状
+
+形如（nb_samples, input_dim）的2D张量
+
+### 输出形状
+
+形如（nb_samples, output_dim）的2D张量
+
+### 参考文献
+
+* [Maxout Networks](http://arxiv.org/pdf/1302.4389.pdf)
+
+***
+
+## TimeDisributedDense层
+```python
+keras.layers.core.TimeDistributedDense(output_dim, init='glorot_uniform', activation='linear', weights=None, W_regularizer=None, b_regularizer=None, activity_regularizer=None, W_constraint=None, b_constraint=None, bias=True, input_dim=None, input_length=None)
+```
+为输入序列的每个时间步信号（即维度1）建立一个全连接层，当RNN网络设置为```return_sequence=True```时尤其有用
+
+* 注意：该层已经被弃用，请使用其包装器```TImeDistributed```完成此功能
+
+```python
+model.add(TimeDistributed(Dense(32)))
+```
+
+## 参数
+
+* output_dim：大于0的整数，代表该层的输出维度。模型中非首层的全连接层其输入维度可以自动推断，因此非首层的全连接定义时不需要指定输入维度。
+
+* init：初始化方法，为预定义初始化方法名的字符串，或用于初始化权重的Theano函数。该参数仅在不传递```weights```参数时有意义。
+
+* activation：激活函数，为预定义的激活函数名（参考[<font color='#FF0000'>激活函数</font>](../other/activations)），或逐元素（element-wise）的Theano函数。如果不指定该参数，将不会使用任何激活函数（即使用线性激活函数：a(x)=x）
+
+* weights：权值，为numpy array的list。该list应含有一个形如（input_dim,output_dim）的权重矩阵和一个形如(output_dim,)的偏置向量。
+
+* W_regularizer：施加在权重上的正则项，为[WeightRegularizer](../other/regularizers)对象
+
+* b_regularizer：施加在偏置向量上的正则项，为[WeightRegularizer](../other/regularizers)对象
+
+* activity_regularizer：施加在输出上的正则项，为[ActivityRegularizer](../other/regularizers)对象
+
+* W_constraints：施加在权重上的正则项，为[constraints](../other/constraints)对象
+
+* b_constraints：施加在偏置上的正则项，为[constraints](../other/constraints)对象
+
+* bias：布尔值，是否包含偏置向量（即层对输入做线性变换还是仿射变换）
+
+* input_dim：整数，输入数据的维度。当该层作为网络的第一层时，必须指定该参数或```input_shape```参数。
+
+* input_length：输入序列的长度，为整数或None，若为None则代表输入序列是变长序列
+
+## 输入形状
+
+形如 ```(nb_sample, time_dimension, input_dim)```的3D张量
+
+## 输出形状
+
+形如 ```(nb_sample, time_dimension, output_dim)```的3D张量
 
 
 
