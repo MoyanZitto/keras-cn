@@ -31,6 +31,6 @@ pages:
 - ['other/visualization.md','其他重要模块','可视化Visualization']
 - ['backend.md','keras后端Backend']
 - ['scikit-learn_API.md','scikit-learn接口']
-- ['acknowlegement.md','致谢']
+- ['acknowledgement.md','致谢']
 theme: readthedocs
 site_author: BigMoyan

@@ -78,9 +78,10 @@ keras.layers.core.Activation(activation)
 与输入形状相同
 
 ***
-
+</a name='dropout'>
+<font color='#404040'>
 ## Dropout层
-
+</font></a>
 ```python
 keras.layers.core.Dropout(p)
 ```
