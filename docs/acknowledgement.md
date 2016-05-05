@@ -1,7 +1,21 @@
-<html>
-<head><title>301 Moved Permanently</title></head>
-<body bgcolor="white">
-<center><h1>301 Moved Permanently</h1></center>
-<hr><center>nginx/1.6.2</center>
-</body>
-</html>
+# 致谢
+
+本项目由以下贡献者贡献：
+
+## 文档翻译
+
+* Bigmoyan完成了1.0版的全部文档翻译
+
+* 虚位以待
+
+## Reviewer
+
+* 虚位以待
+
+## Tips
+
+* 虚位以待
+
+## 示例程序
+
+* 虚位以待

@@ -58,8 +58,10 @@ model.add(Dense(32))
 
 ***
 
+<a name='activation'>
+<font color='#404040'>
 ## Activation层
-
+</font></a>
 ```python
 keras.layers.core.Activation(activation)
 ```

@@ -38,7 +38,19 @@ skipgrams将一个词向量下标的序列转化为下面的一对tuple：
 
 * 对于负样本，转化为（word，random word from the vocabulary）
 
-详情请参考[<font color='FF0000'>Efficient Estimation of Word Representations in Vector Space</font>](http://arxiv.org/pdf/1301.3781v3.pdf)
+【Tips】根据维基百科，n-gram代表在给定序列中产生连续的n项，当序列句子时，每项就是单词，此时n-gram也称为shingles。而skip-gram的推广，skip-gram产生的n项子序列中，各个项在原序列中不连续，而是跳了k个字。例如，对于句子：
+
+“the rain in Spain falls mainly on the plain”
+
+其 2-grams为子序列集合：
+
+the rain，rain in，in Spain，Spain falls，falls mainly，mainly on，on the，the plain
+
+其 1-skip-2-grams为子序列集合：
+
+the in, rain Spain, in falls, Spain mainly, falls on, mainly the, on plain.
+
+更多详情请参考[<font color='FF0000'>Efficient Estimation of Word Representations in Vector Space</font>](http://arxiv.org/pdf/1301.3781v3.pdf)
 
 ### 参数
 
@@ -48,7 +60,7 @@ skipgrams将一个词向量下标的序列转化为下面的一对tuple：
 
 * window_size：整数，正样本对之间的最大距离
 
-* negative_samples：大于0的浮点数，代表没有负样本或随机负样本。等于1为与正样本的数目相同
+* negative_samples：大于0的浮点数，等于0代表没有负样本，等于1代表负样本与正样本数目相同，以此类推（即负样本的数目是正样本的```negative_samples```倍）
 
 * shuffle：布尔值，确定是否随机打乱样本
 
@@ -63,9 +75,9 @@ skipgrams将一个词向量下标的序列转化为下面的一对tuple：
 
 * ```couples```是一个长为2的整数列表：```[word_index,other_word_index]```
 
-* ```labels```是一个仅由0和1构成的列表，1代表在```word_index```的窗口中能找到```other_word_index```，0代表```other_word_index```是随机的。
+* ```labels```是一个仅由0和1构成的列表，1代表```other_word_index```在```word_index```的窗口，0代表```other_word_index```是词典里的随机单词。
 
-* 如果设置```categorical```为```True```，则标签被类别化，即1变为\[0,1\]，0变为\[1,0\]
+* 如果设置```categorical```为```True```，则标签将以one-hot的方式给出，即1变为\[0,1\]，0变为\[1,0\]
 
 ***
 
