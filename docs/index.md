@@ -94,8 +94,12 @@ proba = model.predict_proba(X_test, batch_size=32)
 
 为了更深入的了解Keras，我们建议你查看一下下面的两个tutorial
 
-* [<font color=#FF0000>快速开始Sequntial模型</font>]()
-* [<font color=#FF0000>快速开始泛型模型</font>]()
+* [<font color=#FF0000>快速开始Sequntial模型</font>](getting_started/sequential_model)
+* [<font color=#FF0000>快速开始泛型模型</font>](getting_started/functional_API)
+
+还有我们对一些概念的解释
+
+* [<font color=#FF0000>一些基本概念</font>](getting_started/concepts)
 
 在Keras代码包的examples文件夹里，我们提供了一些更高级的模型：基于记忆网络的问答系统、基于LSTM的文本的文本生成等。
 
@@ -131,7 +135,7 @@ sudo pip install keras
 	
 ##在Theano和TensorFlow间切换
 
-Keras默认使用Theano作为后端来进行张量操作，如需切换到TensorFlow，请查看[<font color=FF0000>这里</font>](backend.md)
+Keras默认使用Theano作为后端来进行张量操作，如需切换到TensorFlow，请查看[<font color=FF0000>这里</font>](backend)
 
 ***
 
@@ -142,7 +146,6 @@ Keras默认使用Theano作为后端来进行张量操作，如需切换到Tensor
 你也可以在[<font color=FF0000>Github issues</font>](https://github.com/fchollet/keras/issues)里提问。在提问之前请确保你阅读过我们的[<font color=FF0000>指导</font>](https://github.com/fchollet/keras/blob/master/CONTRIBUTING.md)
 
 同时，我们也欢迎同学们加我们的QQ群119427073进行讨论（潜水和灌水会被T哦）
-
 
 ***
 
