@@ -49,3 +49,6 @@ model.add(Activation(tanh)
 ## 高级激活函数
 
 对于简单的Theano/TensorFlow不能表达的复杂激活函数，如含有可学习参数的激活函数，可通过[<font color='#FF0000'>高级激活函数</font>](../layers/advanced_activation_layer)实现，如PReLU，LeakyReLU等
+
+【Tips】待会儿（大概几天吧）我们将把各个激活函数的表达式、图形和特点总结一下。请大家持续关注~
+

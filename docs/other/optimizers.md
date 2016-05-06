@@ -105,3 +105,5 @@ keras.optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
 ### 参考文献
 
 * [<font color='#FF0000'>Adam - A Method for Stochastic Optimization</font>](http://arxiv.org/abs/1412.6980v8)
+
+【Tips】很快（过两天）我们会将各种优化器的算法及特点总结一下，敬请关注

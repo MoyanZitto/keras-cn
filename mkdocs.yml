@@ -1,4 +1,4 @@
-site_name: keras-cn
+site_name: Keras中文文档
 pages:
 - ['index.md','主页']
 - ['getting_started/concepts.md','快速开始','一些基本概念']

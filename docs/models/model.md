@@ -1,6 +1,8 @@
 # 泛型模型接口
 
-Keras的泛型模型为Model，即广义的拥有输入和输出的模型，我们使用```Model```来初始化一个泛型模型
+为什么叫“泛型模型”，请查看[<font color='#FF0000'>一些基本概念</font>](../getting_started/concepts/#functional)
+
+Keras的泛型模型为```Model```，即广义的拥有输入和输出的模型，我们使用```Model```来初始化一个泛型模型
 
 ```python
 from keras.models import Model
@@ -34,9 +36,9 @@ compile(self, optimizer, loss, metrics=[], loss_weights=None, sample_weight_mode
 ```
 本函数编译模型以供训练，参数有
 
-* optimizer：优化器，为预定义优化器名的字符串或优化器对象，参考[<font color='#FF0000'>优化器</font>](../other/optimizers.md)
+* optimizer：优化器，为预定义优化器名或优化器对象，参考[<font color='#FF0000'>优化器</font>](../other/optimizers.md)
 
-* loss：目标函数，为预定义损失函数名的字符串或一个目标函数，参考[<font color='#FF0000'>目标函数</font>](../other/objectives.md)
+* loss：目标函数，为预定义损失函数名或一个目标函数，参考[<font color='#FF0000'>目标函数</font>](../other/objectives.md)
 
 * metrics：列表，包含评估模型在训练和测试时的性能的指标，典型用法是```metrics=['accuracy']```如果要在多输出模型中为不同的输出指定不同的指标，可像该参数传递一个字典，例如```metrics={'ouput_a': 'accuracy'}```
 
@@ -82,6 +84,9 @@ fit(self, x, y, batch_size=32, nb_epoch=10, verbose=1, callbacks=[], validation_
 <a name='evaluate'>
 <font color='#404040'>
 ### evaluate
+</font>
+</a>
+
 ```python
 evaluate(self, x, y, batch_size=32, verbose=1, sample_weight=None)
 ```
@@ -102,8 +107,6 @@ evaluate(self, x, y, batch_size=32, verbose=1, sample_weight=None)
 如果没有特殊说明，以下函数的参数均保持与```fit```的同名参数相同的含义
 
 如果没有特殊说明，以下函数的verbose参数（如果有）均只能取0或1
-</font>
-</a>
 
 ***
 
@@ -201,7 +204,7 @@ model.fit_generator(generate_arrays_from_file('/my_file.txt'),
 ```python
 evaluate_generator(self, generator, val_samples, max_q_size=10)
 ```
-本函数使用一个生成器作为数据源评估模型，生成器应返回与```test_on_batch```的输入数据相同类型的数据。该函数的参数与```fit_generator```同名参数含义相同
+本函数使用一个生成器作为数据源，来评估模型，生成器应返回与```test_on_batch```的输入数据相同类型的数据。该函数的参数与```fit_generator```同名参数含义相同
 
 ***
 

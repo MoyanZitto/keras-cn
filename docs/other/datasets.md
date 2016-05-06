@@ -132,3 +132,5 @@ from keras.datasets import mnist
 * y_train和y_test：是形如（nb_samples,）标签数据，标签的范围是0~9
 
 数据库将会被下载到```'~/.keras/datasets/'+path```
+
+***

@@ -27,7 +27,7 @@ model.add(TimeDistributed(Dense(32)))
 # now model.output_shape == (None, 10, 32)
 ```
 
-程序的输出数据形状为```(32,10,8)```
+程序的输出数据shape为```(32,10,8)```
 
 使用```TimeDistributed```包装```Dense```严格等价于```layers.TimeDistribuedDense```。不同的是包装器```TimeDistribued```还可以对别的层进行包装，如这里对```Convolution2D```包装：
 

@@ -39,11 +39,11 @@ keras.layers.convolutional.Convolution1D(nb_filter, filter_length, init='uniform
 
 * input_length：当输入序列的长度固定时，该参数为输入序列的长度。当需要在该层后连接```Flatten```层，然后又要连接```Dense```层时，需要指定该参数，否则全连接的输出无法计算出来。
 
-### 输入形状
+### 输入shape
 
 形如（samples，steps，input_dim）的3D张量
 
-### 输出形状
+### 输出shape
 
 形如（samples，new_steps，nb_filter）的3D张量，因为有向量填充的原因，```steps```的值会改变
 
@@ -60,7 +60,7 @@ model.add(Convolution1D(32, 3, border_mode='same'))
 # now model.output_shape == (None, 10, 32)
 ```
 
-【TIPS】可以将Convolution1D看作Convolution2D的快捷版，对例子中（10，32）的信号进行1D卷积相当于对其进行卷积核为（filter_length, 32）的2D卷积。
+【Tips】可以将Convolution1D看作Convolution2D的快捷版，对例子中（10，32）的信号进行1D卷积相当于对其进行卷积核为（filter_length, 32）的2D卷积。
 
 ***
 
@@ -102,15 +102,15 @@ keras.layers.convolutional.Convolution2D(nb_filter, nb_row, nb_col, init='glorot
 
 * bias：布尔值，是否包含偏置向量（即层对输入做线性变换还是仿射变换）
 
-### 输入形状
+### 输入shape
 
 ‘th’模式下，输入形如（samples,channels，rows，cols）的4D张量
 
 ‘tf’模式下，输入形如（samples，rows，cols，channels）的4D张量
 
-注意这里的输入形状指的是函数内部实现的输入形状，而非函数接口应指定的```input_shape```，请参考下面提供的例子。
+注意这里的输入shape指的是函数内部实现的输入shape，而非函数接口应指定的```input_shape```，请参考下面提供的例子。
 
-### 输出形状
+### 输出shape
 
 ‘th’模式下，为形如（samples，nb_filter, new_rows, new_cols）的4D张量
 
@@ -177,13 +177,13 @@ keras.layers.convolutional.Convolution3D(nb_filter, kernel_dim1, kernel_dim2, ke
 
 * bias：布尔值，是否包含偏置向量（即层对输入做线性变换还是仿射变换）
 
-### 输入形状
+### 输入shape
 
 ‘th’模式下，输入应为形如（samples，channels，input_dim1，input_dim2, input_dim3）的5D张量
 
 ‘tf’模式下，输入应为形如（samples，input_dim1，input_dim2, input_dim3，channels）的5D张量
 
-同样的，这里的输入形状指的是函数内部实现的输入形状，而非函数接口应指定的```input_shape```。
+同样的，这里的输入shape指的是函数内部实现的输入shape，而非函数接口应指定的```input_shape```。
 
 ***
 
@@ -202,11 +202,11 @@ keras.layers.convolutional.MaxPooling1D(pool_length=2, stride=None, border_mode=
 * border_mode：‘valid’或者‘same’
 	* 注意，目前‘same’模式只能在TensorFlow作为后端时使用
 	
-### 输入形状
+### 输入shape
 
 * 形如（samples，steps，features）的3D张量
 
-### 输出形状
+### 输出shape
 
 * 形如（samples，downsampled_steps，features）的3D张量
 
@@ -229,13 +229,13 @@ keras.layers.convolutional.MaxPooling2D(pool_size=(2, 2), strides=None, border_m
 
 * dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第3个位置，```Convolution2D```有较详细的类似说明。默认是‘th’模式。
 
-### 输入形状
+### 输入shape
 
 ‘th’模式下，为形如（samples，channels, rows，cols）的4D张量
 
 ‘tf’模式下，为形如（samples，rows, cols，channels）的4D张量
 
-### 输出形状
+### 输出shape
 
 ‘th’模式下，为形如（samples，channels, pooled_rows, pooled_cols）的4D张量
 
@@ -261,13 +261,13 @@ keras.layers.convolutional.MaxPooling3D(pool_size=(2, 2, 2), strides=None, borde
 
 * dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第4个位置，```Convolution2D```有较详细的类似说明。默认是‘th’模式。
 
-### 输入形状
+### 输入shape
 
 ‘th’模式下，为形如（samples, channels, len_pool_dim1, len_pool_dim2, len_pool_dim3）的5D张量
 
 ‘tf’模式下，为形如（samples, len_pool_dim1, len_pool_dim2, len_pool_dim3，channels, ）的5D张量
 
-### 输出形状
+### 输出shape
 
 ‘th’模式下，为形如（samples, channels, pooled_dim1, pooled_dim2, pooled_dim3）的5D张量
 
@@ -290,11 +290,11 @@ keras.layers.convolutional.AveragePooling1D(pool_length=2, stride=None, border_m
 * border_mode：‘valid’或者‘same’
 	* 注意，目前‘same’模式只能在TensorFlow作为后端时使用
 	
-### 输入形状
+### 输入shape
 
 * 形如（samples，steps，features）的3D张量
 
-### 输出形状
+### 输出shape
 
 * 形如（samples，downsampled_steps，features）的3D张量
 
@@ -317,13 +317,13 @@ keras.layers.convolutional.AveragePooling2D(pool_size=(2, 2), strides=None, bord
 
 * dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第3个位置，```Convolution2D```有较详细的类似说明。默认是‘th’模式。
 
-### 输入形状
+### 输入shape
 
 ‘th’模式下，为形如（samples，channels, rows，cols）的4D张量
 
 ‘tf’模式下，为形如（samples，rows, cols，channels）的4D张量
 
-### 输出形状
+### 输出shape
 
 ‘th’模式下，为形如（samples，channels, pooled_rows, pooled_cols）的4D张量
 
@@ -349,13 +349,13 @@ keras.layers.convolutional.AveragePooling3D(pool_size=(2, 2, 2), strides=None, b
 
 * dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第4个位置，```Convolution2D```有较详细的类似说明。默认是‘th’模式。
 
-### 输入形状
+### 输入shape
 
 ‘th’模式下，为形如（samples, channels, len_pool_dim1, len_pool_dim2, len_pool_dim3）的5D张量
 
 ‘tf’模式下，为形如（samples, len_pool_dim1, len_pool_dim2, len_pool_dim3，channels, ）的5D张量
 
-### 输出形状
+### 输出shape
 
 ‘th’模式下，为形如（samples, channels, pooled_dim1, pooled_dim2, pooled_dim3）的5D张量
 
@@ -373,11 +373,11 @@ keras.layers.convolutional.UpSampling1D(length=2)
 
 * length：上采样因子
 
-### 输入形状
+### 输入shape
 
 * 形如（samples，steps，features）的3D张量
 
-### 输出形状
+### 输出shape
 
 * 形如（samples，upsampled_steps，features）的3D张量
 
@@ -395,13 +395,13 @@ keras.layers.convolutional.UpSampling2D(size=(2, 2), dim_ordering='th')
 
 * dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第4个位置，```Convolution2D```有较详细的类似说明。默认是‘th’模式。
 
-### 输入形状
+### 输入shape
 
 ‘th’模式下，为形如（samples，channels, rows，cols）的4D张量
 
 ‘tf’模式下，为形如（samples，rows, cols，channels）的4D张量
 
-### 输出形状
+### 输出shape
 
 ‘th’模式下，为形如（samples，channels, upsampled_rows, upsampled_cols）的4D张量
 
@@ -423,13 +423,13 @@ keras.layers.convolutional.UpSampling3D(size=(2, 2, 2), dim_ordering='th')
 
 * dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第4个位置，```Convolution2D```有较详细的类似说明。默认是‘th’模式。
 
-### 输入形状
+### 输入shape
 
 ‘th’模式下，为形如（samples, channels, len_pool_dim1, len_pool_dim2, len_pool_dim3）的5D张量
 
 ‘tf’模式下，为形如（samples, len_pool_dim1, len_pool_dim2, len_pool_dim3，channels, ）的5D张量
 
-### 输出形状
+### 输出shape
 
 ‘th’模式下，为形如（samples, channels, dim1, dim2, dim3）的5D张量
 
@@ -447,11 +447,11 @@ keras.layers.convolutional.ZeroPadding1D(padding=1)
 
 * padding：整数，表示在要填充的轴的起始和结束处填充0的数目，这里要填充的轴是轴1（第1维，第0维是样本数）
 
-### 输入形状
+### 输入shape
 
 形如（samples，axis_to_pad，features）的3D张量
 
-### 输出形状
+### 输出shape
 
 形如（samples，paded_axis，features）的3D张量
 
@@ -469,13 +469,13 @@ keras.layers.convolutional.ZeroPadding2D(padding=(1, 1), dim_ordering='th')
 
 dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第4个位置，```Convolution2D```有较详细的类似说明。默认是‘th’模式。
 
-### 输入形状
+### 输入shape
 
 ‘th’模式下，形如（samples，channels，first_axis_to_pad，second_axis_to_pad）的4D张量
 
 ‘tf’模式下，形如（samples，first_axis_to_pad，second_axis_to_pad, channels）的4D张量
 
-### 输出形状
+### 输出shape
 
 ‘th’模式下，形如（samples，channels，first_paded_axis，second_paded_axis）的4D张量
 
@@ -497,13 +497,13 @@ padding：整数tuple，表示在要填充的轴的起始和结束处填充0的�
 
 * dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第4个位置，```Convolution2D```有较详细的类似说明。默认是‘th’模式。
 
-### 输入形状
+### 输入shape
 
 ‘th’模式下，为形如（samples, channels, first_axis_to_pad，first_axis_to_pad, first_axis_to_pad,）的5D张量
 
 ‘tf’模式下，为形如（samples, first_axis_to_pad，first_axis_to_pad, first_axis_to_pad, channels）的5D张量
 
-### 输出形状
+### 输出shape
 
 ‘th’模式下，为形如（samples, channels, first_paded_axis，second_paded_axis, third_paded_axis,）的5D张量
 

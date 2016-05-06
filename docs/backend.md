@@ -93,7 +93,7 @@ cast_to_floatx(x)
 ```python
 shape(x)
 ```
-返回一个张量的符号形状
+返回一个张量的符号shape
 
 ### variable
 ```python
@@ -113,7 +113,7 @@ placeholder(shape=None, ndim=None, dtype='float32', name=None)
 ```
 实例化一个占位符，返回之
 
-* shape：占位符的形状（整数tuple，可能包含None） 
+* shape：占位符的shape（整数tuple，可能包含None） 
 
 * ndim: 占位符张量的阶数，要初始化一个占位符，至少指定```shape```和```ndim```之一，如果都指定则使用```shape```
 
@@ -125,7 +125,7 @@ placeholder(shape=None, ndim=None, dtype='float32', name=None)
 ```python
 int_shape(x)
 ```
-以整数Tuple或None的形式返回张量形状
+以整数Tuple或None的形式返回张量shape
 
 ### ndim
 ```python
@@ -168,13 +168,13 @@ eye(size, dtype='float32', name=None)
 ```python
 zeros_like(x, name=None)
 ```
-生成与另一个张量形状相同的全0张量
+生成与另一个张量shape相同的全0张量
 
 ### ones_like
 ```python
 ones_like(x, name=None)
 ```
-生成与另一个张量形状相同的全1张量
+生成与另一个张量shape相同的全1张量
 
 ### count_params
 ```python
@@ -379,7 +379,7 @@ concatenate(tensors, axis=-1)
 ```python
 reshape(x, shape)
 ```
-将张量的形状变换为指定形状
+将张量的shape变换为指定shape
 
 ###permute_dimensions
 ```python
@@ -400,13 +400,13 @@ resize_images(X, height_factor, width_factor, dim_ordering)
 ```python
 repeat_elements(x, rep, axis)
 ```
-在给定轴上重复张量元素```rep```次，与```np.repeat```类似。例如，若x形状```(s1, s2, s3) ```并且给定轴为```axis=1```，输出张量的形状为```(s1, s2 * rep, s3)```
+在给定轴上重复张量元素```rep```次，与```np.repeat```类似。例如，若xshape```(s1, s2, s3) ```并且给定轴为```axis=1```，输出张量的shape为```(s1, s2 * rep, s3)```
 
 ###repeat
 ```python
 repeat(x, n)
 ```
-重复2D张量，例如若x形状是```(samples, dim)```且n为2，则输出张量的形状是```(samples, 2, dim)```
+重复2D张量，例如若xshape是```(samples, dim)```且n为2，则输出张量的shape是```(samples, 2, dim)```
 
 ###batch_flatten
 ```python
@@ -520,7 +520,7 @@ rnn(step_function, inputs, initial_states, go_backwards=False, mask=None, consta
 ```python
 switch(condition, then_expression, else_expression)
 ```
-依据给定的条件‘condition’（整数或布尔值）在两个表达式之间切换，注意两个表达式都应该是具有同样形状的符号化张量表达式
+依据给定的条件‘condition’（整数或布尔值）在两个表达式之间切换，注意两个表达式都应该是具有同样shape的符号化张量表达式
 
 * condition：标量张量
 * then_expression：TensorFlow表达式
@@ -530,13 +530,13 @@ switch(condition, then_expression, else_expression)
 ```python
 in_train_phase(x, alt)
 ```
-如果处于训练模式，则选择x，否则选择alt，注意alt应该与x的形状相同
+如果处于训练模式，则选择x，否则选择alt，注意alt应该与x的shape相同
 
 ###in_test_phase
 ```python
 in_test_phase(x, alt)
 ```
-如果处于测试模式，则选择x，否则选择alt，注意alt应该与x的形状相同
+如果处于测试模式，则选择x，否则选择alt，注意alt应该与x的shape相同
 
 ###relu
 ```python
@@ -563,7 +563,7 @@ softplus(x)
 ```python
 categorical_crossentropy(output, target, from_logits=False)
 ```
-计算输出张量和目标张量的Categorical crossentropy（类别交叉熵），目标张量与输出张量必须形状相同
+计算输出张量和目标张量的Categorical crossentropy（类别交叉熵），目标张量与输出张量必须shape相同
 
 ###sparse_categorical_crossentropy
 ```python

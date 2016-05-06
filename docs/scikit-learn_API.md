@@ -34,3 +34,5 @@
 3. ```keras.models.Sequential```，```fit```，```predict```，```predict_proba```和```score```的默认值
 
 当使用scikit-learn的```grid_search```接口时，合法的可转换参数是你可以传递给```sk_params```的参数，包括训练参数。即，你可以使用```grid_search```来搜索最佳的```batch_size```或```nb_epoch```以及其他模型参数
+
+【Tips】过段时间（几周？）我们希望能提供一些Scikit-learn与Keras联合作业的例子，这个先别太期待……

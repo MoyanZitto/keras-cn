@@ -10,7 +10,7 @@ model.compile(loss='mean_squared_error', optimizer='sgd')
 
 * y_true：真实的数据标签，Theano/TensorFlow张量
 
-* y_pred：预测值，与y_true相同形状的Theano/TensorFlow张量
+* y_pred：预测值，与y_true相同shape的Theano/TensorFlow张量
 
 真实的优化目标函数是在各个数据点得到的损失函数值之和的均值
 

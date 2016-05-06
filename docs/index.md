@@ -47,7 +47,7 @@ Keras适用的Python版本是：Python 2.7-3.5
 
 ##快速开始：30s上手Keras
 
-Keras的核心数据结构是“模型”，模型是一种组织网络层的方式。Keras中主要的模型是Sequential模型，Sequential是一系列网络层按顺序构成的栈。你也可以查看[<font color=#FF0000>泛型模型</font>](getting_started/functional_API.md)来查看更复杂的模型
+Keras的核心数据结构是“模型”，模型是一种组织网络层的方式。Keras中主要的模型是Sequential模型，Sequential是一系列网络层按顺序构成的栈。你也可以查看[<font color=#FF0000>泛型模型</font>](getting_started/functional_API.md)来学习建立更复杂的模型
 
 Sequential模型如下
 ```python
@@ -68,16 +68,19 @@ model.add(Activation("softmax"))
 ```python
 model.compile(loss='categorical_crossentropy', optimizer='sgd', metrics=['accuracy'])
 ```	
-编译模型时必须指明损失函数和优化器，如果你需要的话，也可以自己定制损失函数。Keras的一个核心理念就是使得事情在简单的同时，保证用户对他们希望做的事情有足够的控制力度（最绝对的控制来自于源代码的可扩展性）
+编译模型时必须指明损失函数和优化器，如果你需要的话，也可以自己定制损失函数。Keras的一个核心理念就是简明易用同时，保证用户对Keras的绝对控制力度，用户可以根据自己的需要定制自己的模型、网络层，甚至修改源代码。
 ```python
 from keras.optimizers import SGD
 model.compile(loss='categorical_crossentropy', optimizer=SGD(lr=0.01, momentum=0.9, nesterov=True))
 ```
-完成模型编译后，我们在训练数据上按batch进行一定次数的迭代训练，以拟合网络：
+完成模型编译后，我们在训练数据上按batch进行一定次数的迭代训练，以拟合网络，关于为什么要使用‘batch’，请参考[<font color=#FF0000>一些基本概念</font>](getting_started/concepts/#batch)
+
+【Tips】Keras中遍历一次训练数据称为一个‘epoch’，即进行一轮训练。通常一个神经网络需要多轮训练才能得到比较好的效果。
+
 ```python
 model.fit(X_train, Y_train, nb_epoch=5, batch_size=32)
 ```
-当然，我们也可以手动将一批批的数据送入网络中训练，这时候需要使用：
+当然，我们也可以手动将一个个batch的数据送入网络中训练，这时候需要使用：
 ```python
 model.train_on_batch(X_batch, Y_batch)
 ```
@@ -90,7 +93,7 @@ loss_and_metrics = model.evaluate(X_test, Y_test, batch_size=32)
 classes = model.predict_classes(X_test, batch_size=32)
 proba = model.predict_proba(X_test, batch_size=32)
 ```	
-搭建一个问答系统、图像分类模型，或神经图灵机、word2vec嵌入器就是这么快。支撑深度学习的基本想法本就是简单的，那凭什么我们不能把它的实现也变得超简单呢？
+搭建一个问答系统、图像分类模型，或神经图灵机、word2vec词嵌入器就是这么快。支撑深度学习的基本想法本就是简单的，现在让我们把它的实现也变的简单起来！
 
 为了更深入的了解Keras，我们建议你查看一下下面的两个tutorial
 
@@ -122,6 +125,8 @@ Keras使用了下面的依赖包：
 当使用TensorFlow为后端时：
 
 * [<font color=FF0000>TensorFlow</font>](https://github.com/tensorflow/tensorflow#download-and-setup)
+
+【Tips】“后端”翻译自backend，指的是Keras依赖于完成底层的张量运算的软件包。
 
 安装Keras时，请<code>cd</code>到Keras的文件夹中，并运行下面的安装命令：
 ```python

@@ -25,11 +25,11 @@ keras.layers.recurrent.Recurrent(weights=None, return_sequences=False, go_backwa
 
 * input_dim：当输入序列的长度固定时，该参数为输入序列的长度。当需要在该层后连接```Flatten```层，然后又要连接```Dense```层时，需要指定该参数，否则全连接的输出无法计算出来。注意，如果递归层不是网络的第一层，你需要在网络的第一层中指定序列的长度，如通过```input_shape```指定。
 
-### 输入形状
+### 输入shape
 
 形如（samples，timesteps，input_dim）的3D张量
 
-### 输出形状
+### 输出shape
 
 如果```return_sequences=True```：返回形如（samples，timesteps，output_dim）的3D张量
 
@@ -51,9 +51,9 @@ model.add(LSTM(32, input_dim=64, input_length=10))
 model.add(LSTM(16))
 ```
 
-### 屏蔽输入数据
+### 屏蔽输入数据（Masking）
 
-递归层支持通过时间步变量对输入数据进行Masking，如果想将输入数据的一部分掩盖掉，请使用[<font color-'#FF0000'>Embedding</font>](embedding_layer)层并将参数```mask_zero```设为```True```。
+递归层支持通过时间步变量对输入数据进行Masking，如果想将输入数据的一部分屏蔽掉，请使用[<font color-'#FF0000'>Embedding</font>](embedding_layer)层并将参数```mask_zero```设为```True```。
 
 ### TensorFlow警告
 

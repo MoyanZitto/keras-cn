@@ -31,11 +31,11 @@ Embedding层只能作为模型的第一层
 
 * dropout：0~1的浮点数，代表要断开的嵌入比例，
 
-### 输入形状
+### 输入shape
 
 形如（samples，sequence_length）的2D张量
 
-### 输出形状
+### 输出shape
 
 形如(samples, sequence_length, output_dim)的3D张量
 

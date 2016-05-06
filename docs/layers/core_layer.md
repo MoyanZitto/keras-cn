@@ -28,7 +28,7 @@ model.add(Dense(32))
 
 * output_dim：大于0的整数，代表该层的输出维度。模型中非首层的全连接层其输入维度可以自动推断，因此非首层的全连接定义时不需要指定输入维度。
 
-* init：初始化方法，为预定义初始化方法名的字符串，或用于初始化权重的Theano函数。该参数仅在不传递```weights```参数时有意义。
+* init：初始化方法，为预定义初始化方法名的字符串，或用于初始化权重的Theano函数。该参数仅在不传递```weights```参数时才有意义。
 
 * activation：激活函数，为预定义的激活函数名（参考[<font color='#FF0000'>激活函数</font>](../other/activations)），或逐元素（element-wise）的Theano函数。如果不指定该参数，将不会使用任何激活函数（即使用线性激活函数：a(x)=x）
 
@@ -71,13 +71,13 @@ keras.layers.core.Activation(activation)
 
 * activation：将要使用的激活函数，为预定义激活函数名或一个Tensorflow/Theano的函数。参考[<font color='#FF0000'>激活函数</font>](../other/activations)
 
-### 输入形状
+### 输入shape
 
 任意，当使用激活层作为第一层时，要指定```input_shape```
 
-### 输出形状
+### 输出shape
 
-与输入形状相同
+与输入shape相同
 
 ***
 </a name='dropout'>
@@ -121,17 +121,17 @@ model.add(Flatten())
 ```python
 keras.layers.core.Reshape(target_shape)
 ```
-Reshape层用来将输入形状转换为特定的形状
+Reshape层用来将输入shape转换为特定的shape
 
 ### 参数
 
-* target_shape：目标形状，为整数的tuple，不包含样本数目的维度（batch大小）
+* target_shape：目标shape，为整数的tuple，不包含样本数目的维度（batch大小）
 
-### 输入形状
+### 输入shape
 
-任意，但输入的形状必须固定。当使用该层为模型首层时，需要指定```input_shape```参数
+任意，但输入的shape必须固定。当使用该层为模型首层时，需要指定```input_shape```参数
 
-### 输出形状
+### 输出shape
 
 ```(batch_size,)+target_shape```
 
@@ -170,11 +170,11 @@ model.add(Permute((2, 1), input_shape=(10, 64)))
 # note: `None` is the batch dimension
 ```
 
-### 输入形状
+### 输入shape
 
 任意，当使用激活层作为第一层时，要指定```input_shape```
 
-### 输出形状
+### 输出shape
 
 与输入相同，但是其维度按照指定的模式重新排列
 
@@ -190,11 +190,11 @@ RepeatVector层将输入重复n次
 
 * n：整数，重复的次数
 
-### 输入形状
+### 输入shape
 
 形如（nb_samples, features）的2D张量
 
-### 输出形状
+### 输出shape
 
 形如（nb_samples, n, features）的3D张量
 
@@ -227,7 +227,7 @@ Merge层根据给定的模式，将一个张量列表中的若干张量合并为
 
 * dot_axes：整数或整数tuple，当```mode=dot```时，指定要消去的轴
 
-* output_shape：整数tuple或lambda函数/普通函数（当mode为函数时）。如果output_shape是函数时，该函数的输入值应为输入张量形状的list，并返回一个一一对应的输出张量形状的tuple。
+* output_shape：整数tuple或lambda函数/普通函数（当mode为函数时）。如果output_shape是函数时，该函数的输入值应为输入张量shape的list，并返回一个一一对应的输出张量shape的tuple。
 
 * node_indices：可选，为整数list，如果有些层具有多个输出节点（node）的话，该参数可以指定需要merge的那些节点的下标。如果没有提供，该参数的默认值为全0向量，即合并输入层0号节点的输出值。
 
@@ -260,7 +260,7 @@ keras.layers.core.Lambda(function, output_shape=None, arguments={})
 
 * function：要实现的函数，该函数仅接受一个变量，即上一层的输出
 
-* output_shape：函数应该返回的值的形状，可以是一个tuple，也可以是一个根据输入形状计算输出形状的函数
+* output_shape：函数应该返回的值的shape，可以是一个tuple，也可以是一个根据输入shape计算输出shape的函数
 
 * arguments：可选，字典，用来记录向函数中传递的其他关键字参数
 
@@ -290,13 +290,13 @@ def antirectifier_output_shape(input_shape):
 
 model.add(Lambda(antirectifier, output_shape=antirectifier_output_shape))
 ```
-### 输入形状
+### 输入shape
 
 任意，当使用该层作为第一层时，要指定```input_shape```
 
-### 输出形状
+### 输出shape
 
-由```output_shape```参数指定的输出形状
+由```output_shape```参数指定的输出shape
 
 ***
 
@@ -313,13 +313,13 @@ keras.layers.core.ActivityRegularization(l1=0.0, l2=0.0)
 
 * l2：2范数正则因子（正浮点数）
 
-### 输入形状
+### 输入shape
 
 任意，当使用该层作为第一层时，要指定```input_shape```
 
-### 输出形状
+### 输出shape
 
-与输入形状相同
+与输入shape相同
 
 ***
 
@@ -328,11 +328,11 @@ keras.layers.core.ActivityRegularization(l1=0.0, l2=0.0)
 keras.layers.core.Masking(mask_value=0.0)
 ```
 
-使用给定的值对输入的序列信号进行“掩盖”，用以定位需要跳过的时间步
+使用给定的值对输入的序列信号进行“屏蔽”，用以定位需要跳过的时间步
 
-对于输入张量的时间步，即输入张量的第1维度（维度从0开始算，见例子），如果输入张量在该时间步上都等于```mask_value```，则该时间步将在模型接下来的所有层（只要支持masking）被跳过。
+对于输入张量的时间步，即输入张量的第1维度（维度从0开始算，见例子），如果输入张量在该时间步上都等于```mask_value```，则该时间步将在模型接下来的所有层（只要支持masking）被跳过（屏蔽）。
 
-如果模型接下来的一些层不支持masking，却收到这样一个输入掩膜，则抛出异常。
+如果模型接下来的一些层不支持masking，却接受到masking过的数据，则抛出异常。
 
 ### 例子
 
@@ -383,11 +383,11 @@ Highway层建立全连接的Highway网络，这是LSTM在前馈神经网络中�
 
 * transform_bias：用以初始化传递参数，默认为-2（请参考文献理解本参数的含义）
 
-### 输入形状
+### 输入shape
 
 形如（nb_samples, input_dim）的2D张量
 
-### 输出形状
+### 输出shape
 
 形如（nb_samples, output_dim）的2D张量
 
@@ -407,11 +407,11 @@ Highway层建立全连接的Highway网络，这是LSTM在前馈神经网络中�
 
 * nb_features：内部使用的全连接层的数目
 
-### 输入形状
+### 输入shape
 
 形如（nb_samples, input_dim）的2D张量
 
-### 输出形状
+### 输出shape
 
 形如（nb_samples, output_dim）的2D张量
 
@@ -459,11 +459,11 @@ model.add(TimeDistributed(Dense(32)))
 
 * input_length：输入序列的长度，为整数或None，若为None则代表输入序列是变长序列
 
-### 输入形状
+### 输入shape
 
 形如 ```(nb_sample, time_dimension, input_dim)```的3D张量
 
-### 输出形状
+### 输出shape
 
 形如 ```(nb_sample, time_dimension, output_dim)```的3D张量
 

@@ -28,3 +28,5 @@ model.add(Dense(64, init='uniform'))
 * he_normal：由扇入放缩后的高斯初始化（[<font color='#FF0000'>He et al.,2014</font>](http://arxiv.org/abs/1502.01852)）
 
 * he_uniform
+
+【Tips】稍后（一两周吧……）我们希望将各个初始化方法的特点总结一下，请继续关注

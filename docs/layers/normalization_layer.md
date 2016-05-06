@@ -21,20 +21,25 @@ keras.layers.normalization.BatchNormalization(epsilon=1e-06, mode=0, axis=-1, mo
 
 * momentum：在按特征规范化时，计算数据的指数平均数和标准差时的动量
 
-* weights：初始化权重，为包含2个numpy array的list，其形状为```[(input_shape,),(input_shape)]```
+* weights：初始化权重，为包含2个numpy array的list，其shape为```[(input_shape,),(input_shape)]```
 
 * beta_init：beta的初始化方法，为预定义初始化方法名的字符串，或用于初始化权重的Theano函数。该参数仅在不传递```weights```参数时有意义。
 
 * gamma_init：gamma的初始化方法，为预定义初始化方法名的字符串，或用于初始化权重的Theano函数。该参数仅在不传递```weights```参数时有意义。
 
-### 输入形状
+### 输入shape
 
 任意，当使用本层为模型首层时，指定```input_shape```参数时有意义。
 
-### 输出形状
+### 输出shape
 
-与输入形状相同
+与输入shape相同
 
 ### 参考文献
 
 * [<font color='FF0000'>Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift</font>](http://arxiv.org/pdf/1502.03167v3.pdf)
+
+【Tips】为什么要用BatchNormalization
+
+统计学习的一个重要假设是源空间与目标空间的数据分布是一致的，而神经网络各层输出的分布不一定与输入一致，尤其当网络越深，这种不一致越明显。BatchNormalization把分布一致弱化为均值与方差一致，然而即使是这种弱化的版本也对学习过程起到了重要效果。另一方面，BN的更重要作用是防止梯度弥散，它通过将激活值规范为统一的均值和方差，将原本会减小的激活值得到放大。
+

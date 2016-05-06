@@ -25,17 +25,17 @@ model.add(Activation('relu'))
 
 ***
 	
-## 指定输入数据的形状
+## 指定输入数据的shape
 
-模型需要知道输入数据的形状，因此，```Sequential```的第一层需要接受一个关于输入数据形状的参数，后面的各个层则可以自动的推导出中间数据的形状，因此不需要为每个层都指定这个参数。有几种方法来为第一层指定输入数据的形状
+模型需要知道输入数据的shape，因此，```Sequential```的第一层需要接受一个关于输入数据shape的参数，后面的各个层则可以自动的推导出中间数据的shape，因此不需要为每个层都指定这个参数。有几种方法来为第一层指定输入数据的shape
 
 * 传递一个```input_shape```的关键字参数给第一层，```input_shape```是一个tuple类型的数据，其中也可以填入```None```，如果填入```None```则表示此位置可能是任何正整数。数据的batch大小不应包含在其中。
 
 * 传递一个```batch_input_shape```的关键字参数给第一层，该参数包含数据的batch大小。该参数在指定固定大小batch时比较有用，例如在stateful RNNs中。事实上，Keras在内部会通过添加一个None将input_shape转化为batch_input_shape
 
-* 有些2D层，如```Dense```，支持通过指定其输入维度```input_dim```来隐含的指定输入数据形状。一些3D的时域层支持通过参数```input_dim```和```input_length```来指定输入形状。
+* 有些2D层，如```Dense```，支持通过指定其输入维度```input_dim```来隐含的指定输入数据shape。一些3D的时域层支持通过参数```input_dim```和```input_length```来指定输入shape。
 
-下面的三个指定输入数据形状方法是严格等价的：
+下面的三个指定输入数据shape的方法是严格等价的：
 
 ```python
 model = Sequential()
@@ -122,7 +122,7 @@ merged = Merge([left_branch, right_branch], mode=lambda x, y: x - y)
 
 * 损失函数loss：该参数为模型试图最小化的目标函数，它可为预定义的损失函数名，如```categorical_crossentropy```、```mse```，也可以为一个损失函数。详情见[<font color=#FF0000>objectives</font>](../other/objectives.md)
 
-* 指标列表metrics：对任何分类问题，我们会希望将该列表设置为```metrics=['accuracy']```。指标可以是一个预定义指标的名字（目前仅支持```accuracy```），也可以是一个一般的指标函数。
+* 指标列表metrics：对分类问题，我们一般将该列表设置为```metrics=['accuracy']```。指标可以是一个预定义指标的名字（目前仅支持```accuracy```），也可以是一个一般的函数。
 	
 
 ```python
@@ -449,7 +449,7 @@ model.fit(x_train, y_train,
 			  
 ### 采用状态LSTM的相同模型
 
-状态LSTM的特点是，在处理过一个batch的训练数据后，其内部状态（记忆）会被作为下一个batch的训练数据的初始状态。状态LSTM使得我们可以在合理的计算复杂度内处理较长序列
+状态（stateful）LSTM的特点是，在处理过一个batch的训练数据后，其内部状态（记忆）会被作为下一个batch的训练数据的初始状态。状态LSTM使得我们可以在合理的计算复杂度内处理较长序列
 
 请FAQ中关于[<font color=#FF0000>状态LSTM</font>](FAQ.md)的部分获取更多信息
 

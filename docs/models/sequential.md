@@ -21,7 +21,7 @@ compile(self, optimizer, loss, metrics=[], sample_weight_mode=None)
 
 * loss：字符串（预定义损失函数名）或目标函数，参考[<font color='#FF0000'>目标函数</font>](../other/objectives.md)
 
-* metrics：列表，包含评估模型在训练和测试时的性能的指标，典型用法是```metrics=['accuracy']```
+* metrics：列表，包含评估模型在训练和测试时的网络性能的指标，典型用法是```metrics=['accuracy']```
 
 * sample_weight_mode：如果你需要按时间步为样本赋权（2D权矩阵），将该值设为“temporal”。默认为“None”，代表按样本赋权（1D权）。在下面```fit```函数的解释中有相关的参考内容。
 
@@ -41,7 +41,7 @@ model.compile(optimizer='rmsprop',
 ```python
 fit(self, x, y, batch_size=32, nb_epoch=10, verbose=1, callbacks=[], validation_split=0.0, validation_data=None, shuffle=True, class_weight=None, sample_weight=None)
 ```
-本函数将模型训练nb_epoch轮，其参数有：
+本函数将模型训练```nb_epoch```轮，其参数有：
 
 * x：输入数据。如果模型只有一个输入，那么x的类型是numpy array，如果模型有多个输入，那么x的类型应当为list，list的元素是对应于各个输入的numpy array
 
@@ -71,6 +71,8 @@ fit(self, x, y, batch_size=32, nb_epoch=10, verbose=1, callbacks=[], validation_
 <a name='evaluate'>
 <font color='#404040'>
 ### evaluate
+</font>
+</a>
 ```python
 evaluate(self, x, y, batch_size=32, verbose=1, sample_weight=None)
 ```
@@ -91,8 +93,7 @@ evaluate(self, x, y, batch_size=32, verbose=1, sample_weight=None)
 如果没有特殊说明，以下函数的参数均保持与```fit```的同名参数相同的含义
 
 如果没有特殊说明，以下函数的verbose参数（如果有）均只能取0或1
-</font>
-</a>
+
 
 ***
 
