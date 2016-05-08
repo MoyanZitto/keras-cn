@@ -28,7 +28,7 @@ pages:
 - ['other/initializations.md','其他重要模块','初始化方法Initialization']
 - ['other/regularizers.md','其他重要模块','正则项Regularizer']
 - ['other/constraints.md','其他重要模块','约束项Constraint']
-- ['other/datasets.md','其他重要模块','常用数据库Datasrt']
+- ['other/datasets.md','其他重要模块','常用数据库Dataset']
 - ['other/visualization.md','其他重要模块','可视化Visualization']
 - ['backend.md','keras后端Backend']
 - ['scikit-learn_API.md','scikit-learn接口']
