@@ -50,7 +50,7 @@ the rain，rain in，in Spain，Spain falls，falls mainly，mainly on，on the�
 
 the in, rain Spain, in falls, Spain mainly, falls on, mainly the, on plain.
 
-更多详情请参考[<font color='FF0000'>Efficient Estimation of Word Representations in Vector Space</font>](http://arxiv.org/pdf/1301.3781v3.pdf)
+更多详情请参考[<font color='FF0000'>Efficient Estimation of Word Representations in Vector Space</font>](http://arxiv.org/pdf/1301.3781v3.pdf)【@BigMoyan】
 
 ### 参数
 
