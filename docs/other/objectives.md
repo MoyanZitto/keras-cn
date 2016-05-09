@@ -39,3 +39,5 @@ model.compile(loss='mean_squared_error', optimizer='sgd')
 * poisson：即```(predictions - targets * log(predictions))```的均值
 
 * cosine_proximity：即预测值与真实标签的余弦距离平均值的相反数
+
+【Tips】过一段时间（等我或者谁有时间吧……）我们将把各种目标函数的表达式和常用场景总结一下。

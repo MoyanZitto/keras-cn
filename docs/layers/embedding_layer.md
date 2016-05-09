@@ -23,7 +23,7 @@ Embedding层只能作为模型的第一层
 
 * W_regularizer：施加在权重上的正则项，为[<font color='FF0000'>WeightRegularizer</font>](../other/regularizers)对象
 
-* W_constraints：施加在权重上的正则项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
+* W_constraints：施加在权重上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
 * mask_zero：布尔值，确定是否将输入中的‘0’看作是应该被忽略的‘填充’（padding）值，该参数在使用[<font color='#FF0000'>递归层</font>](recurrent_layer)处理变长输入时有用。设置为```True```的话，模型中后续的层必须都支持masking，否则会抛出异常
 

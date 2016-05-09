@@ -29,9 +29,9 @@ keras.layers.convolutional.Convolution1D(nb_filter, filter_length, init='uniform
 
 * activity_regularizer：施加在输出上的正则项，为[<font color='FF0000'>ActivityRegularizer</font>](../other/regularizers)对象
 
-* W_constraints：施加在权重上的正则项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
+* W_constraints：施加在权重上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
-* b_constraints：施加在偏置上的正则项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
+* b_constraints：施加在偏置上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
 * bias：布尔值，是否包含偏置向量（即层对输入做线性变换还是仿射变换）
 
@@ -60,7 +60,7 @@ model.add(Convolution1D(32, 3, border_mode='same'))
 # now model.output_shape == (None, 10, 32)
 ```
 
-【Tips】可以将Convolution1D看作Convolution2D的快捷版，对例子中（10，32）的信号进行1D卷积相当于对其进行卷积核为（filter_length, 32）的2D卷积。
+【Tips】可以将Convolution1D看作Convolution2D的快捷版，对例子中（10，32）的信号进行1D卷积相当于对其进行卷积核为（filter_length, 32）的2D卷积。【@3rduncle】
 
 ***
 
@@ -94,9 +94,9 @@ keras.layers.convolutional.Convolution2D(nb_filter, nb_row, nb_col, init='glorot
 
 * activity_regularizer：施加在输出上的正则项，为[<font color='FF0000'>ActivityRegularizer</font>](../other/regularizers)对象
 
-* W_constraints：施加在权重上的正则项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
+* W_constraints：施加在权重上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
-* b_constraints：施加在偏置上的正则项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
+* b_constraints：施加在偏置上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
 * dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第3个位置。例如128*128的三通道彩色图片，在‘th’模式中```input_shape```应写为（3，128，128），而在‘tf’模式中应写为（128，128，3），注意这里3出现在低0个位置，因为```input_shape```不包含样本数的维度，在其内部实现中，实际上是（None，3，128，128）和（None，128，128，3）。默认是‘th’模式。
 
@@ -169,9 +169,9 @@ keras.layers.convolutional.Convolution3D(nb_filter, kernel_dim1, kernel_dim2, ke
 
 * activity_regularizer：施加在输出上的正则项，为[<font color='FF0000'>ActivityRegularizer</font>](../other/regularizers)对象
 
-* W_constraints：施加在权重上的正则项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
+* W_constraints：施加在权重上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
-* b_constraints：施加在偏置上的正则项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
+* b_constraints：施加在偏置上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
 * dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第4个位置，```Convolution2D```有较详细的类似说明。默认是‘th’模式。
 

@@ -39,7 +39,5 @@ keras.layers.normalization.BatchNormalization(epsilon=1e-06, mode=0, axis=-1, mo
 
 * [<font color='FF0000'>Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift</font>](http://arxiv.org/pdf/1502.03167v3.pdf)
 
-【Tips】为什么要用BatchNormalization
-
-统计学习的一个重要假设是源空间与目标空间的数据分布是一致的，而神经网络各层输出的分布不一定与输入一致，尤其当网络越深，这种不一致越明显。BatchNormalization把分布一致弱化为均值与方差一致，然而即使是这种弱化的版本也对学习过程起到了重要效果。另一方面，BN的更重要作用是防止梯度弥散，它通过将激活值规范为统一的均值和方差，将原本会减小的激活值得到放大。
+【Tips】统计学习的一个重要假设是源空间与目标空间的数据分布是一致的，而神经网络各层输出的分布不一定与输入一致，尤其当网络越深，这种不一致越明显。BatchNormalization把分布一致弱化为均值与方差一致，然而即使是这种弱化的版本也对学习过程起到了重要效果。另一方面，BN的更重要作用是防止梯度弥散，它通过将激活值规范为统一的均值和方差，将原本会减小的激活值得到放大。【@Bigmoyan】
 

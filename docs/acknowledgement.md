@@ -10,11 +10,15 @@
 
 ## Reviewer
 
-* 【白菜】 review了“快速开始泛型模型”一节并指出错误（@共享层）
+* 【白菜】 review了“快速开始泛型模型”（@共享层）一节并指出错误
+
+* 【doudou】 review了“关于模型”（@关于Keras模型）、“常用层”（@Dense层）一节并指出错误
 
 ## Tips
 
-* BigMoyan
+* 【BigMoyan】添加了一些注释
+
+* 【3rduncle】添加了一些注释
 
 ## 示例程序
 

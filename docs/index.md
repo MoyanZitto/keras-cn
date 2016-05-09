@@ -75,7 +75,7 @@ model.compile(loss='categorical_crossentropy', optimizer=SGD(lr=0.01, momentum=0
 ```
 完成模型编译后，我们在训练数据上按batch进行一定次数的迭代训练，以拟合网络，关于为什么要使用‘batch’，请参考[<font color=#FF0000>一些基本概念</font>](getting_started/concepts/#batch)
 
-【Tips】Keras中遍历一次训练数据称为一个‘epoch’，即进行一轮训练。通常一个神经网络需要多轮训练才能得到比较好的效果。
+【Tips】Keras中遍历一次训练数据称为一个‘epoch’，即进行一轮训练。通常一个神经网络需要多轮训练才能得到比较好的效果。【@Bigmoyan】
 
 ```python
 model.fit(X_train, Y_train, nb_epoch=5, batch_size=32)
@@ -126,7 +126,7 @@ Keras使用了下面的依赖包：
 
 * [<font color=FF0000>TensorFlow</font>](https://github.com/tensorflow/tensorflow#download-and-setup)
 
-【Tips】“后端”翻译自backend，指的是Keras依赖于完成底层的张量运算的软件包。
+【Tips】“后端”翻译自backend，指的是Keras依赖于完成底层的张量运算的软件包。【@Bigmoyan】
 
 安装Keras时，请<code>cd</code>到Keras的文件夹中，并运行下面的安装命令：
 ```python

@@ -40,9 +40,9 @@ model.add(Dense(32))
 
 * activity_regularizer：施加在输出上的正则项，为[<font color='FF0000'>ActivityRegularizer</font>](../other/regularizers)对象
 
-* W_constraints：施加在权重上的正则项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
+* W_constraints：施加在权重上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
-* b_constraints：施加在偏置上的正则项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
+* b_constraints：施加在偏置上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
 * bias：布尔值，是否包含偏置向量（即层对输入做线性变换还是仿射变换）
 
@@ -373,9 +373,9 @@ Highway层建立全连接的Highway网络，这是LSTM在前馈神经网络中�
 
 * activity_regularizer：施加在输出上的正则项，为[<font color='FF0000'>ActivityRegularizer</font>](../other/regularizers)对象
 
-* W_constraints：施加在权重上的正则项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
+* W_constraints：施加在权重上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
-* b_constraints：施加在偏置上的正则项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
+* b_constraints：施加在偏置上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
 * bias：布尔值，是否包含偏置向量（即层对输入做线性变换还是仿射变换）
 
@@ -449,9 +449,9 @@ model.add(TimeDistributed(Dense(32)))
 
 * activity_regularizer：施加在输出上的正则项，为[<font color='FF0000'>ActivityRegularizer</font>](../other/regularizers)对象
 
-* W_constraints：施加在权重上的正则项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
+* W_constraints：施加在权重上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
-* b_constraints：施加在偏置上的正则项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
+* b_constraints：施加在偏置上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
 * bias：布尔值，是否包含偏置向量（即层对输入做线性变换还是仿射变换）
 
