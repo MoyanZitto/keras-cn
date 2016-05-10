@@ -195,11 +195,11 @@ fit_generator(self, generator, samples_per_epoch, nb_epoch, verbose=1, callbacks
 def generate_arrays_from_file(path):
     while 1:
     f = open(path)
-    for line in f:
-        # create numpy arrays of input data
-        # and labels, from each line in the file
-        x, y = process_line(line)
-        yield (x, y)
+		for line in f:
+			# create numpy arrays of input data
+			# and labels, from each line in the file
+			x, y = process_line(line)
+			yield (x, y)
     f.close()
 
 model.fit_generator(generate_arrays_from_file('/my_file.txt'),

@@ -16,7 +16,7 @@
 
 ## Tips
 
-* 【BigMoyan】添加了一些注释
+* 【Bigmoyan】添加了一些注释
 
 * 【3rduncle】添加了一些注释
 
