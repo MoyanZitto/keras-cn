@@ -75,7 +75,6 @@ model.compile(loss='categorical_crossentropy', optimizer=SGD(lr=0.01, momentum=0
 ```
 完成模型编译后，我们在训练数据上按batch进行一定次数的迭代训练，以拟合网络，关于为什么要使用‘batch’，请参考[<font color=#FF0000>一些基本概念</font>](getting_started/concepts/#batch)
 
-【Tips】Keras中遍历一次训练数据称为一个‘epoch’，即进行一轮训练。通常一个神经网络需要多轮训练才能得到比较好的效果。【@Bigmoyan】
 
 ```python
 model.fit(X_train, Y_train, nb_epoch=5, batch_size=32)

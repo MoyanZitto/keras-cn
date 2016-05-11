@@ -14,6 +14,8 @@
 
 * 【doudou】 review了“关于模型”（@关于Keras模型）、“常用层”（@Dense层）一节并指出错误
 
+* 【艾子】review了“常用层”（@Merge）并指出错误
+
 ## Tips
 
 * 【Bigmoyan】添加了一些注释

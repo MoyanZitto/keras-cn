@@ -227,7 +227,7 @@ Merge层根据给定的模式，将一个张量列表中的若干张量合并为
 
 * dot_axes：整数或整数tuple，当```mode=dot```时，指定要消去的轴
 
-* output_shape：整数tuple或lambda函数/普通函数（当mode为函数时）。如果output_shape是函数时，该函数的输入值应为输入张量shape的list，并返回一个一一对应的输出张量shape的tuple。
+* output_shape：整数tuple或lambda函数/普通函数（当mode为函数时）。如果output_shape是函数时，该函数的输入值应为一一对应于输入shape的list，并返回输出张量的shape。
 
 * node_indices：可选，为整数list，如果有些层具有多个输出节点（node）的话，该参数可以指定需要merge的那些节点的下标。如果没有提供，该参数的默认值为全0向量，即合并输入层0号节点的输出值。
 
