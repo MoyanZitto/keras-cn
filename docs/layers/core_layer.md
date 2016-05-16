@@ -87,7 +87,7 @@ keras.layers.core.Activation(activation)
 ```python
 keras.layers.core.Dropout(p)
 ```
-为输入数据施加Dropout。Dropout将在训练过程中每次更新参数时随机断开p%的输入神经元连接，Dropout层用于防止过拟合。
+为输入数据施加Dropout。Dropout将在训练过程中每次更新参数时随机断开一定百分比（p）的输入神经元连接，Dropout层用于防止过拟合。
 
 ### 参数
 
