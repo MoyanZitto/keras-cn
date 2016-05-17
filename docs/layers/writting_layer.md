@@ -1,6 +1,5 @@
 #编写自己的层
 
-##编写自己的层
 
 对于简单的定制操作，我们或许可以通过使用```layers.core.Lambda```层来完成。但对于任何具有可训练权重的定制层，你应该自己来实现。
 
@@ -65,35 +64,35 @@ return K.in_train_phase(K.dropout(x, level=self.p), x)
 
 	* ```__call__```
 	
-	*```add_input```
+	* ```add_input```
 	
-	*```assert_input_compatibility```
+	* ```assert_input_compatibility```
 	
-	*```set_input```
+	* ```set_input```
 	
-	*```input```
+	* ```input```
 	
-	*```output```
+	* ```output```
 	
-	*```input_shape```
+	* ```input_shape```
 
-	*```output_shape```
+	* ```output_shape```
 	
-	*```input_mask```
+	* ```input_mask```
 	
-	*```output_mask```
+	* ```output_mask```
 	
-	*```get_input_at```
+	* ```get_input_at```
 	
-	*```get_output_at```
+	* ```get_output_at```
 	
-	*```get_input_shape_at```
+	* ```get_input_shape_at```
 
-	*```get_output_shape_at```
+	* ```get_output_shape_at```
 	
-	*```get_input_mask_at```
+	* ```get_input_mask_at```
 	
-	*```get_output_mask_at```
+	* ```get_output_mask_at```
 	
 
 现存的Keras层代码可以为你的实现提供良好参考，阅读源代码吧！
