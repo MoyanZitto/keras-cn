@@ -11,7 +11,7 @@
 * [训练数据在训练时会被随机洗乱吗？](#shuffle)
 * [如何在每个epoch后记录训练/测试的loss和正确率？](#history)
 * [如何使用状态RNN（statful RNN）？](#statful_RNN)
-* [如何使用Keras进行分布式/多GPU运算？](#multi-GPU)
+* [如何使用Keras进行分布式/多GPU运算？](#multi-GPU)]
 
 ***
 

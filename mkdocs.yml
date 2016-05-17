@@ -32,6 +32,8 @@ pages:
 - ['other/visualization.md','其他重要模块','可视化Visualization']
 - ['backend.md','keras后端Backend']
 - ['scikit-learn_API.md','scikit-learn接口']
+- ['blog/cnn_see_world.md','深度学习与Keras','CNN眼中的世界']
+- ['blog/autoencoder.md','深度学习与Keras','花式自动编码器']
 - ['acknowledgement.md','致谢']
 theme: readthedocs
 site_author: BigMoyan
