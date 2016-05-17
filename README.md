@@ -2,7 +2,7 @@
 
 本项目由BigMoyan于2016-4-29发起，旨在建立一个[keras.io](keras.io)的中文版文档，并提供更多用户友好的支持与建议。
 
-本项目目前已完成1.1版本，keras-cn的网站为[keras-cn](keras-cn.readthedocs.org)
+本项目目前已完成1.1版本，keras-cn的网站为[keras-cn](http://keras-cn.readthedocs.io/en/latest/)
 
 项目基于Mkdocs生成静态网页，请使用Markdown编写文档并遵守以下约定：
 
