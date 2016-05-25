@@ -15,9 +15,9 @@ from keras.datasets import cifar10
 
 两个Tuple
 
-```(X_train, X_test)```是形如（nb_samples, 3, 32, 32）的RGB三通道图像数据，数据类型是无符号8位整形（uint8）
+```X_train```和```X_test```是形如（nb_samples, 3, 32, 32）的RGB三通道图像数据，数据类型是无符号8位整形（uint8）
 
-```(X_train, X_test)```是形如（nb_samples,）标签数据，标签的范围是0~9
+```Y_train```和 ```Y_test```是形如（nb_samples,）标签数据，标签的范围是0~9
 
 ***
 
