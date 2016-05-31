@@ -2,7 +2,7 @@
 
 ## 文章信息
 
-<font color='#FF0000'>本文地址：[<font color='#FF0000'>http://blog.keras.io/how-convolutional-neural-networks-see-the-world.html</font>](http://blog.keras.io/how-convolutional-neural-networks-see-the-world.html)
+<font color='#FF0000'>本文地址：[<font color='#FF0000'>http://blog.keras.io/building-autoencoders-in-keras.html</font>](http://blog.keras.io/building-autoencoders-in-keras.html)
 
 本文作者：Francois Chollet
 </font>
