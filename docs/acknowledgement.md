@@ -22,6 +22,8 @@
 
 * 【迷川浩浩】review了“回调函数”（@callback）并指出错误 
 
+* 【tadakey】review了“一些基本概念”（@张量）并指出错误
+
 
 ## Tips
 
