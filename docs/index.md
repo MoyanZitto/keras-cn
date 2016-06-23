@@ -29,7 +29,7 @@ Keras适用的Python版本是：Python 2.7-3.5
 
 您对文档的任何贡献，包括文档的翻译、查缺补漏、概念解释、发现和修改问题、贡献示例程序等，均会被记录在[<font color='FF0000'>致谢</font>](acknowledgement)，十分感谢您对Keras中文文档的贡献！
 
-文档现在的版本号是1.1
+文档现在的版本号是1.2
 
 ***
 
@@ -161,6 +161,9 @@ sudo python setup.py install
 ```python
 sudo pip install keras
 ```
+
+对于在Windows上使用Keras的同学，请移步[<font color='#FF0000'> Keras安装和配置指南</font>](getting_started/install.md)
+
 ***
 	
 ##在Theano和TensorFlow间切换
