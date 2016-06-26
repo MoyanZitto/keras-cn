@@ -1,37 +1,41 @@
-﻿# 致谢
+﻿
+# 致谢
 
 本项目由以下贡献者贡献：
 
-## 文档翻译
+## 文档贡献
 
-* 【Bigmoyan】完成了1.0版的全部文档翻译
-
-* 【Bigmoyan】完成了“深度学习与Keras”（@CNN眼中的世界 @花式自动编码器）的翻译
+| 贡献者 | 页面 | 章节 | 类型 |
+|--------|:----:|---:|
+|Bigmoyan|keras.io的全部正文| - |翻译|
+|Bigmoyan|深度学习与Keras|CNN眼中的世界|翻译|
+|Bigmoyan|深度学习与Keras|花式自动编码器|翻译|
+|Bigmoyan|快速开始|一些基本概念|编写|
+|SCP-173|快速开始|Keras安装和配置指南|编写|
 
 ## Tips与编写
 
-* 【Bigmoyan】添加了一些注释，并编写了“快速开始->一些基本概念”
-
-* 【3rduncle】添加了一些注释
-
-* 【SCP-173】编写了“快速开始->Keras安装和配置指南”
+| 贡献者 | 页面 |
+|--------|----:|
+|Bigmoyan|Tips处标注|
+|3rduncle|Tips处标注|
 
 
 ## Reviewer
 
-* 【白菜】 review了“快速开始泛型模型”（@共享层），“其他重要模块/常用数据库”（@IMDB影评倾向分类）并指出错误
-
-* 【doudou】 review了“关于模型”（@关于Keras模型）、“常用层”（@Dense层）一节并指出错误
-
-* 【艾子】review了“常用层”（@Merge）并指出错误
-
-* 【NUDT-小超人、、】review了“快速开始Sequential模型”（@Merge层）并指出错误
-
-* 【毛毛熊】 review了“常用数据库”（@cifar-10）并指出错误
-
-* 【迷川浩浩】review了“回调函数”（@callback）并指出错误 
-
-* 【tadakey】review了“一些基本概念”（@张量）并指出错误
+| Reviewer | 页面 | 章节 |
+|----------|:----:|-----:|
+|白菜|快速开始泛型模型|共享层|
+|白菜|常用数据库|IMDB影评倾向分类| 
+|doudou|关于模型|关于Keras模型|
+|doudou|常用层|Dense层|
+|艾子|常用层|Merge层| 
+|NUDT-小超人、、|快速开始Sequential模型|Merge层| 
+|毛毛熊|常用数据库|cifar-10| 
+|迷川浩浩|回调函数|callback| 
+|tadakey|一些基本概念|张量| 
+|方渺渺|递归层|recurrent层| 
+|leo-nlp|快速开始泛型模型|共享层| 
 
 ## 示例程序
 
