@@ -12,6 +12,7 @@
 |Bigmoyan|深度学习与Keras|花式自动编码器|翻译|
 |Bigmoyan|快速开始|一些基本概念|编写|
 |SCP-173|快速开始|Keras安装和配置指南|编写|
+|Bigmoyan|深度学习与Keras|面向小数据集构建图像分类模型|翻译|
 
 ## Tips与编写
 
