@@ -338,7 +338,7 @@ keras.layers.core.Masking(mask_value=0.0)
 
 考虑输入数据```x```是一个形如(samples,timesteps,features)的张量，现将其送入LSTM层。因为你缺少时间步为3和5的信号，所以你希望将其掩盖。这时候应该：
 
-* 赋值```x[:,3:,:] = 0.```，```x[:,5,:] = 0.```
+* 赋值```x[:,3,:] = 0.```，```x[:,5,:] = 0.```
 
 * 在LSTM层之前插入```mask_value=0.```的```Masking```层
 
