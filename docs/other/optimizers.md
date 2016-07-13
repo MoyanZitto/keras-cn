@@ -106,4 +106,53 @@ keras.optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
 
 * [<font color='#FF0000'>Adam - A Method for Stochastic Optimization</font>](http://arxiv.org/abs/1412.6980v8)
 
+***
+
+## Adamax
+```python
+keras.optimizers.Adamax(lr=0.002, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
+```
+
+Adamax优化器来自于Adam的论文的Section7，该方法是基于无穷范数的Adam方法的变体。
+
+默认参数由论文提供
+
+### 参数
+
+* lr：大于0的浮点数，学习率
+
+* beta_1/beta_2：浮点数， 0<beta<1，通常很接近1
+
+* epsilon：大于0的小浮点数，防止除0错误
+
+### 参考文献
+
+* [<font color='#FF0000'>Adam - A Method for Stochastic Optimization</font>](http://arxiv.org/abs/1412.6980v8)
+
+***
+
+## Nadam
+
+```python
+keras.optimizers.Nadam(lr=0.002, beta_1=0.9, beta_2=0.999, epsilon=1e-08, schedule_decay=0.004)
+```
+
+Nesterov Adam optimizer: Adam本质上像是带有动量项的RMSprop，Nadam就是带有Nesterov 动量的Adam RMSprop
+
+默认参数来自于论文，推荐不要对默认参数进行更改。
+
+### 参数
+
+* lr：大于0的浮点数，学习率
+
+* beta_1/beta_2：浮点数， 0<beta<1，通常很接近1
+
+* epsilon：大于0的小浮点数，防止除0错误
+
+### 参考文献
+
+* [<font color='#FF0000'>Nadam report</font>](http://cs229.stanford.edu/proj2015/054_report.pdf)
+
+* [<font color='#FF0000'>On the importance of initialization and momentum in deep learning</font>](http://www.cs.toronto.edu/~fritz/absps/momentum.pdf)
+
 【Tips】很快（过两天）我们会将各种优化器的算法及特点总结一下，敬请关注

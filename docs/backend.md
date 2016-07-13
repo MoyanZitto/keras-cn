@@ -70,6 +70,20 @@ a = concatenate([b, c], axis=-1)
 
 ## Kera后端函数
 
+###epsilon
+```python
+epsilon()
+```
+
+以数值形式返回一个（一般来说很小的）数，即fuzz factor
+
+###set_epsilon
+```python
+set_epsilon()
+```
+
+设置在数值表达式中使用的fuzz factor
+
 ### learning_phase
 
 ```python
@@ -88,6 +102,19 @@ floatx()
 cast_to_floatx(x)
 ```
 将numpy array转换为floatx
+
+### image_dim_ordering
+```python
+image_dim_ordering()
+```
+返回图像的维度顺序（‘tf’或‘th’）
+
+### set_image_dim_ordering
+```python
+set_image_dim_ordering()
+```
+设置图像的维度顺序（‘tf’或‘th’）
+
 
 ### shape
 ```python
@@ -266,6 +293,12 @@ mean(x, axis=None, keepdims=False)
 any(x, axis=None, keepdims=False)
 ```
 按位或，返回数据类型为uint8的张量（元素为0或1）
+
+### all
+```python
+any(x, axis=None, keepdims=False)
+```
+按位与，返回类型为uint8de tensor
 
 ### argmax
 ```python
@@ -621,7 +654,7 @@ conv2d(x, kernel, strides=(1, 1), border_mode='valid', dim_ordering='th', image_
 ```
 2D卷积
 
-Arguments
+参数：
 
 * kernel：卷积核张量
 
@@ -630,6 +663,46 @@ Arguments
 * border_mode：“same”，“valid”之一的字符串
 
 * dim_ordering：“tf”和“th”之一，维度排列顺序
+
+### deconv2d
+```python
+deconv2d(x, kernel, output_shape, strides=(1, 1), border_mode='valid', dim_ordering='th', image_shape=None, filter_shape=None)
+```
+2D反卷积（转置卷积）
+
+参数：
+
+* x：输入张量
+
+* kernel：卷积核张量
+
+* output_shape: 输出shape的1D的整数张量
+
+* strides：步长，tuple类型
+
+* border_mode：‘same’或‘valid’
+
+* dim_ordering：‘tf’或‘th’
+
+### conv3d
+```python
+conv3d(x, kernel, strides=(1, 1, 1), border_mode='valid', dim_ordering='th', volume_shape=None, filter_shape=None)
+```
+3D卷积
+
+参数：
+
+* x：输入张量
+
+* kernel：卷积核张量
+
+* output_shape: 输出shape的1D的整数张量
+
+* strides：步长，tuple类型
+
+* border_mode：‘same’或‘valid’
+
+* dim_ordering：‘tf’或‘th’
 
 ### pool2d
 ```python
@@ -640,6 +713,22 @@ pool2d(x, pool_size, strides=(1, 1), border_mode='valid', dim_ordering='th', poo
 * pool_size：含有两个整数的tuple，池的大小
 
 * strides: 含有两个整数的tuple，步长
+
+* border_mode：“same”，“valid”之一的字符串
+
+* dim_ordering：“tf”和“th”之一，维度排列顺序
+
+* pool_mode: “max”，“avg”之一，池化方式
+
+### pool3d
+```python
+pool3d(x, pool_size, strides=(1, 1, 1), border_mode='valid', dim_ordering='th', pool_mode='max')
+```
+3D池化
+
+* pool_size：含有3个整数的tuple，池的大小
+
+* strides: 含有3个整数的tuple，步长
 
 * border_mode：“same”，“valid”之一的字符串
 

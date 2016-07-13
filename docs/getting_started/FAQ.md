@@ -12,7 +12,8 @@
 * [如何在每个epoch后记录训练/测试的loss和正确率？](#history)
 * [如何使用状态RNN（statful RNN）？](#statful_RNN)
 * [如何使用Keras进行分布式/多GPU运算？](#multi-GPU)
-
+* [如何“冻结”网络的层？](#freeze)
+* [如何从Sequential模型中去除一个层？](#pop)
 ***
 
 <a name='citation'>
@@ -115,7 +116,7 @@ model.save_weights('my_model_weights.h5')
 model = model_from_json(open('my_model_architecture.json').read())
 model.load_weights('my_model_weights.h5')
 ```
-最后，在模型使用前，还是需要再编译一下
+最后，在模型使用前，还是需要再编译一下（如果只用来预测可不用编译）
 ```python
 model.compile(optimizer='adagrad', loss='mse')
 ```
@@ -159,13 +160,28 @@ layer_output = get_3rd_layer_output([X])[0]
 get_3rd_layer_output = K.function([model.layers[0].input, K.learning_phase()],
 								  [model.layers[3].output])
 
-# output in train mode = 0
+# output in train mode = 1
 layer_output = get_3rd_layer_output([X, 0])[0]
 
-# output in test mode = 1
+# output in test mode = 0
 layer_output = get_3rd_layer_output([X, 1])[0]
 ```
-另一种更灵活的获取中间层输出的方法是使用[<font color="FF0000">泛型模型</font>](functional_API.md)
+另一种更灵活的获取中间层输出的方法是使用[<font color="FF0000">泛型模型</font>](functional_API.md)，例如，假如我们已经有一个
+编写一个自编码器并从MNIST数据集训练：
+
+```python
+inputs = Input(shape=(784,))
+encoded = Dense(32, activation='relu')(inputs)
+decoded = Dense(784)(encoded)
+model = Model(input=inputs, output=decoded)
+```
+
+编译和训练该模型后，我们可以通过下面的方法得到encoder的输出：
+
+```python
+encoder = Model(input=inputs, output=encoded)
+X_encoded = encoder.predict(X)
+```
 
 ***
 
@@ -355,3 +371,66 @@ K.set_session(sess)
 
 关于分布式训练的更多信息，请参考[<font color="#FF0000">这里</font>](https://www.tensorflow.org/versions/r0.8/how_tos/distributed/index.html)
 
+***
+
+<a name='freeze'>
+<font color='#404040'>
+## 如何“冻结”网络的层？
+</font>
+</a>
+
+“冻结”一个层指的是该层将不参加网络训练，即该层的权重永不会更新。在进行fine-tune时我们经常会需要这项操作。
+在使用固定的embedding层处理文本输入时，也需要这个技术。
+
+可以通过向层的构造函数传递```trainable```参数来指定一个层是不是可训练的，如：
+
+```python
+frozen_layer = Dense(32,trainable=False)
+```
+
+此外，也可以通过将层对象的```trainable```属性设为```True```或```False```来为已经搭建好的模型设置要冻结的层。
+在设置完后，需要运行```compile```来使设置生效，例如：
+
+```python
+x = Input(shape=(32,))
+layer = Dense(32)
+layer.trainable = False
+y = layer(x)
+
+frozen_model = Model(x, y)
+# in the model below, the weights of `layer` will not be updated during training
+frozen_model.compile(optimizer='rmsprop', loss='mse')
+
+layer.trainable = True
+trainable_model = Model(x, y)
+# with this model the weights of the layer will be updated during training
+# (which will also affect the above model since it uses the same layer instance)
+trainable_model.compile(optimizer='rmsprop', loss='mse')
+
+frozen_model.fit(data, labels)  # this does NOT update the weights of `layer`
+trainable_model.fit(data, labels)  # this updates the weights of `layer`
+```
+
+***
+
+<a name='pop'>
+<font color='#404040'>
+## 如何从Sequential模型中去除一个层？
+</font>
+</a>
+
+可以通过调用```.pop()```来去除模型的最后一个层，反复调用n次即可去除模型后面的n个层
+
+```python
+model = Sequential()
+model.add(Dense(32, activation='relu', input_dim=784))
+model.add(Dense(32, activation='relu'))
+
+print(len(model.layers))  # "2"
+
+model.pop()
+print(len(model.layers))  # "1"
+```
+
+【Tips】模型的.layers属性保存了模型中的层对象，数据类型是list，在model没有```.pop()```方法前，我一般通过model.layers.pop()完成相同的功能。
+但显然，使用keras提供的方法会安全的多【@bigmoyan】

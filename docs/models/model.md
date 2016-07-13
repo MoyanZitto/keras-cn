@@ -46,6 +46,7 @@ compile(self, optimizer, loss, metrics=[], loss_weights=None, sample_weight_mode
 
 * kwargs：使用TensorFlow作为后端请忽略该参数，若使用Theano作为后端，kwargs的值将会传递给 K.function
 
+【Tips】如果你只是载入模型并利用其predict，可以不用进行compile。在Keras中，compile主要完成损失函数和优化器的一些配置，是为训练服务的。predict会在内部进行符号函数的编译工作（通过调用_make_predict_function生成函数）【@白菜，@我是小将】
 ***
 
 ### fit
