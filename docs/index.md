@@ -66,6 +66,8 @@ Keras从2015年3月开始启动，经过一年多的开发，目前Keras进入�
 
 * 一些基本概念：位于快速开始模块的[<font color='#FF0000'>一些基本概念</font>](getting_started/concepts)简单介绍了使用Keras前需要知道的一些小知识，新手在使用前应该先阅读本部分的文档。
 
+* Keras安装和配置指南，提供了详细的Linux和Windows下Keras的安装和配置步骤。
+
 * 深度学习与Keras：位于导航栏最下方的该模块翻译了来自Keras作者博客[<font color='#FF0000'>keras.io</font>](http://blog.keras.io/)和其他Keras相关博客的文章，该栏目的文章提供了对深度学习的理解和大量使用Keras的例子，您也可以向这个栏目投稿。
 所有的文章均在醒目位置标志标明来源与作者，本文档对该栏目文章的原文不具有任何处置权。如您仍觉不妥，请联系本人（moyan_work@foxmail.com）删除。
 
