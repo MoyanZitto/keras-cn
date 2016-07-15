@@ -1,9 +1,13 @@
 # CNN眼中的世界：利用Keras解释CNN的滤波器
 
+## 文章信息
 <font color='#FF0000'>本文地址：[<font color='#FF0000'>http://blog.keras.io/how-convolutional-neural-networks-see-the-world.html</font>](http://blog.keras.io/how-convolutional-neural-networks-see-the-world.html)
 
 本文作者：Francois Chollet
 </font>
+
+
+### 使用Keras探索卷积网络的滤波器
 
 本文中我们将利用Keras观察CNN到底在学些什么，它是如何理解我们送入的训练图片的。我们将使用Keras来对滤波器的激活值进行可视化。本文使用的神经网络是VGG-16，数据集为ImageNet。本文的代码可以在<font color='#FF0000'>[<font color='#FF0000'>github</font>](https://github.com/fchollet/keras/blob/master/examples/conv_filter_visualization.py)</font>找到
 
@@ -161,6 +165,8 @@ imsave('%s_filter_%d.png' % (layer_name, filter_index), img)
 
 ![conv5_1_filter_0.png][../images/conv5_1_filter_0.png]
 
+### 可视化所有的滤波器
+
 下面我们系统的可视化一下各个层的各个滤波器结果，看看CNN是如何对输入进行逐层分解的。
 
 第一层的滤波器主要完成方向、颜色的编码，这些颜色和方向与基本的纹理组合，逐渐生成复杂的形状。
@@ -173,10 +179,15 @@ imsave('%s_filter_%d.png' % (layer_name, filter_index), img)
 
 令人震惊的是，这种旋转的性质在高层的滤波器中仍然可以被观察到。如Conv4_1
 
+
+### Deep Dream（nightmare）
+
 另一个有趣的事儿是，如果我们把刚才的随机噪声图片替换为有意义的照片，结果就变的更好玩了。这就是去年由Google提出的Deep Dream。通过选择特定的滤波器组合，我们可以获得一些很有意思的结果。如果你对此感兴趣，可以参考Keras的例子
 [<font color='#FF0000'>Deep Dream</font>](https://github.com/fchollet/keras/blob/master/examples/deep_dream.py)和Google的博客[<font color='#FF0000'>Google blog post</font>](googleresearch.blogspot.com/2015/06/inceptionism-going-deeper-into-neural.html)（墙）
 
 ![filter_dream.jpg](../images/filter_dream.jpg)
+
+### 愚弄神经网络
 
 如果我们添加上VGG的全连接层，然后试图最大化某个指定类别的激活值呢？你会得到一张很像该类别的图片吗？让我们试试。
 
@@ -196,6 +207,8 @@ loss = K.mean(layer_output[:, output_index])
 ![magpie.jpg](../images/magpie.jpg)
 
 OK，我们的网络认为是喜鹊的东西看起来完全不是喜鹊，往好了说，这个图里跟喜鹊相似的，也不过就是一些局部的纹理，如羽毛，嘴巴之类的。那么，这就意味着卷积神经网络是个很差的工具吗？当然不是，我们按照一个特定任务来训练它，它就会在那个任务上表现的不错。但我们不能有网络“理解”某个概念的错觉。我们不能将网络人格化，它只是工具而已。比如一条狗，它能识别其为狗只是因为它能以很高的概率将其正确分类而已，而不代表它理解关于“狗”的任何外延。
+
+### 革命尚未成功，同志仍需努力
 
 所以，神经网络到底理解了什么呢？我认为有两件事是它们理解的。
 

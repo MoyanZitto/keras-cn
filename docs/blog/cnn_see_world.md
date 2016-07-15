@@ -163,7 +163,7 @@ imsave('%s_filter_%d.png' % (layer_name, filter_index), img)
 ```
 这里是第5卷基层第0个滤波器的结果：
 
-![conv5_1_filter_0.png][../images/conv5_1_filter_0.png]
+![conv5_1_filter_0.png](../images/conv5_1_filter_0.png)
 
 ### 可视化所有的滤波器
 
