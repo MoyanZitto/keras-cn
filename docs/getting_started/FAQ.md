@@ -160,10 +160,10 @@ layer_output = get_3rd_layer_output([X])[0]
 get_3rd_layer_output = K.function([model.layers[0].input, K.learning_phase()],
 								  [model.layers[3].output])
 
-# output in train mode = 1
+# output in test mode = 0
 layer_output = get_3rd_layer_output([X, 0])[0]
 
-# output in test mode = 0
+# output in train mode = 1
 layer_output = get_3rd_layer_output([X, 1])[0]
 ```
 另一种更灵活的获取中间层输出的方法是使用[<font color="FF0000">泛型模型</font>](functional_API.md)，例如，假如我们已经有一个
