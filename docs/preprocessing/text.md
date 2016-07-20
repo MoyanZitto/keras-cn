@@ -25,7 +25,7 @@ keras.preprocessing.text.text_to_word_sequence(text,
 
 ## one-hot编码
 ```python
-keras.preprocessing.text.text_to_word_sequence(text, 
+keras.preprocessing.text.one_hot(text, n,
     filters=base_filter(), lower=True, split=" ")
 ```
 本函数将一段文本编码为one-hot形式的码，即仅记录词在词典中的下标。
