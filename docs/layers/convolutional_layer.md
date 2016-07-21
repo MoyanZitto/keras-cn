@@ -133,6 +133,78 @@ model.add(Convolution2D(32, 3, 3, border_mode='same'))
 
 ***
 
+## AtrousConvolution2D层
+```python
+keras.layers.convolutional.AtrousConvolution2D(nb_filter, nb_row, nb_col, init='glorot_uniform', activation='linear', weights=None, border_mode='valid', subsample=(1, 1), atrous_rate=(1, 1), dim_ordering='th', W_regularizer=None, b_regularizer=None, activity_regularizer=None, W_constraint=None, b_constraint=None, bias=True)
+```
+该层对二维输入进行Atrous卷积，也即膨胀卷积或带孔洞的卷积。当使用该层作为第一层时，应提供```input_shape```参数。例如```input_shape = (3,128,128)```代表128*128的彩色RGB图像
+
+### 参数
+
+* nb_filter：卷积核的数目
+
+* nb_row：卷积核的行数
+
+* nb_col：卷积核的列数
+
+* init：初始化方法，为预定义初始化方法名的字符串，或用于初始化权重的Theano函数。该参数仅在不传递```weights```参数时有意义。
+
+* activation：激活函数，为预定义的激活函数名（参考[<font color='#FF0000'>激活函数</font>](../other/activations)），或逐元素（element-wise）的Theano函数。如果不指定该参数，将不会使用任何激活函数（即使用线性激活函数：a(x)=x）
+
+* weights：权值，为numpy array的list。该list应含有一个形如（input_dim,output_dim）的权重矩阵和一个形如(output_dim,)的偏置向量。
+
+* border_mode：边界模式，为“valid”或“same”
+
+* subsample：长为2的tuple，输出对输入的下采样因子，更普遍的称呼是“strides”
+
+* atrous_rate：长为2的tuple，代表卷积核膨胀的系数，在其他地方也被称为'filter_dilation'
+
+* W_regularizer：施加在权重上的正则项，为[<font color='FF0000'>WeightRegularizer</font>](../other/regularizers)对象
+
+* b_regularizer：施加在偏置向量上的正则项，为[<font color='FF0000'>WeightRegularizer</font>](../other/regularizers)对象
+
+* activity_regularizer：施加在输出上的正则项，为[<font color='FF0000'>ActivityRegularizer</font>](../other/regularizers)对象
+
+* W_constraints：施加在权重上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
+
+* b_constraints：施加在偏置上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
+
+* dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第3个位置。例如128*128的三通道彩色图片，在‘th’模式中```input_shape```应写为（3，128，128），而在‘tf’模式中应写为（128，128，3），注意这里3出现在低0个位置，因为```input_shape```不包含样本数的维度，在其内部实现中，实际上是（None，3，128，128）和（None，128，128，3）。默认是‘th’模式。
+
+* bias：布尔值，是否包含偏置向量（即层对输入做线性变换还是仿射变换）
+
+### 输入shape
+
+‘th’模式下，输入形如（samples,channels，rows，cols）的4D张量
+
+‘tf’模式下，输入形如（samples，rows，cols，channels）的4D张量
+
+注意这里的输入shape指的是函数内部实现的输入shape，而非函数接口应指定的```input_shape```，请参考下面提供的例子。
+
+### 输出shape
+
+‘th’模式下，为形如（samples，nb_filter, new_rows, new_cols）的4D张量
+
+‘tf’模式下，为形如（samples，new_rows, new_cols，nb_filter）的4D张量
+
+输出的行列数可能会因为填充而改变
+
+### 例子
+
+```python
+# apply a 3x3 convolution with atrous rate 2x2 and 64 output filters on a 256x256 image:
+model = Sequential()
+model.add(AtrousConvolution2D(64, 3, 3, atrous_rate=(2,2), border_mode='valid', input_shape=(3, 256, 256)))
+# now the actual kernel size is dilated from 3x3 to 5x5 (3+(3-1)*(2-1)=5)
+# thus model.output_shape == (None, 64, 252, 252)
+```
+
+### 参考文献
+
+* [<font color='#FF0000'>Multi-Scale Context Aggregation by Dilated Convolutions</font>](https://arxiv.org/abs/1511.07122)
+
+***
+
 ## Convolution3D层
 ```python
 keras.layers.convolutional.Convolution3D(nb_filter, kernel_dim1, kernel_dim2, kernel_dim3, init='glorot_uniform', activation='linear', weights=None, border_mode='valid', subsample=(1, 1, 1), dim_ordering='th', W_regularizer=None, b_regularizer=None, activity_regularizer=None, W_constraint=None, b_constraint=None, bias=True)

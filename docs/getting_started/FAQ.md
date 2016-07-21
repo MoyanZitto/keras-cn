@@ -14,6 +14,7 @@
 * [如何使用Keras进行分布式/多GPU运算？](#multi-GPU)
 * [如何“冻结”网络的层？](#freeze)
 * [如何从Sequential模型中去除一个层？](#pop)
+* [如何在Keras中使用预训练的模型](#pretrain)
 ***
 
 <a name='citation'>
@@ -434,3 +435,25 @@ print(len(model.layers))  # "1"
 
 【Tips】模型的.layers属性保存了模型中的层对象，数据类型是list，在model没有```.pop()```方法前，我一般通过model.layers.pop()完成相同的功能。
 但显然，使用keras提供的方法会安全的多【@bigmoyan】
+
+***
+
+<a name='pretrain'>
+<font color='#404040'>
+## 如何在Keras中使用预训练的模型？
+</font>
+</a>
+
+下面的图像分类模型提供了模型搭建的代码和相应的预训练权重
+
+* [<font color='#FF0000'>VGG-16</font>](https://gist.github.com/baraldilorenzo/07d7802847aaad0a35d3)
+* [<font color='#FF0000'>VGG-19</font>](https://gist.github.com/baraldilorenzo/8d096f48a1be4a2d660d)
+* [<font color='#FF0000'>AlexNet</font>](https://github.com/heuritech/convnets-keras)
+
+使用这些预训练模型进行特征抽取或fine-tune的例子可以参考[<font color='#FF0000'>此博客</font>](http://blog.keras.io/building-powerful-image-classification-models-using-very-little-data.html)
+
+VGG模型也是很多Keras例子的基础模型，如：
+
+* [<font color='#FF0000'>Style-transfer</font>](https://github.com/fchollet/keras/blob/master/examples/neural_style_transfer.py)
+* [<font color='#FF0000'>Feature visualization</font>](https://github.com/fchollet/keras/blob/master/examples/conv_filter_visualization.py)
+* [<font color='#FF0000'>Deep dream</font>](https://github.com/fchollet/keras/blob/master/examples/deep_dream.py)
