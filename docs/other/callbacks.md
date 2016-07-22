@@ -93,7 +93,7 @@ keras.callbacks.EarlyStopping(monitor='val_loss', patience=0, verbose=0, mode='a
 
 * monitor：需要监视的量
 
-* patience：忍耐限度，即如果经过```patience```个epoch，检测值都没有改善的话，就会停止训练。
+* patience：当early stop被激活（如发现loss相比上一个epoch训练没有下降），则经过```patience```个epoch后停止训练。
 
 * verbose：信息展示模式
 
