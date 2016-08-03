@@ -72,7 +72,6 @@
 
 
 ```python
-
 texts = []  # list of text samples
 labels_index = {}  # dictionary mapping label name to numeric id
 labels = []  # list of label ids
@@ -90,12 +89,11 @@ for name in sorted(os.listdir(TEXT_DATA_DIR)):
                 labels.append(label_id)
 
 print('Found %s texts.' % len(texts))
-
 ```
 
 之后，我们可以新闻样本转化为神经网络训练所用的张量。所用到的Keras库是keras.preprocessing.text.Tokenizer和keras.preprocessing.sequence.pad_sequences。代码如下所示
 
-``` python
+```python
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 
@@ -141,7 +139,7 @@ f.close()
 print('Found %s word vectors.' % len(embeddings_index))
 ```
 
-此时，我们可以根据得到的字典生成上文所定义的词向量矩阵（代码中多加1列表示未登录词）
+此时，我们可以根据得到的字典生成上文所定义的词向量矩阵
 ```python
 embedding_matrix = np.zeros((len(word_index) + 1, EMBEDDING_DIM))
 for word, i in word_index.items():
