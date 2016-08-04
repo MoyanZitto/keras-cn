@@ -37,6 +37,7 @@ pages:
 - ['blog/autoencoder.md','深度学习与Keras','花式自动编码器']
 - ['blog/image_classification_using_very_little_data.md','深度学习与Keras','面向小数据集构建图像分类模型']
 - ['blog/word_embedding.md','深度学习与Keras','在Keras模型中使用预训练的词向量']
+- ['blog/keras_and_tensorflow.md','深度学习与Keras','将Keras作为tensorflow的精简接口']
 - ['acknowledgement.md','致谢']
 theme: readthedocs
 site_author: BigMoyan
