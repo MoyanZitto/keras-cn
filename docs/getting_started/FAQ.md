@@ -76,8 +76,27 @@ THEANO_FLAGS=device=gpu,floatX=float32 python my_keras_script.py
 
 我们不推荐使用pickle或cPickle来保存Keras模型
 
-如果只需要保存模型的结构，而不需要保存其权重，可以使用
+你可以使用```model.save(filepath)```将Keras模型和权重保存在一个HDF5文件中，该文件将包含：
 
+* 模型的结构，以便重构该模型
+* 模型的权重
+* 训练配置（损失函数，优化器等）
+* 优化器的状态，以便于从上次训练中断的地方开始
+
+使用```keras.models.load_model(filepath)```来重新实例化你的模型，如果文件中存储了训练配置的话，该函数还会同时完成模型的编译
+
+例子：
+```python
+from keras.models import load_model
+
+model.save('my_model.h5')  # creates a HDF5 file 'my_model.h5'
+del model  # deletes the existing model
+
+# returns a compiled model
+# identical to the previous one
+model = load_model('my_model.h5')
+```
+如果你只是希望保存模型的结构，而不包含其权重或配置信息，可以使用：
 ```python
 # save as JSON
 json_string = model.to_json()
@@ -85,8 +104,9 @@ json_string = model.to_json()
 # save as YAML
 yaml_string = model.to_yaml()
 ```
+这项操作将把模型序列化为json或yaml文件，这些文件对人而言也是友好的，如果需要的话你甚至可以手动打开这些文件并进行编辑。
 
-需要时，可以从保存好的json文件或yaml文件中载入模型：
+当然，你也可以从保存好的json文件或yaml文件中载入模型：
 
 ```python
 # model reconstruction from JSON:
@@ -103,26 +123,14 @@ model = model_from_yaml(yaml_string)
 model.save_weights('my_model_weights.h5')
 ```	
 
-在需要时，你可用保存好的权重初始化相应的模型：
+如果只想保存模型的权重，请使用下面的函数：
 ```python
-model.load_weights('my_model_weights.h5')
-```	
-通过模型和权重的保存和加载，我们可以轻松重构已经训练好的模型
-```python
-json_string = model.to_json()
-open('my_model_architecture.json', 'w').write(json_string)
 model.save_weights('my_model_weights.h5')
-
-# elsewhere...
-model = model_from_json(open('my_model_architecture.json').read())
+```	
+当然，你也可以将保存好的权重载入到你的模型结构中：
+```python
 model.load_weights('my_model_weights.h5')
 ```
-最后，在模型使用前，还是需要再编译一下（如果只用来预测可不用编译）
-```python
-model.compile(optimizer='adagrad', loss='mse')
-```
-
-
 ***
 
 <a name='loss'>

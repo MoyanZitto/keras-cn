@@ -150,7 +150,7 @@ Keras以Numpy数组作为输入数据和标签的数据类型。训练模型一�
 ```python
 # for a single-input model with 2 classes (binary):
 model = Sequential()
-model.add(Dense(1, input_dim=784, activation='softmax'))
+model.add(Dense(1, input_dim=784, activation='sigmoid'))
 model.compile(optimizer='rmsprop',
               loss='binary_crossentropy',
               metrics=['accuracy'])

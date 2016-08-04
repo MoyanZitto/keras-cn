@@ -25,7 +25,7 @@ Keras是一个模型级的库，提供了快速构建深度学习网络的模块
 我们也可以通过定义环境变量```KERAS_BACKEND```来覆盖上面配置文件中定义的后端：
 
 ```python
-KERAS_BACKEND=tensorflow python -c "from keras import backend; print backend._BACKEND"
+KERAS_BACKEND=tensorflow python -c "from keras import backend; print(backend._BACKEND)"
 Using TensorFlow backend.
 tensorflow
 ```
