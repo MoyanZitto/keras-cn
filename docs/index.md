@@ -82,7 +82,7 @@ Keras从2015年3月开始启动，经过一年多的开发，目前Keras进入�
 
 * 我们的中文文档没有及时更新：如果是这种情况，请发邮件给我，我会尽快更新
 
-目前文档的版本号是1.0.7，对应于官方的1.0.7 release 版本, 本次更新的主要内容是(1.05->1.07)：
+目前文档的版本号是1.0.7，对应于官方的1.0.7 release 版本, 本次更新的主要内容是：
 
 * Optimizer增加了适用于所有optimizer的参数,现在你可以对梯度进行clip了
 * 增加了初始化方法的说明,现在你可以根据初始化方法一节中的指导编写自己的初始化函数
@@ -91,7 +91,8 @@ Keras从2015年3月开始启动，经过一年多的开发，目前Keras进入�
 * 在回调函数ModelCheckPoint增加了"save_weights_only"参数，该参数将指定是否只保存权重
 * 增加了一种新的卷积层：AtrousConvolution2D
 * 增加了一种新的损失函数:kullback_leibler_divergence/kld,即衡量两个分布的KL距离
-* 修正了示例代码中的一些错误
+* 增加了图像预处理模块的flow_from_dictionary方法,改变了部分默认参数.现在你可以通过指定图片所在文件夹路径来产生数据生成器
+* 修正了文档和代码中的一些小错误
 
 注意，keras在github上的master往往要高于当前的release版本，如果你从源码编译keras，可能某些模块与文档说明不相符，请以官方Github代码为准
 
@@ -109,7 +110,7 @@ model = Sequential()
 ```
 将一些网络层通过<code>.add\(\)</code>堆叠起来，就构成了一个模型：
 ```python
-from keras.layers.core import Dense, Activation
+from keras.layers import Dense, Activation
 
 model.add(Dense(output_dim=64, input_dim=100))
 model.add(Activation("relu"))

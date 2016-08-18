@@ -6,6 +6,7 @@
 
 ```python
 from keras.models import Sequential
+from keras.layers import Dense, Activation
 
 model = Sequential([
 Dense(32, input_dim=784),
@@ -103,6 +104,12 @@ Merge层支持一些预定义的合并模式，包括：
 * ```ave```：张量平均
 * ```dot```：张量相乘，可以通过```dot_axis```关键字参数来指定要消去的轴
 * ```cos```：计算2D张量（即矩阵）中各个向量的余弦距离
+
+这个两个分支的模型可以通过下面的代码训练:
+```python
+final_model.compile(optimizer='rmsprop', loss='categorical_crossentropy')
+final_model.fit([input_data_1, input_data_2], targets)  # we pass one data array per model input
+```
 
 也可以为Merge层提供关键字参数```mode```，以实现任意的变换，例如：
 
