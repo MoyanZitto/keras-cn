@@ -36,6 +36,8 @@ model.compile(loss='mean_squared_error', optimizer='sgd')
 
 * sparse_categorical_crossentrop：如上，但接受稀疏标签。注意，使用该函数时仍然需要你的标签与输出值的维度相同，你可能需要在标签数据上增加一个维度：```np.expand_dims(y,-1)```
 
+* kullback_leibler_divergence:从预测值概率分布Q到真值概率分布P的信息增益,用以度量两个分布的差异.
+
 * poisson：即```(predictions - targets * log(predictions))```的均值
 
 * cosine_proximity：即预测值与真实标签的余弦距离平均值的相反数

@@ -16,6 +16,19 @@ model.compile(loss='mean_squared_error', optimizer=sgd)
 # pass optimizer by name: default parameters will be used
 model.compile(loss='mean_squared_error', optimizer='sgd')
 ```
+## 所有优化器都可用的参数
+参数```clipnorm```和```clipvalue```是所有优化器都可以使用的参数,用于对梯度进行裁剪.示例如下:
+```python
+# all parameter gradients will be clipped to
+# a maximum norm of 1.
+sgd = SGD(lr=0.01, clipnorm=1.)
+```
+```python
+# all parameter gradients will be clipped to
+# a maximum value of 0.5 and
+# a minimum value of -0.5.
+sgd = SGD(lr=0.01, clipvalue=0.5)
+```
 
 ## SGD
 ```python
