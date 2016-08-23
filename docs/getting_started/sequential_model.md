@@ -6,6 +6,7 @@
 
 ```python
 from keras.models import Sequential
+from keras.layers import Dense, Activation
 
 model = Sequential([
 Dense(32, input_dim=784),
@@ -103,6 +104,12 @@ Merge层支持一些预定义的合并模式，包括：
 * ```ave```：张量平均
 * ```dot```：张量相乘，可以通过```dot_axis```关键字参数来指定要消去的轴
 * ```cos```：计算2D张量（即矩阵）中各个向量的余弦距离
+
+这个两个分支的模型可以通过下面的代码训练:
+```python
+final_model.compile(optimizer='rmsprop', loss='categorical_crossentropy')
+final_model.fit([input_data_1, input_data_2], targets)  # we pass one data array per model input
+```
 
 也可以为Merge层提供关键字参数```mode```，以实现任意的变换，例如：
 
@@ -378,7 +385,7 @@ image_model.load_weights('weight_file.h5')
 language_model = Sequential()
 language_model.add(Embedding(vocab_size, 256, input_length=max_caption_len))
 language_model.add(GRU(output_dim=128, return_sequences=True))
-language_model.add(TimeDistributedDense(128))
+language_model.add(TimeDistributed(Dense(128))
 
 # let's repeat the image vector to turn it into a sequence.
 image_model.add(RepeatVector(max_caption_len))

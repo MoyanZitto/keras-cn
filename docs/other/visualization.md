@@ -9,9 +9,10 @@ from keras.utils.visualize_util import plot
 plot(model, to_file='model.png')
 ```
 
-```plot```接收一个可选参数：
+```plot```接收两个可选参数：
 
-* ```show_shapes```：指定是否画出输出数据的形状，默认为```False```
+* ```show_shapes```：指定是否显示输出数据的形状，默认为```False```
+* ```show_layer_names```:指定是否显示层名称,默认为```True```
 
 我们也可以直接获取一个```pydot.Graph```对象，然后按照自己的需要配置它，例如，如果要在ipython中展示图片
 ```python

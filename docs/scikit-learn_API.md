@@ -1,13 +1,13 @@
 # Scikit-Learn接口包装器
 
-我们可以通过包装器将```Sequential```模型（仅有一个输入）作为Scikit-Learn工作流的一部分，相关的包装器定义在```keras.wrappers.sklearn.py```中
+我们可以通过包装器将```Sequential```模型（仅有一个输入）作为Scikit-Learn工作流的一部分，相关的包装器定义在```keras.wrappers.scikit_learn.py```中
 
 目前，有两个包装器可用：
 
-```keras.wrappers.sklearn.KerasClassifier(build_fn=None, **sk_params)```实现了sklearn的分类器接口
+```keras.wrappers.scikit_learn.KerasClassifier(build_fn=None, **sk_params)```实现了sklearn的分类器接口
 
 
-```keras.wrappers.sklearn.KerasRegressor(build_fn=None, **sk_params)```实现了sklearn的回归器接口
+```keras.wrappers.scikit_learn.KerasRegressor(build_fn=None, **sk_params)```实现了sklearn的回归器接口
 
 ## 参数
 
