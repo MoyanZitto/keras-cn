@@ -115,6 +115,11 @@ set_image_dim_ordering()
 ```
 设置图像的维度顺序（‘tf’或‘th’）
 
+### manual_variable_initialization
+```python
+manual_variable_initialization(value)
+```
+指出变量应该以其默认值被初始化还是由用户手动初始化，参数value为布尔值，默认False代表变量由其默认值初始化。
 
 ### shape
 ```python
@@ -378,6 +383,30 @@ not_equal(x, y)
 ```
 逐元素判不等关系，返回布尔张量
 
+### greater
+```python
+greater(x,y)
+```
+逐元素判断x>y关系，返回布尔张量
+
+### greater_equal
+```python
+greater_equal(x,y)
+```
+逐元素判断x>=y关系，返回布尔张量
+
+### lesser
+```python
+lesser(x,y)
+```
+逐元素判断x<y关系，返回布尔张量
+
+### lesser_equal
+```python
+lesser_equal(x,y)
+```
+逐元素判断x<=y关系，返回布尔张量
+
 ###maximum
 ```python
 maximum(x, y)
@@ -401,6 +430,19 @@ sin(x)
 cos(x)
 ```
 逐元素求余弦值
+
+### normalize_batch_in_training
+```python
+normalize_batch_in_training(x, gamma, beta, reduction_axes, epsilon=0.0001)
+```
+对一个batch数据先计算其均值和方差，然后再进行batch_normalization
+
+### batch_normalization
+```python
+batch_normalization(x, mean, var, beta, gamma, epsilon=0.0001)
+```
+对一个batch的数据进行batch_normalization，计算公式为：
+output = (x-mean)/(sqrt(var)+epsilon)*gamma+beta
 
 ###concatenate
 ```python
@@ -426,8 +468,13 @@ permute_dimensions(x, pattern)
 ```python
 resize_images(X, height_factor, width_factor, dim_ordering)
 ```
-依据给定的缩放因子，改变一个batch图片的大小，参数中的两个因子都为正整数，图片的排列顺序与维度的模式相关，如‘th’和‘tf’
+依据给定的缩放因子，改变一个batch图片的shape，参数中的两个因子都为正整数，图片的排列顺序与维度的模式相关，如‘th’和‘tf’
 
+###resize_volumes
+```python
+resize_volumes(X, depth_factor, height_factor, width_factor, dim_ordering)
+```
+依据给定的缩放因子，改变一个5D张量数据的shape，参数中的两个因子都为正整数，图片的排列顺序与维度的模式相关，如‘th’和‘tf’。5D数据的形式是[batch, channels, depth, height, width](th)或[batch, depth, height, width, channels](tf)
 
 ###repeat_elements
 ```python
@@ -471,11 +518,23 @@ spatial_2d_padding(x, padding=(1, 1), dim_ordering='th')
 ```
 向4D张量第二和第三维度的左右两端填充```padding[0]```和```padding[1]```个0值.
 
+### one-hot
+```python
+one_hot(indices, nb_classes)
+```
+输入为n维的整数张量，形如(batch_size, dim1, dim2, ... dim(n-1))，输出为(n+1)维的one-hot编码，形如(batch_size, dim1, dim2, ... dim(n-1), nb_classes)
+
 ###get_value
 ```python
 get_value(x)
 ```
 以Numpy array的形式返回张量的值
+
+###batch_get_value
+```python
+batch_get_value(x)
+```
+以Numpy array list的形式返回多个张量的值
 
 ###set_value
 ```python
@@ -490,6 +549,12 @@ batch_set_value(tuples)
 将多个值载入多个张量变量中
 
 * tuples: 列表，其中的元素形如```(tensor, value)```。```value```是要载入的Numpy array数据
+
+### print_tensor
+```
+print_tensor(x, message='')
+```
+在求值时打印张量的信息，并返回原张量
 
 ###function
 ```python
@@ -508,6 +573,13 @@ function(inputs, outputs, updates=[])
 gradients(loss, variables)
 ```
 返回loss函数关于variables的梯度，variables为张量变量的列表
+
+### stop_gradient
+```python
+stop_gradient(variables)
+```
+英文原句：“Returns `variables` but with zero gradient with respect to every other
+    variables.”
 
 ###rnn
 ```python
