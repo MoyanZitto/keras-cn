@@ -92,9 +92,11 @@ Keras从2015年3月开始启动，经过一年多的开发，目前Keras进入�
 
 * 新增了Locally-connected模块，并增加了两种局部连接层LocallyConnected1D和LocallyConnected2D
 
-* 新增了一种包装期Bidirectional，现在你可以使用它将普通的递归神经网络层包装为双向的版本。
+* 新增了一种包装器Bidirectional，现在你可以使用它将普通的递归神经网络层包装为双向的版本。
 
 * model新增了方法```predict_generator```，现在你可以在一个生成器上进行预测
+
+* 在getting_started部分新增了页面“Keras陷阱”，欢迎各位将使用中的Keras陷阱投稿给我
 
 * 新增了若干种后端函数
 
