@@ -60,7 +60,7 @@ model.add(LocallyConnected1D(32, 3))
 
 ***
 
-## Convolution2D层
+## LocallyConnected2D层
 ```python
 keras.layers.local.LocallyConnected2D(nb_filter, nb_row, nb_col, init='glorot_uniform', activation='linear', weights=None, border_mode='valid', subsample=(1, 1), dim_ordering='default', W_regularizer=None, b_regularizer=None, activity_regularizer=None, W_constraint=None, b_constraint=None, bias=True)
 ```
