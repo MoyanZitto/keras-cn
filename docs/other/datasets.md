@@ -56,11 +56,15 @@ from keras.datasets import cifar100
 ```python
 from keras.datasets import imdb
 
-(X_train, y_train), (X_test, y_test) = imdb.load_data(path="imdb.pkl",
+(X_train, y_train), (X_test, y_test) = imdb.load_data(path="imdb_full.pkl",
                                                       nb_words=None,
                                                       skip_top=0,
                                                       maxlen=None,
                                                       test_split=0.1)
+                                                      seed=113,
+                                                      start_char=1,
+                                                      oov_char=2,
+                                                      index_from=3)
 ```
 
 ### 参数
@@ -73,9 +77,13 @@ from keras.datasets import imdb
 
 * maxlen：整数，最大序列长度，任何长度大于此值的序列将被截断
 
-* test_split：浮点数，从数据集中按该比例划分出测试集
-
 * seed：整数，用于数据重排的随机数种子
+
+* start_char：字符，序列的起始将以该字符标记，默认为1因为0通常用作padding
+
+* oov_char：字符，因```nb_words```或```skip_top```限制而cut掉的单词将被该字符代替
+
+* index_from：整数，真实的单词（而不是类似于```start_char```的特殊占位符）将从这个下标开始
 
 ### 返回值
 
@@ -95,14 +103,20 @@ from keras.datasets import imdb
 ```python
 from keras.datasets import reuters
 
+
 (X_train, y_train), (X_test, y_test) = reuters.load_data(path="reuters.pkl",
                                                          nb_words=None,
                                                          skip_top=0,
                                                          maxlen=None,
-                                                         test_split=0.1)
+                                                         test_split=0.2,
+                                                         seed=113,
+                                                         start_char=1,
+                                                         oov_char=2,
+                                                         index_from=3)
 ```
 
-参数的含义与IMDB同名参数相同，该数据库支持获取用于编码序列的词下标：
+参数的含义与IMDB同名参数相同，唯一多的参数是：
+```test_split```，用于指定从原数据中分割出作为测试集的比例。该数据库支持获取用于编码序列的词下标：
 ```python
 word_index = reuters.get_word_index(path="reuters_word_index.pkl")
 ```

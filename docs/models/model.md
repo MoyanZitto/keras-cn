@@ -205,7 +205,39 @@ model.fit_generator(generate_arrays_from_file('/my_file.txt'),
 ```python
 evaluate_generator(self, generator, val_samples, max_q_size=10)
 ```
-本函数使用一个生成器作为数据源，来评估模型，生成器应返回与```test_on_batch```的输入数据相同类型的数据。该函数的参数与```fit_generator```同名参数含义相同
+本函数使用一个生成器作为数据源，来评估模型，生成器应返回与```test_on_batch```的输入数据相同类型的数据。
+
+函数的参数是：
+
+* generator：生成输入batch数据的生成器
+
+* val_samples：生成器应该返回的总样本数
+
+* max_q_size：生成器队列的最大容量
+
+* nb_worker：使用基于进程的多线程处理时的进程数
+
+* pickle_safe：若设置为True，则使用基于进程的线程。注意因为它的实现依赖于多进程处理，不可传递不可pickle的参数到生成器中，因为它们不能轻易的传递到子进程中。
+
+***
+
+### predict_generator
+```python
+predict_generator(self, generator, val_samples, max_q_size=10, nb_worker=1, pickle_safe=False)
+```
+从一个生成器上获取数据并进行预测，生成器应返回与```predict_on_batch```输入类似的数据
+
+函数的参数是：
+
+* generator：生成输入batch数据的生成器
+
+* val_samples：生成器应该返回的总样本数
+
+* max_q_size：生成器队列的最大容量
+
+* nb_worker：使用基于进程的多线程处理时的进程数
+
+* pickle_safe：若设置为True，则使用基于进程的线程。注意因为它的实现依赖于多进程处理，不可传递不可pickle的参数到生成器中，因为它们不能轻易的传递到子进程中。
 
 ***
 

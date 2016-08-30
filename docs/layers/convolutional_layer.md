@@ -98,7 +98,7 @@ keras.layers.convolutional.Convolution2D(nb_filter, nb_row, nb_col, init='glorot
 
 * b_constraints：施加在偏置上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
-* dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第3个位置。例如128*128的三通道彩色图片，在‘th’模式中```input_shape```应写为（3，128，128），而在‘tf’模式中应写为（128，128，3），注意这里3出现在低0个位置，因为```input_shape```不包含样本数的维度，在其内部实现中，实际上是（None，3，128，128）和（None，128，128，3）。默认是‘th’模式。
+* dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第3个位置。例如128*128的三通道彩色图片，在‘th’模式中```input_shape```应写为（3，128，128），而在‘tf’模式中应写为（128，128，3），注意这里3出现在第0个位置，因为```input_shape```不包含样本数的维度，在其内部实现中，实际上是（None，3，128，128）和（None，128，128，3）。默认是```image_dim_ordering```指定的模式，可在```~/.keras/keras.json```中查看，若没有设置过则为'th'。
 
 * bias：布尔值，是否包含偏置向量（即层对输入做线性变换还是仿射变换）
 
@@ -169,7 +169,7 @@ keras.layers.convolutional.AtrousConvolution2D(nb_filter, nb_row, nb_col, init='
 
 * b_constraints：施加在偏置上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
-* dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第3个位置。例如128*128的三通道彩色图片，在‘th’模式中```input_shape```应写为（3，128，128），而在‘tf’模式中应写为（128，128，3），注意这里3出现在低0个位置，因为```input_shape```不包含样本数的维度，在其内部实现中，实际上是（None，3，128，128）和（None，128，128，3）。默认是‘th’模式。
+* dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第3个位置。例如128*128的三通道彩色图片，在‘th’模式中```input_shape```应写为（3，128，128），而在‘tf’模式中应写为（128，128，3），注意这里3出现在第0个位置，因为```input_shape```不包含样本数的维度，在其内部实现中，实际上是（None，3，128，128）和（None，128，128，3）。默认是```image_dim_ordering```指定的模式，可在```~/.keras/keras.json```中查看，若没有设置过则为'th'。
 
 * bias：布尔值，是否包含偏置向量（即层对输入做线性变换还是仿射变换）
 
@@ -202,6 +202,162 @@ model.add(AtrousConvolution2D(64, 3, 3, atrous_rate=(2,2), border_mode='valid', 
 ### 参考文献
 
 * [<font color='#FF0000'>Multi-Scale Context Aggregation by Dilated Convolutions</font>](https://arxiv.org/abs/1511.07122)
+
+***
+
+## SeparableConvolution2D层
+```python
+keras.layers.convolutional.SeparableConvolution2D(nb_filter, nb_row, nb_col, init='glorot_uniform', activation='linear', weights=None, border_mode='valid', subsample=(1, 1), depth_multiplier=1, dim_ordering='default', depthwise_regularizer=None, pointwise_regularizer=None, b_regularizer=None, activity_regularizer=None, depthwise_constraint=None, pointwise_constraint=None, b_constraint=None, bias=True)
+```
+该层是对2D输入的可分离卷积
+
+可分离卷积首先按深度方向进行卷积（对每个输入通道分别卷积），然后逐点进行卷积，将上一步的卷积结果混合到输出通道中。参数```depth_multiplier```控制了在depthwise卷积（第一步）的过程中，每个输入通道信号产生多少个输出通道。
+
+直观来说，可分离卷积可以看做讲一个卷积核分解为两个小的卷积核，或看作Inception模块的一种极端情况。
+
+当使用该层作为第一层时，应提供```input_shape```参数。例如```input_shape = (3,128,128)```代表128*128的彩色RGB图像
+
+### Theano警告
+
+该层目前只能在Tensorflow后端的条件下使用
+
+### 参数
+
+* nb_filter：卷积核的数目
+
+* nb_row：卷积核的行数
+
+* nb_col：卷积核的列数
+
+* init：初始化方法，为预定义初始化方法名的字符串，或用于初始化权重的Theano函数。该参数仅在不传递```weights```参数时有意义。
+
+* activation：激活函数，为预定义的激活函数名（参考[<font color='#FF0000'>激活函数</font>](../other/activations)），或逐元素（element-wise）的Theano函数。如果不指定该参数，将不会使用任何激活函数（即使用线性激活函数：a(x)=x）
+
+* weights：权值，为numpy array的list。该list应含有一个形如（input_dim,output_dim）的权重矩阵和一个形如(output_dim,)的偏置向量。
+
+* border_mode：边界模式，为“valid”或“same”
+
+* subsample：长为2的tuple，输出对输入的下采样因子，更普遍的称呼是“strides”
+
+* depth_multiplier：在按深度卷积的步骤中，每个输入通道使用多少个输出通道
+
+* depthwise_regularizer：施加在按深度卷积的权重上的正则项，为[<font color='FF0000'>WeightRegularizer</font>](../other/regularizers)对象
+
+* pointwise_regularizer：施加在按点卷积的权重上的正则项，为[<font color='FF0000'>WeightRegularizer</font>](../other/regularizers)对象
+
+* b_regularizer：施加在偏置向量上的正则项，为[<font color='FF0000'>WeightRegularizer</font>](../other/regularizers)对象
+
+* activity_regularizer：施加在输出上的正则项，为[<font color='FF0000'>ActivityRegularizer</font>](../other/regularizers)对象
+
+* depthwise_constraint：施加在按深度卷积权重上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
+
+* pointwise_constraint施加在按点卷积权重的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
+
+* b_constraints：施加在偏置上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
+
+* dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第3个位置。例如128*128的三通道彩色图片，在‘th’模式中```input_shape```应写为（3，128，128），而在‘tf’模式中应写为（128，128，3），注意这里3出现在第0个位置，因为```input_shape```不包含样本数的维度，在其内部实现中，实际上是（None，3，128，128）和（None，128，128，3）。默认是```image_dim_ordering```指定的模式，可在```~/.keras/keras.json```中查看，若没有设置过则为'th'。
+
+* bias：布尔值，是否包含偏置向量（即层对输入做线性变换还是仿射变换）
+
+### 输入shape
+
+‘th’模式下，输入形如（samples,channels，rows，cols）的4D张量
+
+‘tf’模式下，输入形如（samples，rows，cols，channels）的4D张量
+
+注意这里的输入shape指的是函数内部实现的输入shape，而非函数接口应指定的```input_shape```，请参考下面提供的例子。
+
+### 输出shape
+
+‘th’模式下，为形如（samples，nb_filter, new_rows, new_cols）的4D张量
+
+‘tf’模式下，为形如（samples，new_rows, new_cols，nb_filter）的4D张量
+
+输出的行列数可能会因为填充方法而改变
+
+***
+
+## Deconvolution2D层
+```python
+keras.layers.convolutional.Deconvolution2D(nb_filter, nb_row, nb_col, output_shape, init='glorot_uniform', activation='linear', weights=None, border_mode='valid', subsample=(1, 1), dim_ordering='tf', W_regularizer=None, b_regularizer=None, activity_regularizer=None, W_constraint=None, b_constraint=None, bias=True)
+```
+该层是卷积操作的转置（反卷积）。需要反卷积的情况通常发生在用户想要对一个普通卷积的结果做反方向的变换。例如，将具有该卷积层输出shape的tensor转换为具有该卷积层输入shape的tensor。，同时保留与卷积层兼容的连接模式。
+
+当使用该层作为第一层时，应提供```input_shape```参数。例如```input_shape = (3,128,128)```代表128*128的彩色RGB图像
+
+### 参数
+
+* nb_filter：卷积核的数目
+
+* nb_row：卷积核的行数
+
+* nb_col：卷积核的列数
+
+* output_shape：反卷积的输出shape，为整数的tuple，形如（nb_samples,nb_filter,nb_output_rows,nb_output_cols），计算output_shape的公式是：o = s (i - 1) + a + k - 2p,其中a的取值范围是0~s-1，其中：
+	* i:输入的size（rows或cols）
+	* k：卷积核大小（nb_filter）
+	* s: 步长（subsample）
+	* a：用户指定的的用于区别s个不同的可能output size的参数
+
+* init：初始化方法，为预定义初始化方法名的字符串，或用于初始化权重的Theano函数。该参数仅在不传递```weights```参数时有意义。
+
+* activation：激活函数，为预定义的激活函数名（参考[<font color='#FF0000'>激活函数</font>](../other/activations)），或逐元素（element-wise）的Theano函数。如果不指定该参数，将不会使用任何激活函数（即使用线性激活函数：a(x)=x）
+
+* weights：权值，为numpy array的list。该list应含有一个形如（input_dim,output_dim）的权重矩阵和一个形如(output_dim,)的偏置向量。
+
+* border_mode：边界模式，为“valid”或“same”
+
+* subsample：长为2的tuple，输出对输入的下采样因子，更普遍的称呼是“strides”
+
+* W_regularizer：施加在权重上的正则项，为[<font color='FF0000'>WeightRegularizer</font>](../other/regularizers)对象
+
+* b_regularizer：施加在偏置向量上的正则项，为[<font color='FF0000'>WeightRegularizer</font>](../other/regularizers)对象
+
+* activity_regularizer：施加在输出上的正则项，为[<font color='FF0000'>ActivityRegularizer</font>](../other/regularizers)对象
+
+* W_constraints：施加在权重上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
+
+* b_constraints：施加在偏置上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
+
+* dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第3个位置。例如128*128的三通道彩色图片，在‘th’模式中```input_shape```应写为（3，128，128），而在‘tf’模式中应写为（128，128，3），注意这里3出现在第0个位置，因为```input_shape```不包含样本数的维度，在其内部实现中，实际上是（None，3，128，128）和（None，128，128，3）。默认是```image_dim_ordering```指定的模式，可在```~/.keras/keras.json```中查看，若没有设置过则为'th'。
+
+* bias：布尔值，是否包含偏置向量（即层对输入做线性变换还是仿射变换）
+
+### 输入shape
+
+‘th’模式下，输入形如（samples,channels，rows，cols）的4D张量
+
+‘tf’模式下，输入形如（samples，rows，cols，channels）的4D张量
+
+注意这里的输入shape指的是函数内部实现的输入shape，而非函数接口应指定的```input_shape```，请参考下面提供的例子。
+
+### 输出shape
+
+‘th’模式下，为形如（samples，nb_filter, new_rows, new_cols）的4D张量
+
+‘tf’模式下，为形如（samples，new_rows, new_cols，nb_filter）的4D张量
+
+输出的行列数可能会因为填充方法而改变
+
+### 例子
+
+```python
+# apply a 3x3 transposed convolution with stride 1x1 and 3 output filters on a 12x12 image:
+model = Sequential()
+model.add(Deconvolution2D(3, 3, 3, output_shape=(None, 3, 14, 14), border_mode='valid', input_shape=(3, 12, 12)))
+# output_shape will be (None, 3, 14, 14)
+
+# apply a 3x3 transposed convolution with stride 2x2 and 3 output filters on a 12x12 image:
+model = Sequential()
+model.add(Deconvolution2D(3, 3, 3, output_shape=(None, 3, 25, 25), subsample=(2, 2), border_mode='valid', input_shape=(3, 12, 12)))
+model.summary()
+# output_shape will be (None, 3, 25, 25)
+```
+
+### 参考文献
+* [<font color='#FF0000'>A guide to convolution arithmetic for deep learning</font>](https://arxiv.org/abs/1603.07285)
+* [<font color='#FF0000'>Transposed convolution arithmetic </font>](http://deeplearning.net/software/theano_versions/dev/tutorial/conv_arithmetic.html#transposed-convolution-arithmetic)
+* [<font color='#FF0000'>Deconvolutional Networks </font>](http://www.matthewzeiler.com/pubs/cvpr2010/cvpr2010.pdf)
 
 ***
 
@@ -245,7 +401,7 @@ keras.layers.convolutional.Convolution3D(nb_filter, kernel_dim1, kernel_dim2, ke
 
 * b_constraints：施加在偏置上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
 
-* dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第4个位置，```Convolution2D```有较详细的类似说明。默认是‘th’模式。
+* dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第4个位置。默认是```image_dim_ordering```指定的模式，可在```~/.keras/keras.json```中查看，若没有设置过则为'th'。
 
 * bias：布尔值，是否包含偏置向量（即层对输入做线性变换还是仿射变换）
 
@@ -256,182 +412,6 @@ keras.layers.convolutional.Convolution3D(nb_filter, kernel_dim1, kernel_dim2, ke
 ‘tf’模式下，输入应为形如（samples，input_dim1，input_dim2, input_dim3，channels）的5D张量
 
 同样的，这里的输入shape指的是函数内部实现的输入shape，而非函数接口应指定的```input_shape```。
-
-***
-
-## MaxPooling1D层
-```python
-keras.layers.convolutional.MaxPooling1D(pool_length=2, stride=None, border_mode='valid')
-```
-对时域1D信号进行最大值池化
-
-### 参数
-
-* pool_length：下采样因子，如取2则将输入下采样到一半长度
-
-* stride：整数或None，步长值
-
-* border_mode：‘valid’或者‘same’
-	* 注意，目前‘same’模式只能在TensorFlow作为后端时使用
-	
-### 输入shape
-
-* 形如（samples，steps，features）的3D张量
-
-### 输出shape
-
-* 形如（samples，downsampled_steps，features）的3D张量
-
-***
-
-## MaxPooling2D层
-```python
-keras.layers.convolutional.MaxPooling2D(pool_size=(2, 2), strides=None, border_mode='valid', dim_ordering='th')
-```
-为空域信号施加最大值池化
-
-### 参数
-
-* pool_size：长为2的整数tuple，代表在两个方向（竖直，水平）上的下采样因子，如取（2，2）将使图片在两个维度上均变为原长的一半
-
-* strides：长为2的整数tuple，或者None，步长值。
-
-* border_mode：‘valid’或者‘same’
-	* 注意，目前‘same’模式只能在TensorFlow作为后端时使用
-
-* dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第3个位置，```Convolution2D```有较详细的类似说明。默认是‘th’模式。
-
-### 输入shape
-
-‘th’模式下，为形如（samples，channels, rows，cols）的4D张量
-
-‘tf’模式下，为形如（samples，rows, cols，channels）的4D张量
-
-### 输出shape
-
-‘th’模式下，为形如（samples，channels, pooled_rows, pooled_cols）的4D张量
-
-‘tf’模式下，为形如（samples，pooled_rows, pooled_cols，channels）的4D张量
-
-***
-
-## MaxPooling3D层
-```python
-keras.layers.convolutional.MaxPooling3D(pool_size=(2, 2, 2), strides=None, border_mode='valid', dim_ordering='th')
-```
-为3D信号（空域或时空域）施加最大值池化
-
-本层目前只能在使用Theano为后端时可用
-
-### 参数
-
-* pool_size：长为3的整数tuple，代表在三个维度上的下采样因子，如取（2，2，2）将使信号在每个维度都变为原来的一半长。
-
-* strides：长为3的整数tuple，或者None，步长值。
-
-* border_mode：‘valid’或者‘same’
-
-* dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第4个位置，```Convolution2D```有较详细的类似说明。默认是‘th’模式。
-
-### 输入shape
-
-‘th’模式下，为形如（samples, channels, len_pool_dim1, len_pool_dim2, len_pool_dim3）的5D张量
-
-‘tf’模式下，为形如（samples, len_pool_dim1, len_pool_dim2, len_pool_dim3，channels, ）的5D张量
-
-### 输出shape
-
-‘th’模式下，为形如（samples, channels, pooled_dim1, pooled_dim2, pooled_dim3）的5D张量
-
-‘tf’模式下，为形如（samples, pooled_dim1, pooled_dim2, pooled_dim3,channels,）的5D张量
-
-***
-
-## AveragePooling1D层
-```python
-keras.layers.convolutional.AveragePooling1D(pool_length=2, stride=None, border_mode='valid')
-```
-对时域1D信号进行平均值池化
-
-### 参数
-
-* pool_length：下采样因子，如取2则将输入下采样到一半长度
-
-* stride：整数或None，步长值
-
-* border_mode：‘valid’或者‘same’
-	* 注意，目前‘same’模式只能在TensorFlow作为后端时使用
-	
-### 输入shape
-
-* 形如（samples，steps，features）的3D张量
-
-### 输出shape
-
-* 形如（samples，downsampled_steps，features）的3D张量
-
-***
-
-## AveragePooling2D层
-```python
-keras.layers.convolutional.AveragePooling2D(pool_size=(2, 2), strides=None, border_mode='valid', dim_ordering='th')
-```
-为空域信号施加平均值池化
-
-### 参数
-
-* pool_size：长为2的整数tuple，代表在两个方向（竖直，水平）上的下采样因子，如取（2，2）将使图片在两个维度上均变为原长的一半
-
-* strides：长为2的整数tuple，或者None，步长值。
-
-* border_mode：‘valid’或者‘same’
-	* 注意，目前‘same’模式只能在TensorFlow作为后端时使用
-
-* dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第3个位置，```Convolution2D```有较详细的类似说明。默认是‘th’模式。
-
-### 输入shape
-
-‘th’模式下，为形如（samples，channels, rows，cols）的4D张量
-
-‘tf’模式下，为形如（samples，rows, cols，channels）的4D张量
-
-### 输出shape
-
-‘th’模式下，为形如（samples，channels, pooled_rows, pooled_cols）的4D张量
-
-‘tf’模式下，为形如（samples，pooled_rows, pooled_cols，channels）的4D张量
-
-***
-
-## AveragePooling3D层
-```python
-keras.layers.convolutional.AveragePooling3D(pool_size=(2, 2, 2), strides=None, border_mode='valid', dim_ordering='th')
-```
-为3D信号（空域或时空域）施加平均值池化
-
-本层目前只能在使用Theano为后端时可用
-
-### 参数
-
-* pool_size：长为3的整数tuple，代表在三个维度上的下采样因子，如取（2，2，2）将使信号在每个维度都变为原来的一半长。
-
-* strides：长为3的整数tuple，或者None，步长值。
-
-* border_mode：‘valid’或者‘same’
-
-* dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第4个位置，```Convolution2D```有较详细的类似说明。默认是‘th’模式。
-
-### 输入shape
-
-‘th’模式下，为形如（samples, channels, len_pool_dim1, len_pool_dim2, len_pool_dim3）的5D张量
-
-‘tf’模式下，为形如（samples, len_pool_dim1, len_pool_dim2, len_pool_dim3，channels, ）的5D张量
-
-### 输出shape
-
-‘th’模式下，为形如（samples, channels, pooled_dim1, pooled_dim2, pooled_dim3）的5D张量
-
-‘tf’模式下，为形如（samples, pooled_dim1, pooled_dim2, pooled_dim3,channels,）的5D张量
 
 ***
 
@@ -465,7 +445,7 @@ keras.layers.convolutional.UpSampling2D(size=(2, 2), dim_ordering='th')
 
 * size：整数tuple，分别为行和列上采样因子
 
-* dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第4个位置，```Convolution2D```有较详细的类似说明。默认是‘th’模式。
+dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第3个位置。例如128*128的三通道彩色图片，在‘th’模式中```input_shape```应写为（3，128，128），而在‘tf’模式中应写为（128，128，3），注意这里3出现在第0个位置，因为```input_shape```不包含样本数的维度，在其内部实现中，实际上是（None，3，128，128）和（None，128，128，3）。默认是```image_dim_ordering```指定的模式，可在```~/.keras/keras.json```中查看，若没有设置过则为'th'。
 
 ### 输入shape
 
@@ -493,7 +473,7 @@ keras.layers.convolutional.UpSampling3D(size=(2, 2, 2), dim_ordering='th')
 
 * size：长为3的整数tuple，代表在三个维度上的上采样因子
 
-* dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第4个位置，```Convolution2D```有较详细的类似说明。默认是‘th’模式。
+* dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第4个位置。默认是```image_dim_ordering```指定的模式，可在```~/.keras/keras.json```中查看，若没有设置过则为'th'。
 
 ### 输入shape
 
@@ -539,7 +519,7 @@ keras.layers.convolutional.ZeroPadding2D(padding=(1, 1), dim_ordering='th')
 
 * padding：整数tuple，表示在要填充的轴的起始和结束处填充0的数目，这里要填充的轴是轴3和轴4（即在'th'模式下图像的行和列，在‘tf’模式下要填充的则是轴2，3）
 
-dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第4个位置，```Convolution2D```有较详细的类似说明。默认是‘th’模式。
+dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第3个位置。例如128*128的三通道彩色图片，在‘th’模式中```input_shape```应写为（3，128，128），而在‘tf’模式中应写为（128，128，3），注意这里3出现在第0个位置，因为```input_shape```不包含样本数的维度，在其内部实现中，实际上是（None，3，128，128）和（None，128，128，3）。默认是```image_dim_ordering```指定的模式，可在```~/.keras/keras.json```中查看，若没有设置过则为'th'。
 
 ### 输入shape
 
@@ -567,7 +547,7 @@ keras.layers.convolutional.ZeroPadding3D(padding=(1, 1, 1), dim_ordering='th')
 
 padding：整数tuple，表示在要填充的轴的起始和结束处填充0的数目，这里要填充的轴是轴3，轴4和轴5，‘tf’模式下则是轴2，3和4
 
-* dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第4个位置，```Convolution2D```有较详细的类似说明。默认是‘th’模式。
+* dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第4个位置。默认是```image_dim_ordering```指定的模式，可在```~/.keras/keras.json```中查看，若没有设置过则为'th'。
 
 ### 输入shape
 

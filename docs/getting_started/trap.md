@@ -19,13 +19,6 @@ Keras提供了两套后端，Theano和Tensorflow，这是一件幸福的事，�
 
 如需对卷积核进行转换，可以使用utils.np_utils.kernel_convert，或使用utils.layer_utils.convert_all_kernels_in_model来对模型的所有卷积核进行转换
 
-## Merge 和 merge
-
-Merge是一个layer对象，merge是一个函数
-Merge的输入参数是Layer对象，merge的输入参数是Keras tensor
-Merge多用在Sequential模型，merge多用在Model模型
-就酱
-
 ## 向BN层中载入权重
 如果你不知道从哪里淘来一个预训练好的BN层，想把它的权重载入到Keras中，要小心参数的载入顺序。
 
@@ -47,4 +40,8 @@ Keras的可训练参数在前，不可训练参数在后
 
 假如你的训练集是有序的，比方说正样本在前负样本在后，又设置了validation_split，那么你的验证集中很可能将全部是负样本
 
-这个bug我将会提给Keras
+同样的，这个东西不会有任何错误报出来，因为Keras不可能知道你的数据有没有经过shuffle，保险起见如果你的数据是没shuffle过的，最好手动shuffle一下
+
+## 未完待续
+
+如果你在使用Keras中遇到难以察觉的陷阱，请发信到moyan_work@foxmail.com说明~赠人玫瑰，手有余香，前人踩坑，后人沾光，有道是我不入地狱谁入地狱，愿各位Keras使用者积极贡献Keras陷阱。老规矩，陷阱贡献者将被列入致谢一栏

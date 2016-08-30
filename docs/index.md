@@ -82,17 +82,23 @@ Keras从2015年3月开始启动，经过一年多的开发，目前Keras进入�
 
 * 我们的中文文档没有及时更新：如果是这种情况，请发邮件给我，我会尽快更新
 
-目前文档的版本号是1.0.7，对应于官方的1.0.7 release 版本, 本次更新的主要内容是：
+目前文档的版本号是1.0.8，对应于官方的1.0.8 release 版本, 本次更新的主要内容是：
 
-* Optimizer增加了适用于所有optimizer的参数,现在你可以对梯度进行clip了
-* 增加了初始化方法的说明,现在你可以根据初始化方法一节中的指导编写自己的初始化函数
-* 修改了FAQ中模型保存和载入的方法，现在可以将模型结构与权重一起保存在HDF5文件中了
-* 增加了如何冻结层权重和使用预训练权模型的FAQ
-* 在回调函数ModelCheckPoint增加了"save_weights_only"参数，该参数将指定是否只保存权重
-* 增加了一种新的卷积层：AtrousConvolution2D
-* 增加了一种新的损失函数:kullback_leibler_divergence/kld,即衡量两个分布的KL距离
-* 增加了图像预处理模块的flow_from_dictionary方法,改变了部分默认参数.现在你可以通过指定图片所在文件夹路径来产生数据生成器
-* 修正了文档和代码中的一些小错误
+* 新增了模块Application，现在你可以通过Application模块载入预训练模型和权重了
+
+* 新增了两种卷积层，SeparableConvolution2D和Deconvolution2D，现在你可以使用可分离卷积和反卷积层了
+
+* Pooling层被从卷积层中分离出去，新增了GlobalMaxPooling1D，GlobalAveragePooling1D，GlobalMaxPooling2D，GlobalAveragePooling2D四种Pooling层，现在你可以使用这些全局池化了
+
+* 新增了Locally-connected模块，并增加了两种局部连接层LocallyConnected1D和LocallyConnected2D
+
+* 新增了一种包装期Bidirectional，现在你可以使用它将普通的递归神经网络层包装为双向的版本。
+
+* model新增了方法```predict_generator```，现在你可以在一个生成器上进行预测
+
+* 新增了若干种后端函数
+
+* 修正了一些文档错误
 
 注意，keras在github上的master往往要高于当前的release版本，如果你从源码编译keras，可能某些模块与文档说明不相符，请以官方Github代码为准
 

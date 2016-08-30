@@ -70,7 +70,7 @@ keras.preprocessing.image.ImageDataGenerator(featurewise_center=False,
 	
 	* round：若设```augment=True```，确定要在数据上进行多少轮数据提升，默认值为1
 	
-* flow(self, X, y, batch_size=32, shuffle=False, seed=None, save_to_dir=None, save_prefix='', save_format='jpeg')：接收numpy数组和标签为参数,生成经过数据提升或标准化后的batch数据,并在一个无限循环中不断的返回batch数据
+* flow(self, X, y, batch_size=32, shuffle=True, seed=None, save_to_dir=None, save_prefix='', save_format='jpeg')：接收numpy数组和标签为参数,生成经过数据提升或标准化后的batch数据,并在一个无限循环中不断的返回batch数据
 
 	* X：数据
 	
@@ -78,7 +78,7 @@ keras.preprocessing.image.ImageDataGenerator(featurewise_center=False,
 	
 	* batch_size：整数，默认32
 	
-	* shuffle：布尔值，是否随机打乱数据，默认为False
+	* shuffle：布尔值，是否随机打乱数据，默认为True
 	
 	* save_to_dir：None或字符串，该参数能让你将提升后的图片保存起来，用以可视化
 	

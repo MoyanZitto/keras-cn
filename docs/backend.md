@@ -518,11 +518,23 @@ spatial_2d_padding(x, padding=(1, 1), dim_ordering='th')
 ```
 向4D张量第二和第三维度的左右两端填充```padding[0]```和```padding[1]```个0值.
 
+###spatial_3d_padding
+```python
+spatial_3d_padding(x, padding=(1, 1, 1), dim_ordering='th')
+```
+向5D张量深度、高度和宽度三个维度上填充```padding[0]```，```padding[1]```和```padding[2]```个0值.
+
 ### one-hot
 ```python
 one_hot(indices, nb_classes)
 ```
 输入为n维的整数张量，形如(batch_size, dim1, dim2, ... dim(n-1))，输出为(n+1)维的one-hot编码，形如(batch_size, dim1, dim2, ... dim(n-1), nb_classes)
+
+### reverse
+```python
+reverse(x, axes)
+```
+将一个张量在给定轴上反转
 
 ###get_value
 ```python
@@ -807,3 +819,38 @@ pool3d(x, pool_size, strides=(1, 1, 1), border_mode='valid', dim_ordering='th', 
 * dim_ordering：“tf”和“th”之一，维度排列顺序
 
 * pool_mode: “max”，“avg”之一，池化方式
+
+### ctc_batch_cost
+```python
+ctc_batch_cost(y_true, y_pred, input_length, label_length)
+```
+在batch上运行CTC损失算法
+
+* 参数
+	* y_true：形如(samples，max_tring_length)的张量，包含标签的真值
+	* y_pred：形如(samples，time_steps，num_categories)的张量，包含预测值或输出的softmax值
+	* input_length：形如(samples，1)的张量，包含y_pred中每个batch的序列长
+	* label_length：形如(samples，1)的张量，包含y_true中每个batch的序列长
+
+* 返回值：形如(samoles，1)的tensor，包含了每个元素的CTC损失
+
+### ctc_decode
+```python
+ctc_decode(y_pred, input_length, greedy=True, beam_width=None, dict_seq_lens=None, dict_values=None)
+```
+使用贪婪算法或带约束的字典搜索算法解码softmax的输出
+
+* 参数
+	* y_pred：形如(samples，time_steps，num_categories)的张量，包含预测值或输出的softmax值
+	* input_length：形如(samples，1)的张量，包含y_pred中每个batch的序列长
+	* greedy：设置为True使用贪婪算法，速度快
+	* dict_seq_lens：dic_values列表中各元素的长度
+	* dict_values：列表的列表，代表字典
+
+* 返回值：形如(samples，time_steps，num_catgories)的张量，包含了路径可能性（以softmax概率的形式）。注意仍然需要一个用来取出argmax和处理空白标签的函数。
+
+### backend
+```python
+backend()
+```
+确定当前使用的后端

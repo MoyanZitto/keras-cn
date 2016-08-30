@@ -24,6 +24,13 @@
 |白菜|Tips处标记|
 |我是小将|Tips处标记|
 
+## Keras陷阱提示
+
+| 贡献者 | 页面 |
+|:------:|:---:|
+|Bigmoyan|tf与th卷积核陷阱|
+|Bigmoyan|向BN层载入权重陷阱|
+|Yin|validation_spilit与shuffle陷阱|
 
 ## Reviewers
 

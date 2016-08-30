@@ -452,6 +452,26 @@ print(len(model.layers))  # "1"
 </font>
 </a>
 
+我们提供了下面这些图像分类的模型代码及预训练权重：
+
+- VGG16
+- VGG19
+- ResNet50
+- Inception v3
+
+可通过```keras.applications```载入这些模型：
+
+```python
+from keras.applications.vgg16 impoprt VGG16
+from keras.applications.vgg19 impoprt VGG19
+from keras.applications.resnet50 impoprt ResNet50
+from keras.applications.inception_v3 impoprt InceptionV3
+
+model = VGG16(weights='imagenet', include_top=True)
+```
+
+这些代码的使用示例请参考```.Application```模型的[<font color='#FF0000'>文档</font>](../other/application.md)
+
 下面的图像分类模型提供了模型搭建的代码和相应的预训练权重
 
 * [<font color='#FF0000'>VGG-16</font>](https://gist.github.com/baraldilorenzo/07d7802847aaad0a35d3)
