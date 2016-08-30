@@ -1,4 +1,4 @@
-# 局部连接层
+# 局部连接层LocallyConnceted
 
 ## LocallyConnected1D层
 ```python
@@ -117,12 +117,13 @@ keras.layers.local.LocallyConnected2D(nb_filter, nb_row, nb_col, init='glorot_un
 ### 例子
 
 ```python
-# apply a 3x3 convolution with 64 output filters on a 256x256 image:
+# apply a 3x3 unshared weights convolution with 64 output filters on a 32x32 image:
 model = Sequential()
-model.add(Convolution2D(64, 3, 3, border_mode='same', input_shape=(3, 256, 256)))
-# now model.output_shape == (None, 64, 256, 256)
+model.add(LocallyConnected2D(64, 3, 3, input_shape=(3, 32, 32)))
+# now model.output_shape == (None, 64, 30, 30)
+# notice that this layer will consume (30*30)*(3*3*3*64) + (30*30)*64 parameters
 
-# add a 3x3 convolution on top, with 32 output filters:
-model.add(Convolution2D(32, 3, 3, border_mode='same'))
-# now model.output_shape == (None, 32, 256, 256)
+# add a 3x3 unshared weights convolution on top, with 32 output filters:
+model.add(LocallyConnected2D(32, 3, 3))
+# now model.output_shape == (None, 32, 28, 28)
 ```
