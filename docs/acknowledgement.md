@@ -54,6 +54,7 @@
 |毒液|回调函数|EarlyStopping|
 |毛毛熊|正则项|缩写|
 |木子天一|局部连接层LocallyConnceted|LocallyConnected2D层|
+|QiaXi|Pooling层|GlobalMax/GlobalAve|
 
 ## 示例程序
 
