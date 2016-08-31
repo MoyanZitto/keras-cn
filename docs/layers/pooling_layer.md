@@ -187,7 +187,7 @@ keras.layers.pooling.GlobalMaxPooling1D()
 
 ### 输出shape
 
-* 形如（samples，downsampled_steps，features）的3D张量
+* 形如(samples, features)的2D张量
 
 ***
 
@@ -203,7 +203,7 @@ keras.layers.pooling.GlobalAveragePooling1D()
 
 ### 输出shape
 
-* 形如（samples，downsampled_steps，features）的3D张量
+* 形如(samples, features)的2D张量
 
 ***
 
@@ -225,9 +225,7 @@ keras.layers.pooling.GlobalMaxPooling2D(dim_ordering='default')
 
 ### 输出shape
 
-‘th’模式下，为形如（samples，channels, pooled_rows, pooled_cols）的4D张量
-
-‘tf’模式下，为形如（samples，pooled_rows, pooled_cols，channels）的4D张量
+形如(nb_samples, channels)的2D张量
 
 ***
 
@@ -249,7 +247,5 @@ keras.layers.pooling.GlobalAveragePooling2D(dim_ordering='default')
 
 ### 输出shape
 
-‘th’模式下，为形如（samples，channels, pooled_rows, pooled_cols）的4D张量
-
-‘tf’模式下，为形如（samples，pooled_rows, pooled_cols，channels）的4D张量
+形如(nb_samples, channels)的2D张量
 
