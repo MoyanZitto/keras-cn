@@ -8,6 +8,8 @@ Keras是一个模型级的库，提供了快速构建深度学习网络的模块
 
 * TensorFlow是一个符号主义的张量操作框架，由Google开发。
 
+在未来，我们有可能要添加更多的后端选项，如果你有兴趣开发后端，请与我联系~
+
 ## 切换后端
 
 如果你至少运行过一次Keras，你将在下面的目录下找到Keras的配置文件：
@@ -16,19 +18,27 @@ Keras是一个模型级的库，提供了快速构建深度学习网络的模块
 
 如果该目录下没有该文件，你可以手动创建一个。
 
-文件的内容大概如下：
+文件的默认配置如下：
 
-```{"epsilon": 1e-07, "floatx": "float32", "backend": "theano"}```
+```
+{
+"image_dim_ordering":"tf",
+"epsilon":1e-07,
+"floatx":"float32",
+"backend":"tensorflow"
+}
+```
 
 将```backend```字段的值改写为你需要使用的后端：```theano```或```tensorflow```，即可完成后端的切换。
 
 我们也可以通过定义环境变量```KERAS_BACKEND```来覆盖上面配置文件中定义的后端：
 
 ```python
-KERAS_BACKEND=tensorflow python -c "from keras import backend; print(backend._BACKEND)"
+KERAS_BACKEND=tensorflow python -c "from keras import backend;"
 Using TensorFlow backend.
-tensorflow
 ```
+
+
 
 ## 使用抽象的Keras后端来编写代码
 

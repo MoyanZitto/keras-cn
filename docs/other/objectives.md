@@ -14,9 +14,9 @@ model.compile(loss='mean_squared_error', optimizer='sgd')
 
 真实的优化目标函数是在各个数据点得到的损失函数值之和的均值
 
-请参考[<font color='#FF0000'>激活函数实现代码</font>](https://github.com/fchollet/keras/blob/master/keras/objectives.py)获取更多信息
+请参考[<font color='#FF0000'>目标实现代码</font>](https://github.com/fchollet/keras/blob/master/keras/objectives.py)获取更多信息
 
-## 可用的激活函数
+## 可用的目标函数
 
 * mean_squared_error或mse
 

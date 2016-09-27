@@ -127,9 +127,34 @@ model.save_weights('my_model_weights.h5')
 ```python
 model.save_weights('my_model_weights.h5')
 ```	
-当然，你也可以将保存好的权重载入到你的模型结构中：
+如果你需要在代码中初始化一个完全相同的模型，请使用：
 ```python
 model.load_weights('my_model_weights.h5')
+```
+如果你需要加载权重到不同的网络结构（有些层一样）中，例如fine-tune或transfer-learning，你可以通过层名字来加载模型：
+
+```python
+model.load_weights('my_model_weights.h5', by_name=True)
+```
+
+例如：
+```python
+"""
+假如原模型为：
+    model = Sequential()
+    model.add(Dense(2, input_dim=3, name="dense_1"))
+    model.add(Dense(3, name="dense_2"))
+    ...
+    model.save_weights(fname)
+"""
+# new model
+model = Sequential()
+model.add(Dense(2, input_dim=3, name="dense_1"))  # will be loaded
+model.add(Dense(10, name="new_dense"))  # will not be loaded
+
+# load weights from first model; will only affect the first layer, dense_1.
+model.load_weights(fname, by_name=True)
+
 ```
 ***
 

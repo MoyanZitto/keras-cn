@@ -63,7 +63,69 @@ model.add(Convolution1D(32, 3, border_mode='same'))
 【Tips】可以将Convolution1D看作Convolution2D的快捷版，对例子中（10，32）的信号进行1D卷积相当于对其进行卷积核为（filter_length, 32）的2D卷积。【@3rduncle】
 
 ***
+## AtrousConvolution1D层
+```python
+keras.layers.convolutional.AtrousConvolution1D(nb_filter, filter_length, init='uniform', activation='linear', weights=None, border_mode='valid', subsample_length=1, atrous_rate=1, W_regularizer=None, b_regularizer=None, activity_regularizer=None, W_constraint=None, b_constraint=None, bias=True)
+```
 
+AtrousConvolution1D层用于对1D信号进行滤波，是膨胀/带孔洞的卷积。当使用该层作为首层时，需要提供关键字参数```input_dim```或```input_shape```。例如```input_dim=128```长为128的向量序列输入，而```input_shape=(10,128)```代表一个长为10的128向量序列.
+
+### 参数
+
+* nb_filter：卷积核的数目（即输出的维度）
+
+* filter_length：卷积核的空域或时域长度
+
+* init：初始化方法，为预定义初始化方法名的字符串，或用于初始化权重的Theano函数。该参数仅在不传递```weights```参数时有意义。
+
+* activation：激活函数，为预定义的激活函数名（参考[<font color='#FF0000'>激活函数</font>](../other/activations)），或逐元素（element-wise）的Theano函数。如果不指定该参数，将不会使用任何激活函数（即使用线性激活函数：a(x)=x）
+
+* weights：权值，为numpy array的list。该list应含有一个形如（input_dim,output_dim）的权重矩阵和一个形如(output_dim,)的偏置向量。
+
+* border_mode：边界模式，为“valid”或“same”
+
+* subsample_length：输出对输入的下采样因子
+
+* atrous_rate:卷积核膨胀的系数，在其他地方也被称为'filter_dilation'
+
+* W_regularizer：施加在权重上的正则项，为[<font color='FF0000'>WeightRegularizer</font>](../other/regularizers)对象
+
+* b_regularizer：施加在偏置向量上的正则项，为[<font color='FF0000'>WeightRegularizer</font>](../other/regularizers)对象
+
+* activity_regularizer：施加在输出上的正则项，为[<font color='FF0000'>ActivityRegularizer</font>](../other/regularizers)对象
+
+* W_constraints：施加在权重上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
+
+* b_constraints：施加在偏置上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
+
+* bias：布尔值，是否包含偏置向量（即层对输入做线性变换还是仿射变换）
+
+* input_dim：整数，输入数据的维度。当该层作为网络的第一层时，必须指定该参数或```input_shape```参数。
+
+* input_length：当输入序列的长度固定时，该参数为输入序列的长度。当需要在该层后连接```Flatten```层，然后又要连接```Dense```层时，需要指定该参数，否则全连接的输出无法计算出来。
+
+### 输入shape
+
+形如（samples，steps，input_dim）的3D张量
+
+### 输出shape
+
+形如（samples，new_steps，nb_filter）的3D张量，因为有向量填充的原因，```steps```的值会改变
+
+### 例子
+```python
+# apply an atrous convolution 1d with atrous rate 2 of length 3 to a sequence with 10 timesteps,
+# with 64 output filters
+model = Sequential()
+model.add(AtrousConvolution1D(64, 3, atrous_rate=2, border_mode='same', input_shape=(10, 32)))
+# now model.output_shape == (None, 10, 64)
+
+# add a new atrous conv1d on top
+model.add(AtrousConvolution1D(32, 3, atrous_rate=2, border_mode='same'))
+# now model.output_shape == (None, 10, 32)
+```
+
+***
 ## Convolution2D层
 ```python
 keras.layers.convolutional.Convolution2D(nb_filter, nb_row, nb_col, init='glorot_uniform', activation='linear', weights=None, border_mode='valid', subsample=(1, 1), dim_ordering='th', W_regularizer=None, b_regularizer=None, activity_regularizer=None, W_constraint=None, b_constraint=None, bias=True)
@@ -411,7 +473,7 @@ keras.layers.convolutional.Convolution3D(nb_filter, kernel_dim1, kernel_dim2, ke
 
 ‘tf’模式下，输入应为形如（samples，input_dim1，input_dim2, input_dim3，channels）的5D张量
 
-同样的，这里的输入shape指的是函数内部实现的输入shape，而非函数接口应指定的```input_shape```。
+这里的输入shape指的是函数内部实现的输入shape，而非函数接口应指定的```input_shape```。
 
 ***
 

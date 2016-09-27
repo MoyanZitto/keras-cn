@@ -114,7 +114,7 @@ final_model.fit([input_data_1, input_data_2], targets)  # we pass one data array
 也可以为Merge层提供关键字参数```mode```，以实现任意的变换，例如：
 
 ```python
-merged = Merge([left_branch, right_branch], mode=lambda x, y: x - y)
+merged = Merge([left_branch, right_branch], mode=lambda x: x[0] - x[1])
 ```
 	
 现在你已经学会定义几乎任何Keras的模型了，对于不能通过Sequential和Merge组合生成的复杂模型，可以参考[<font color=#FF0000>泛型模型API</font>](functional_API.md)

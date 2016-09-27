@@ -52,6 +52,7 @@
 |白菜|FAQ|如何观察中间层的输出|
 |毒液|文本预处理|one-hot|
 |毒液|回调函数|EarlyStopping|
+|毒液|目标函数|可用的目标函数|
 |毛毛熊|正则项|缩写|
 |木子天一|局部连接层LocallyConnceted|LocallyConnected2D层|
 |QiaXi|Pooling层|GlobalMax/GlobalAve|

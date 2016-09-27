@@ -3,8 +3,8 @@
 
 
 ## 这就是Keras
-Keras是一个极简和高度模块化的神经网络库，Keras由纯Python编写而成并基于Theano或Tensorflow。Keras
-为支持快速实验而生，如果你有如下需求，请选择Keras：
+Keras是一个极简和高度模块化的神经网络库，Keras由纯Python编写而成并基Tensorflow或Theano。Keras
+为支持快速实验而生，能够把你的idea迅速转换为结果，如果你有如下需求，请选择Keras：
 
 * 简易和快速的原型设计（keras具有高度模块化，极简，和可扩充特性）
 * 支持CNN和RNN，或二者的结合
@@ -82,23 +82,14 @@ Keras从2015年3月开始启动，经过一年多的开发，目前Keras进入�
 
 * 我们的中文文档没有及时更新：如果是这种情况，请发邮件给我，我会尽快更新
 
-目前文档的版本号是1.0.8，对应于官方的1.0.8 release 版本, 本次更新的主要内容是：
+目前文档的版本号是1.1.0，对应于官方的1.1.0 release 版本, 本次更新的主要内容是：
 
-* 新增了模块Application，现在你可以通过Application模块载入预训练模型和权重了
+* 将默认后端切换为TensorFlow：现在Keras的默认后端是TensorFlow，而不是Theano
+* 支持将权重载入不匹配的模型中：现在可以在使用```model.load_weights()```时指定参数```by_name=True```来将保存的权重载入一个框架不匹配的模型中，只有名字匹配到的权重会被载入
+* 增加了两种新的Dropout，```SpatialDropout2D```和```SpatialDropout3D```两种Dropout，注意这两种Dropout不是断开单个神经元的连接，而是断开整个featuremap
+* 增加了一种卷积层，```AtrousConvolution1D```，带有孔洞的1D卷积。
+* 增加了一套新的Crop层，包含```Cropping1D```,```Cropping2D```,```Cropping3D```，用于裁剪输出的尺寸，以```Cropping2D```为例，它将剪掉每个特征图的周围一圈。
 
-* 新增了两种卷积层，SeparableConvolution2D和Deconvolution2D，现在你可以使用可分离卷积和反卷积层了
-
-* Pooling层被从卷积层中分离出去，新增了GlobalMaxPooling1D，GlobalAveragePooling1D，GlobalMaxPooling2D，GlobalAveragePooling2D四种Pooling层，现在你可以使用这些全局池化了
-
-* 新增了Locally-connected模块，并增加了两种局部连接层LocallyConnected1D和LocallyConnected2D
-
-* 新增了一种包装器Bidirectional，现在你可以使用它将普通的递归神经网络层包装为双向的版本。
-
-* model新增了方法```predict_generator```，现在你可以在一个生成器上进行预测
-
-* 在getting_started部分新增了页面“Keras陷阱”，欢迎各位将使用中的Keras陷阱投稿给我
-
-* 新增了若干种后端函数
 
 * 修正了一些文档错误
 
@@ -178,13 +169,14 @@ Keras使用了下面的依赖包：
 
 * HDF5, h5py（可选，仅在模型的save/load函数中使用）
 
+当使用TensorFlow为后端时：
+
+* [<font color=FF0000>TensorFlow</font>](https://github.com/tensorflow/tensorflow#download-and-setup)
+
 当使用Theano作为后端时：
 
 * [<font color=FF0000>Theano</font>](http://www.deeplearning.net/software/theano/install.html#install)
 
-当使用TensorFlow为后端时：
-
-* [<font color=FF0000>TensorFlow</font>](https://github.com/tensorflow/tensorflow#download-and-setup)
 
 【Tips】“后端”翻译自backend，指的是Keras依赖于完成底层的张量运算的软件包。【@Bigmoyan】
 
@@ -203,7 +195,7 @@ sudo pip install keras
 	
 ##在Theano和TensorFlow间切换
 
-Keras默认使用Theano作为后端来进行张量操作，如需切换到TensorFlow，请查看[<font color=FF0000>这里</font>](backend)
+Keras默认使用TensorFlow作为后端来进行张量操作，如需切换到Theano，请查看[<font color=FF0000>这里</font>](backend)
 
 ***
 
