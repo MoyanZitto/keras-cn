@@ -2,7 +2,8 @@ site_name: Keras中文文档
 pages:
 - ['index.md','主页']
 - ['getting_started/concepts.md','快速开始','一些基本概念']
-- ['getting_started/install.md','快速开始','Keras安装和配置指南']
+- ['getting_started/keras_linux.md','快速开始','Keras安装和配置指南(Linux)']
+- ['getting_started/keras_windows.md','快速开始','Keras安装和配置指南(Windows)']
 - ['getting_started/sequential_model.md','快速开始','快速开始Sequential模型']
 - ['getting_started/functional_API.md','快速开始','快速开始泛型模型']
 - ['getting_started/FAQ.md','快速开始','FAQ']

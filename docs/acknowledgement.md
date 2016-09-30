@@ -11,7 +11,8 @@
 |Bigmoyan|深度学习与Keras|CNN眼中的世界|翻译|
 |Bigmoyan|深度学习与Keras|花式自动编码器|翻译|
 |Bigmoyan|快速开始|一些基本概念|编写|
-|SCP-173|快速开始|Keras安装和配置指南|编写|
+|SCP-173|快速开始|Keras安装和配置指南(Linux)|编写|
+|SCP-173|快速开始|Keras安装和配置指南(Windows)|编写|
 |Bigmoyan|深度学习与Keras|面向小数据集构建图像分类模型|翻译|
 |leo-nlp|深度学习与Keras|在Keras模型中使用预训练的词向量|翻译|
 

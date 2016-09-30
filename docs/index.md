@@ -90,6 +90,7 @@ Keras从2015年3月开始启动，经过一年多的开发，目前Keras进入�
 * 增加了一种卷积层，```AtrousConvolution1D```，带有孔洞的1D卷积。
 * 增加了一套新的Crop层，包含```Cropping1D```,```Cropping2D```,```Cropping3D```，用于裁剪输出的尺寸，以```Cropping2D```为例，它将剪掉每个特征图的周围一圈。
 
+* 增加了最新版本Keras在Linux和Windows上的详细配置指南，鸣谢三当家的**SCP-173**
 
 * 修正了一些文档错误
 
@@ -189,7 +190,7 @@ sudo python setup.py install
 sudo pip install keras
 ```
 
-对于在Windows上使用Keras的同学，请移步[<font color='#FF0000'> Keras安装和配置指南</font>](getting_started/install.md)
+**详细的Windows和Linux安装教程请参考“快速开始”一节中给出的安装教程，特别鸣谢SCP-173编写了这些教程**
 
 ***
 	
