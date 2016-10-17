@@ -61,13 +61,13 @@ keras.callbacks.History()
 
 ## ModelCheckpoint
 ```python
-keras.callbacks.ModelCheckpoint(filepath, monitor='val_loss', verbose=0, save_best_only=False, mode='auto')
+keras.callbacks.ModelCheckpoint(filepath, monitor='val_loss', verbose=0, save_best_only=False, save_weights_only=False, mode='auto')
 ```
 该回调函数将在每个epoch后保存模型到```filepath```
 
 ```filepath```可以是格式化的字符串，里面的占位符将会被```epoch```值和传入```on_epoch_end```的```logs```关键字所填入
 
-例如，```filename```若为```weights.{epoch:02d-{val_loss:.2f}}.hdf5，则会生成对应epoch和验证集loss的多个文件。
+例如，```filepath```若为```weights.{epoch:02d-{val_loss:.2f}}.hdf5，则会生成对应epoch和验证集loss的多个文件。
 
 ### 参数
 
