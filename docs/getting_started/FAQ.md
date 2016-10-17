@@ -123,10 +123,6 @@ model = model_from_yaml(yaml_string)
 model.save_weights('my_model_weights.h5')
 ```	
 
-如果只想保存模型的权重，请使用下面的函数：
-```python
-model.save_weights('my_model_weights.h5')
-```	
 如果你需要在代码中初始化一个完全相同的模型，请使用：
 ```python
 model.load_weights('my_model_weights.h5')
