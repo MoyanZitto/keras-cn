@@ -183,7 +183,7 @@ imsave('%s_filter_%d.png' % (layer_name, filter_index), img)
 ### Deep Dream（nightmare）
 
 另一个有趣的事儿是，如果我们把刚才的随机噪声图片替换为有意义的照片，结果就变的更好玩了。这就是去年由Google提出的Deep Dream。通过选择特定的滤波器组合，我们可以获得一些很有意思的结果。如果你对此感兴趣，可以参考Keras的例子
-[<font color='#FF0000'>Deep Dream</font>](https://github.com/fchollet/keras/blob/master/examples/deep_dream.py)和Google的博客[<font color='#FF0000'>Google blog post</font>](googleresearch.blogspot.com/2015/06/inceptionism-going-deeper-into-neural.html)（墙）
+[<font color='#FF0000'>Deep Dream</font>](https://github.com/fchollet/keras/blob/master/examples/deep_dream.py)和Google的博客[<font color='#FF0000'>Google blog post</font>](https://googleresearch.blogspot.com/2015/06/inceptionism-going-deeper-into-neural.html)（墙）
 
 ![filter_dream.jpg](../images/filter_dream.jpg)
 
