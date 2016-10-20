@@ -17,7 +17,7 @@ Kera的应用模块Application提供了带有预训练权重的Keras模型，这
 
 ***
 
-## 示例
+## 图片分类模型的示例
 
 ### 利用ResNet50网络进行ImageNet分类
 ```python
@@ -146,6 +146,15 @@ model = InceptionV3(input_tensor=input_tensor, weights='imagenet', include_top=T
 
 ***
 
+模型文档
+
+* [VGG16](#vgg16)
+* [VGG19](#vgg19)
+* [ResNet50](#resnet50)
+* [InceptionV3](#inceptionv3)
+
+***
+
 <a name='vgg16'>
 <font color='#404040'>
 ## VGG16模型
@@ -220,7 +229,7 @@ Keras 模型对象
 
 ### 参考文献
 
-* [<font color='#FF0000'>Deep Residual Learning for Image Recognition</font>](https://arxiv.org/abs/1512.03385)：如果在研究中使用了VGG，请引用该文
+* [<font color='#FF0000'>Deep Residual Learning for Image Recognition</font>](https://arxiv.org/abs/1512.03385)：如果在研究中使用了ResNet50，请引用该文
 
 ### License
 预训练权重由[<font color='#FF0000'>Kaiming He</font>](https://github.com/KaimingHe/deep-residual-networks)发布的预训练权重移植而来，基于[<font color='#FF0000'>MIT License</font>](https://github.com/KaimingHe/deep-residual-networks/blob/master/LICENSE)
@@ -247,7 +256,7 @@ Keras 模型对象
 
 ### 参考文献
 
-* [<font color='#FF0000'>Rethinking the Inception Architecture for Computer Vision</font>](http://arxiv.org/abs/1512.00567)：如果在研究中使用了VGG，请引用该文
+* [<font color='#FF0000'>Rethinking the Inception Architecture for Computer Vision</font>](http://arxiv.org/abs/1512.00567)：如果在研究中使用了InceptionV3，请引用该文
 
 ### License
 预训练权重由我们自己训练而来，基于[<font color='#FF0000'>MIT License</font>](https://github.com/KaimingHe/deep-residual-networks/blob/master/LICENSE)
