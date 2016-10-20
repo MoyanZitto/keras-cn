@@ -15,10 +15,6 @@ Kera的应用模块Application提供了带有预训练权重的Keras模型，这
 
 所有的这些模型都兼容Theano和Tensorflow，并会自动基于```~/.keras/keras.json```的Keras的图像维度进行自动设置。例如，如果你设置```image_dim_ordering=tf```，则加载的模型将按照TensorFlow的维度顺序来构造，即“Width-Height-Depth”的顺序
 
-音频文件自动标注模型（梅尔谱图作为输入）
-
-* [MusicTaggerCRNN](#musictaggercrnn)
-
 ***
 
 ## 图片分类模型的示例
@@ -156,7 +152,6 @@ model = InceptionV3(input_tensor=input_tensor, weights='imagenet', include_top=T
 * [VGG19](#vgg19)
 * [ResNet50](#resnet50)
 * [InceptionV3](#inceptionv3)
-* [MusicTaggerCRNN](#musictaggercrnn)
 
 ***
 
@@ -265,66 +260,4 @@ Keras 模型对象
 
 ### License
 预训练权重由我们自己训练而来，基于[<font color='#FF0000'>MIT License</font>](https://github.com/KaimingHe/deep-residual-networks/blob/master/LICENSE)
-
-***
-
-<a name='musictaggercrnn'>
-<font color='#404040'>
-## MusicTaggerCRNN模型
-</font>
-</a>
-```python
-keras.applications.music_tagger_crnn.MusicTaggerCRNN(weights='msd', input_tensor=None, include_top=True)
-```
-
-卷积循环模型将音乐曲目的MelSpectrogram的矢量化表示作为输入，并且能够输出曲目的音乐流派。 您可以使用```keras.applications.music_tagger_crnn.preprocess_input```将声音文件转换为矢量化频谱图。 这需要安装[<font color='#FF0000'>Librosa</font>](http://librosa.github.io/librosa/)库。 请参阅[<font color='#FF0000'>示例</font>](#music-tagging-and-feature-extraction-with-musictaggercrnn)。
-
-### 参数
-* weights：None代表随机初始化，即不加载预训练权重。'msd'代表加载预训练权重[<font color='#FF0000'>Million Song Dataset</font>](http://labrosa.ee.columbia.edu/millionsong/)
-* input_tensor：可填入Keras tensor作为模型的图像输出tensor
-* include_top：是否保留顶层的1个全连接网络，如为否输出32维特征
-
-### 返回值
-
-Keras 模型对象
-
-### 参考文献
-
-* [<font color='#FF0000'>Convolutional Recurrent Neural Networks for Music Classification</font>](https://arxiv.org/abs/1609.04243)：如果在研究中使用了MusicTaggerCRNN，请引用该文
-
-### License
-预训练权重由[<font color='#FF0000'>Keunwoo Choi</font>](https://github.com/keunwoochoi/music-auto_tagging-keras)发布的预训练权重移植而来，基于[<font color='#FF0000'>MIT License</font>](https://github.com/KaimingHe/deep-residual-networks/blob/master/LICENSE)
-
-<a name='music-tagging-and-feature-extraction-with-musictaggercrnn'>
-### 例子：音乐标记和音频特征提取
-</a>
-```python
-from keras.applications.music_tagger_crnn import MusicTaggerCRNN
-from keras.applications.music_tagger_crnn import preprocess_input, decode_predictions
-import numpy as np
-
-# 1. Tagging
-model = MusicTaggerCRNN(weights='msd')
-
-audio_path = 'audio_file.mp3'
-melgram = preprocess_input(audio_path)
-melgrams = np.expand_dims(melgram, axis=0)
-
-preds = model.predict(melgrams)
-print('Predicted:')
-print(decode_predictions(preds))
-# print: ('Predicted:', [[('rock', 0.097071797), ('pop', 0.042456303), ('alternative', 0.032439161), ('indie', 0.024491295), ('female vocalists', 0.016455274)]])
-
-#. 2. Feature extraction
-model = MusicTaggerCRNN(weights='msd', include_top=False)
-
-audio_path = 'audio_file.mp3'
-melgram = preprocess_input(audio_path)
-melgrams = np.expand_dims(melgram, axis=0)
-
-feats = model.predict(melgrams)
-print('Features:')
-print(feats[0, :10])
-# print: ('Features:', [-0.19160545 0.94259131 -0.9991011 0.47644514 -0.19089699 0.99033844 0.1103896 -0.00340496 0.14823607 0.59856361])
-```
 
