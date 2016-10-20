@@ -213,7 +213,7 @@ model.fit([data_a, data_b], labels, nb_epoch=10)
 
 在上一版本的Keras中，你可以通过```layer.get_output()```方法来获得层的输出张量，或者通过```layer.output_shape```获得其输出张量的shape。这个版本的Keras你仍然可以这么做（除了```layer.get_output()```被```output()```替换）。但如果一个层与多个输入相连，会出现什么情况呢？
 
-如果层只与一个输入相连，那没有任何困惑的地方。```.ouput()```将会返回该层唯一的输出
+如果层只与一个输入相连，那没有任何困惑的地方。```.output()```将会返回该层唯一的输出
 
 ```python
 a = Input(shape=(140, 256))
