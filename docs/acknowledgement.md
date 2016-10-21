@@ -60,6 +60,7 @@
 |木子天一|局部连接层LocallyConnceted|LocallyConnected2D层|
 |QiaXi|Pooling层|GlobalMax/GlobalAve|
 |shawn|Callback|ModelCheckpoint|
+|smallYoki|快速开始|泛型模型|
 
 ## 示例程序
 
