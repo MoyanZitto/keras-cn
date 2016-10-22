@@ -133,7 +133,7 @@ SpatialDropout2D与Dropout的作用类似，但它断开的是整个2D特征图�
 ```python
 keras.layers.core.SpatialDropout3D(p, dim_ordering='default')
 ```
-SpatialDropout3D与Dropout的作用类似，但它断开的是整个3D特征图，而不是单个神经元。如果一张特征图的相邻像素之间有很强的相关性（通常发生在低层的卷积层中），那么普通的dropout无法正则化其输出，否则就会导致明显的学习率下降。这种情况下，SpatialDropout2D能够帮助提高特征图之间的独立性，应该用其取代普通的Dropout
+SpatialDropout3D与Dropout的作用类似，但它断开的是整个3D特征图，而不是单个神经元。如果一张特征图的相邻像素之间有很强的相关性（通常发生在低层的卷积层中），那么普通的dropout无法正则化其输出，否则就会导致明显的学习率下降。这种情况下，SpatialDropout3D能够帮助提高特征图之间的独立性，应该用其取代普通的Dropout
 
 ### 参数
 
