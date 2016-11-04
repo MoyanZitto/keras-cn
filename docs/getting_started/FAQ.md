@@ -14,6 +14,7 @@
 * [如何使用Keras进行分布式/多GPU运算？](#multi-GPU)
 * [如何“冻结”网络的层？](#freeze)
 * [如何从Sequential模型中去除一个层？](#pop)
+* [如何在Keras中使用预训练的模型](#pretrain)
 ***
 
 <a name='citation'>
@@ -75,8 +76,27 @@ THEANO_FLAGS=device=gpu,floatX=float32 python my_keras_script.py
 
 我们不推荐使用pickle或cPickle来保存Keras模型
 
-如果只需要保存模型的结构，而不需要保存其权重，可以使用
+你可以使用```model.save(filepath)```将Keras模型和权重保存在一个HDF5文件中，该文件将包含：
 
+* 模型的结构，以便重构该模型
+* 模型的权重
+* 训练配置（损失函数，优化器等）
+* 优化器的状态，以便于从上次训练中断的地方开始
+
+使用```keras.models.load_model(filepath)```来重新实例化你的模型，如果文件中存储了训练配置的话，该函数还会同时完成模型的编译
+
+例子：
+```python
+from keras.models import load_model
+
+model.save('my_model.h5')  # creates a HDF5 file 'my_model.h5'
+del model  # deletes the existing model
+
+# returns a compiled model
+# identical to the previous one
+model = load_model('my_model.h5')
+```
+如果你只是希望保存模型的结构，而不包含其权重或配置信息，可以使用：
 ```python
 # save as JSON
 json_string = model.to_json()
@@ -84,8 +104,9 @@ json_string = model.to_json()
 # save as YAML
 yaml_string = model.to_yaml()
 ```
+这项操作将把模型序列化为json或yaml文件，这些文件对人而言也是友好的，如果需要的话你甚至可以手动打开这些文件并进行编辑。
 
-需要时，可以从保存好的json文件或yaml文件中载入模型：
+当然，你也可以从保存好的json文件或yaml文件中载入模型：
 
 ```python
 # model reconstruction from JSON:
@@ -102,26 +123,35 @@ model = model_from_yaml(yaml_string)
 model.save_weights('my_model_weights.h5')
 ```	
 
-在需要时，你可用保存好的权重初始化相应的模型：
+如果你需要在代码中初始化一个完全相同的模型，请使用：
 ```python
 model.load_weights('my_model_weights.h5')
-```	
-通过模型和权重的保存和加载，我们可以轻松重构已经训练好的模型
-```python
-json_string = model.to_json()
-open('my_model_architecture.json', 'w').write(json_string)
-model.save_weights('my_model_weights.h5')
-
-# elsewhere...
-model = model_from_json(open('my_model_architecture.json').read())
-model.load_weights('my_model_weights.h5')
 ```
-最后，在模型使用前，还是需要再编译一下（如果只用来预测可不用编译）
+如果你需要加载权重到不同的网络结构（有些层一样）中，例如fine-tune或transfer-learning，你可以通过层名字来加载模型：
+
 ```python
-model.compile(optimizer='adagrad', loss='mse')
+model.load_weights('my_model_weights.h5', by_name=True)
 ```
 
+例如：
+```python
+"""
+假如原模型为：
+    model = Sequential()
+    model.add(Dense(2, input_dim=3, name="dense_1"))
+    model.add(Dense(3, name="dense_2"))
+    ...
+    model.save_weights(fname)
+"""
+# new model
+model = Sequential()
+model.add(Dense(2, input_dim=3, name="dense_1"))  # will be loaded
+model.add(Dense(10, name="new_dense"))  # will not be loaded
 
+# load weights from first model; will only affect the first layer, dense_1.
+model.load_weights(fname, by_name=True)
+
+```
 ***
 
 <a name='loss'>
@@ -434,3 +464,45 @@ print(len(model.layers))  # "1"
 
 【Tips】模型的.layers属性保存了模型中的层对象，数据类型是list，在model没有```.pop()```方法前，我一般通过model.layers.pop()完成相同的功能。
 但显然，使用keras提供的方法会安全的多【@bigmoyan】
+
+***
+
+<a name='pretrain'>
+<font color='#404040'>
+## 如何在Keras中使用预训练的模型？
+</font>
+</a>
+
+我们提供了下面这些图像分类的模型代码及预训练权重：
+
+- VGG16
+- VGG19
+- ResNet50
+- Inception v3
+
+可通过```keras.applications```载入这些模型：
+
+```python
+from keras.applications.vgg16 impoprt VGG16
+from keras.applications.vgg19 impoprt VGG19
+from keras.applications.resnet50 impoprt ResNet50
+from keras.applications.inception_v3 impoprt InceptionV3
+
+model = VGG16(weights='imagenet', include_top=True)
+```
+
+这些代码的使用示例请参考```.Application```模型的[<font color='#FF0000'>文档</font>](../other/application.md)
+
+下面的图像分类模型提供了模型搭建的代码和相应的预训练权重
+
+* [<font color='#FF0000'>VGG-16</font>](https://gist.github.com/baraldilorenzo/07d7802847aaad0a35d3)
+* [<font color='#FF0000'>VGG-19</font>](https://gist.github.com/baraldilorenzo/8d096f48a1be4a2d660d)
+* [<font color='#FF0000'>AlexNet</font>](https://github.com/heuritech/convnets-keras)
+
+使用这些预训练模型进行特征抽取或fine-tune的例子可以参考[<font color='#FF0000'>此博客</font>](http://blog.keras.io/building-powerful-image-classification-models-using-very-little-data.html)
+
+VGG模型也是很多Keras例子的基础模型，如：
+
+* [<font color='#FF0000'>Style-transfer</font>](https://github.com/fchollet/keras/blob/master/examples/neural_style_transfer.py)
+* [<font color='#FF0000'>Feature visualization</font>](https://github.com/fchollet/keras/blob/master/examples/conv_filter_visualization.py)
+* [<font color='#FF0000'>Deep dream</font>](https://github.com/fchollet/keras/blob/master/examples/deep_dream.py)

@@ -61,13 +61,13 @@ keras.callbacks.History()
 
 ## ModelCheckpoint
 ```python
-keras.callbacks.ModelCheckpoint(filepath, monitor='val_loss', verbose=0, save_best_only=False, mode='auto')
+keras.callbacks.ModelCheckpoint(filepath, monitor='val_loss', verbose=0, save_best_only=False, save_weights_only=False, mode='auto')
 ```
 该回调函数将在每个epoch后保存模型到```filepath```
 
 ```filepath```可以是格式化的字符串，里面的占位符将会被```epoch```值和传入```on_epoch_end```的```logs```关键字所填入
 
-例如，```filename```若为```weights.{epoch:02d-{val_loss:.2f}}.hdf5，则会生成对应epoch和验证集loss的多个文件。
+例如，```filepath```若为```weights.{epoch:02d-{val_loss:.2f}}.hdf5，则会生成对应epoch和验证集loss的多个文件。
 
 ### 参数
 
@@ -81,6 +81,8 @@ keras.callbacks.ModelCheckpoint(filepath, monitor='val_loss', verbose=0, save_be
 
 * mode：‘auto’，‘min’，‘max’之一，在```save_best_only=True```时决定性能最佳模型的评判准则，例如，当监测值为```val_acc```时，模式应为```max```，当检测值为```val_loss```时，模式应为```min```。在```auto```模式下，评价准则由被监测值的名字自动推断。
 
+* save_weights_only：若设置为True，则只保存模型权重，否则将保存整个模型（包括模型结构，配置信息等）
+
 ***
 
 ## EarlyStopping
@@ -93,7 +95,7 @@ keras.callbacks.EarlyStopping(monitor='val_loss', patience=0, verbose=0, mode='a
 
 * monitor：需要监视的量
 
-* patience：忍耐限度，即如果经过```patience```个epoch，检测值都没有改善的话，就会停止训练。
+* patience：当early stop被激活（如发现loss相比上一个epoch训练没有下降），则经过```patience```个epoch后停止训练。
 
 * verbose：信息展示模式
 

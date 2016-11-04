@@ -35,3 +35,24 @@ model.add(TimeDistributed(Dense(32)))
 model = Sequential()
 model.add(TimeDistributed(Convolution2D(64, 3, 3), input_shape=(10, 3, 299, 299)))
 ```
+
+## Bidirectional包装器
+```python
+keras.layers.wrappers.Bidirectional(layer, merge_mode='concat', weights=None)
+```
+双向RNN包装器
+
+### 参数
+
+* layer：```Recurrent```对象
+* merge_mode：前向和后向RNN输出的结合方式，为```sum```,```mul```,```concat```,```ave```和```None```之一，若设为None，则返回值不结合，而是以列表的形式返回
+
+### 例子
+```python
+model = Sequential()
+model.add(Bidirectional(LSTM(10, return_sequences=True), input_shape=(5, 10)))
+model.add(Bidirectional(LSTM(10)))
+model.add(Dense(5))
+model.add(Activation('softmax'))
+model.compile(loss='categorical_crossentropy', optimizer='rmsprop')
+```

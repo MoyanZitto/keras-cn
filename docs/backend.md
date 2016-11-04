@@ -8,6 +8,8 @@ Keras是一个模型级的库，提供了快速构建深度学习网络的模块
 
 * TensorFlow是一个符号主义的张量操作框架，由Google开发。
 
+在未来，我们有可能要添加更多的后端选项，如果你有兴趣开发后端，请与我联系~
+
 ## 切换后端
 
 如果你至少运行过一次Keras，你将在下面的目录下找到Keras的配置文件：
@@ -16,19 +18,27 @@ Keras是一个模型级的库，提供了快速构建深度学习网络的模块
 
 如果该目录下没有该文件，你可以手动创建一个。
 
-文件的内容大概如下：
+文件的默认配置如下：
 
-```{"epsilon": 1e-07, "floatx": "float32", "backend": "theano"}```
+```
+{
+"image_dim_ordering":"tf",
+"epsilon":1e-07,
+"floatx":"float32",
+"backend":"tensorflow"
+}
+```
 
 将```backend```字段的值改写为你需要使用的后端：```theano```或```tensorflow```，即可完成后端的切换。
 
 我们也可以通过定义环境变量```KERAS_BACKEND```来覆盖上面配置文件中定义的后端：
 
 ```python
-KERAS_BACKEND=tensorflow python -c "from keras import backend; print backend._BACKEND"
+KERAS_BACKEND=tensorflow python -c "from keras import backend;"
 Using TensorFlow backend.
-tensorflow
 ```
+
+
 
 ## 使用抽象的Keras后端来编写代码
 
@@ -115,6 +125,11 @@ set_image_dim_ordering()
 ```
 设置图像的维度顺序（‘tf’或‘th’）
 
+### manual_variable_initialization
+```python
+manual_variable_initialization(value)
+```
+指出变量应该以其默认值被初始化还是由用户手动初始化，参数value为布尔值，默认False代表变量由其默认值初始化。
 
 ### shape
 ```python
@@ -378,6 +393,30 @@ not_equal(x, y)
 ```
 逐元素判不等关系，返回布尔张量
 
+### greater
+```python
+greater(x,y)
+```
+逐元素判断x>y关系，返回布尔张量
+
+### greater_equal
+```python
+greater_equal(x,y)
+```
+逐元素判断x>=y关系，返回布尔张量
+
+### lesser
+```python
+lesser(x,y)
+```
+逐元素判断x<y关系，返回布尔张量
+
+### lesser_equal
+```python
+lesser_equal(x,y)
+```
+逐元素判断x<=y关系，返回布尔张量
+
 ###maximum
 ```python
 maximum(x, y)
@@ -401,6 +440,19 @@ sin(x)
 cos(x)
 ```
 逐元素求余弦值
+
+### normalize_batch_in_training
+```python
+normalize_batch_in_training(x, gamma, beta, reduction_axes, epsilon=0.0001)
+```
+对一个batch数据先计算其均值和方差，然后再进行batch_normalization
+
+### batch_normalization
+```python
+batch_normalization(x, mean, var, beta, gamma, epsilon=0.0001)
+```
+对一个batch的数据进行batch_normalization，计算公式为：
+output = (x-mean)/(sqrt(var)+epsilon)*gamma+beta
 
 ###concatenate
 ```python
@@ -426,8 +478,13 @@ permute_dimensions(x, pattern)
 ```python
 resize_images(X, height_factor, width_factor, dim_ordering)
 ```
-依据给定的缩放因子，改变一个batch图片的大小，参数中的两个因子都为正整数，图片的排列顺序与维度的模式相关，如‘th’和‘tf’
+依据给定的缩放因子，改变一个batch图片的shape，参数中的两个因子都为正整数，图片的排列顺序与维度的模式相关，如‘th’和‘tf’
 
+###resize_volumes
+```python
+resize_volumes(X, depth_factor, height_factor, width_factor, dim_ordering)
+```
+依据给定的缩放因子，改变一个5D张量数据的shape，参数中的两个因子都为正整数，图片的排列顺序与维度的模式相关，如‘th’和‘tf’。5D数据的形式是[batch, channels, depth, height, width](th)或[batch, depth, height, width, channels](tf)
 
 ###repeat_elements
 ```python
@@ -471,11 +528,35 @@ spatial_2d_padding(x, padding=(1, 1), dim_ordering='th')
 ```
 向4D张量第二和第三维度的左右两端填充```padding[0]```和```padding[1]```个0值.
 
+###spatial_3d_padding
+```python
+spatial_3d_padding(x, padding=(1, 1, 1), dim_ordering='th')
+```
+向5D张量深度、高度和宽度三个维度上填充```padding[0]```，```padding[1]```和```padding[2]```个0值.
+
+### one-hot
+```python
+one_hot(indices, nb_classes)
+```
+输入为n维的整数张量，形如(batch_size, dim1, dim2, ... dim(n-1))，输出为(n+1)维的one-hot编码，形如(batch_size, dim1, dim2, ... dim(n-1), nb_classes)
+
+### reverse
+```python
+reverse(x, axes)
+```
+将一个张量在给定轴上反转
+
 ###get_value
 ```python
 get_value(x)
 ```
 以Numpy array的形式返回张量的值
+
+###batch_get_value
+```python
+batch_get_value(x)
+```
+以Numpy array list的形式返回多个张量的值
 
 ###set_value
 ```python
@@ -490,6 +571,12 @@ batch_set_value(tuples)
 将多个值载入多个张量变量中
 
 * tuples: 列表，其中的元素形如```(tensor, value)```。```value```是要载入的Numpy array数据
+
+### print_tensor
+```
+print_tensor(x, message='')
+```
+在求值时打印张量的信息，并返回原张量
 
 ###function
 ```python
@@ -508,6 +595,13 @@ function(inputs, outputs, updates=[])
 gradients(loss, variables)
 ```
 返回loss函数关于variables的梯度，variables为张量变量的列表
+
+### stop_gradient
+```python
+stop_gradient(variables)
+```
+英文原句：“Returns `variables` but with zero gradient with respect to every other
+    variables.”
 
 ###rnn
 ```python
@@ -735,3 +829,38 @@ pool3d(x, pool_size, strides=(1, 1, 1), border_mode='valid', dim_ordering='th', 
 * dim_ordering：“tf”和“th”之一，维度排列顺序
 
 * pool_mode: “max”，“avg”之一，池化方式
+
+### ctc_batch_cost
+```python
+ctc_batch_cost(y_true, y_pred, input_length, label_length)
+```
+在batch上运行CTC损失算法
+
+* 参数
+	* y_true：形如(samples，max_tring_length)的张量，包含标签的真值
+	* y_pred：形如(samples，time_steps，num_categories)的张量，包含预测值或输出的softmax值
+	* input_length：形如(samples，1)的张量，包含y_pred中每个batch的序列长
+	* label_length：形如(samples，1)的张量，包含y_true中每个batch的序列长
+
+* 返回值：形如(samoles，1)的tensor，包含了每个元素的CTC损失
+
+### ctc_decode
+```python
+ctc_decode(y_pred, input_length, greedy=True, beam_width=None, dict_seq_lens=None, dict_values=None)
+```
+使用贪婪算法或带约束的字典搜索算法解码softmax的输出
+
+* 参数
+	* y_pred：形如(samples，time_steps，num_categories)的张量，包含预测值或输出的softmax值
+	* input_length：形如(samples，1)的张量，包含y_pred中每个batch的序列长
+	* greedy：设置为True使用贪婪算法，速度快
+	* dict_seq_lens：dic_values列表中各元素的长度
+	* dict_values：列表的列表，代表字典
+
+* 返回值：形如(samples，time_steps，num_catgories)的张量，包含了路径可能性（以softmax概率的形式）。注意仍然需要一个用来取出argmax和处理空白标签的函数。
+
+### backend
+```python
+backend()
+```
+确定当前使用的后端

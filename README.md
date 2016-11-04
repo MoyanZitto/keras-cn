@@ -2,9 +2,11 @@
 
 本项目由BigMoyan于2016-4-29发起，旨在建立一个[keras.io](keras.io)的中文版文档，并提供更多用户友好的支持与建议。
 
-本项目目前已完成1.1版本，keras-cn的网站为[keras-cn](http://keras-cn.readthedocs.io/en/latest/)
+本项目目前已完成1.x版本，文档网址为[keras-cn](http://keras-cn.readthedocs.io/en/latest/)
 
-项目基于Mkdocs生成静态网页，请使用Markdown编写文档并遵守以下约定：
+如果你在使用keras和keras-cn的过程中有任何问题，请发在issue中，我会定时检查和回复，在issue中你也可以和志同道合的好基友们一起聊天~
+
+项目基于Mkdocs生成静态网页，如果你想为文档做出贡献，请使用Markdown编写文档并遵守以下约定。
 
 ## 0.字体颜色
 

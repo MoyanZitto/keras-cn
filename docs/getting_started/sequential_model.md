@@ -6,6 +6,7 @@
 
 ```python
 from keras.models import Sequential
+from keras.layers import Dense, Activation
 
 model = Sequential([
 Dense(32, input_dim=784),
@@ -104,10 +105,16 @@ Merge层支持一些预定义的合并模式，包括：
 * ```dot```：张量相乘，可以通过```dot_axis```关键字参数来指定要消去的轴
 * ```cos```：计算2D张量（即矩阵）中各个向量的余弦距离
 
+这个两个分支的模型可以通过下面的代码训练:
+```python
+final_model.compile(optimizer='rmsprop', loss='categorical_crossentropy')
+final_model.fit([input_data_1, input_data_2], targets)  # we pass one data array per model input
+```
+
 也可以为Merge层提供关键字参数```mode```，以实现任意的变换，例如：
 
 ```python
-merged = Merge([left_branch, right_branch], mode=lambda x, y: x - y)
+merged = Merge([left_branch, right_branch], mode=lambda x: x[0] - x[1])
 ```
 	
 现在你已经学会定义几乎任何Keras的模型了，对于不能通过Sequential和Merge组合生成的复杂模型，可以参考[<font color=#FF0000>泛型模型API</font>](functional_API.md)
@@ -150,7 +157,7 @@ Keras以Numpy数组作为输入数据和标签的数据类型。训练模型一�
 ```python
 # for a single-input model with 2 classes (binary):
 model = Sequential()
-model.add(Dense(1, input_dim=784, activation='softmax'))
+model.add(Dense(1, input_dim=784, activation='sigmoid'))
 model.compile(optimizer='rmsprop',
               loss='binary_crossentropy',
               metrics=['accuracy'])
@@ -378,7 +385,7 @@ image_model.load_weights('weight_file.h5')
 language_model = Sequential()
 language_model.add(Embedding(vocab_size, 256, input_length=max_caption_len))
 language_model.add(GRU(output_dim=128, return_sequences=True))
-language_model.add(TimeDistributedDense(128))
+language_model.add(TimeDistributed(Dense(128))
 
 # let's repeat the image vector to turn it into a sequence.
 image_model.add(RepeatVector(max_caption_len))

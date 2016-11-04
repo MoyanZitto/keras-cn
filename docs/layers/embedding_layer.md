@@ -17,8 +17,6 @@ Embedding层只能作为模型的第一层
 
 * init：初始化方法，为预定义初始化方法名的字符串，或用于初始化权重的Theano函数。该参数仅在不传递```weights```参数时有意义。
 
-* activation：激活函数，为预定义的激活函数名（参考[<font color='#FF0000'>激活函数</font>](../other/activations)），或逐元素（element-wise）的Theano函数。如果不指定该参数，将不会使用任何激活函数（即使用线性激活函数：a(x)=x）
-
 * weights：权值，为numpy array的list。该list应仅含有一个如（input_dim,output_dim）的权重矩阵
 
 * W_regularizer：施加在权重上的正则项，为[<font color='FF0000'>WeightRegularizer</font>](../other/regularizers)对象

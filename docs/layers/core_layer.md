@@ -98,6 +98,63 @@ keras.layers.core.Dropout(p)
 * [<font color='FF0000'>Dropout: A Simple Way to Prevent Neural Networks from Overfitting</font>](http://www.cs.toronto.edu/~rsalakhu/papers/srivastava14a.pdf)
 
 ***
+## SpatialDropout2D层
+
+```python
+keras.layers.core.SpatialDropout2D(p, dim_ordering='default')
+```
+SpatialDropout2D与Dropout的作用类似，但它断开的是整个2D特征图，而不是单个神经元。如果一张特征图的相邻像素之间有很强的相关性（通常发生在低层的卷积层中），那么普通的dropout无法正则化其输出，否则就会导致明显的学习率下降。这种情况下，SpatialDropout2D能够帮助提高特征图之间的独立性，应该用其取代普通的Dropout
+
+### 参数
+
+* p：0~1的浮点数，控制需要断开的链接的比例
+* dim_ordering:'th'或'tf'，默认为```~/.keras/keras.json```配置的```image_dim_ordering```值
+
+### 输入shape
+
+‘th’模式下，输入形如（samples,channels，rows，cols）的4D张量
+
+‘tf’模式下，输入形如（samples，rows，cols，channels）的4D张量
+
+注意这里的输入shape指的是函数内部实现的输入shape，而非函数接口应指定的```input_shape```，请参考下面提供的例子。
+
+### 输出shape
+
+与输入相同
+
+### 参考文献
+
+* [<font color='FF0000'>Efficient Object Localization Using Convolutional Networks</font>](https://arxiv.org/pdf/1411.4280.pdf)
+
+***
+
+## SpatialDropout3D层
+
+```python
+keras.layers.core.SpatialDropout3D(p, dim_ordering='default')
+```
+SpatialDropout3D与Dropout的作用类似，但它断开的是整个3D特征图，而不是单个神经元。如果一张特征图的相邻像素之间有很强的相关性（通常发生在低层的卷积层中），那么普通的dropout无法正则化其输出，否则就会导致明显的学习率下降。这种情况下，SpatialDropout3D能够帮助提高特征图之间的独立性，应该用其取代普通的Dropout
+
+### 参数
+
+* p：0~1的浮点数，控制需要断开的链接的比例
+* dim_ordering:'th'或'tf'，默认为```~/.keras/keras.json```配置的```image_dim_ordering```值
+
+### 输入shape
+
+‘th’模式下，输入应为形如（samples，channels，input_dim1，input_dim2, input_dim3）的5D张量
+
+‘tf’模式下，输入应为形如（samples，input_dim1，input_dim2, input_dim3，channels）的5D张量
+
+### 输出shape
+
+与输入相同
+
+### 参考文献
+
+* [<font color='FF0000'>Efficient Object Localization Using Convolutional Networks</font>](https://arxiv.org/pdf/1411.4280.pdf)
+
+***
 
 ## Flatten层
 ```python
@@ -254,7 +311,7 @@ merged_model.add(Merge([model1, model2], mode='concat', concat_axis=1)
 ```python
 keras.layers.core.Lambda(function, output_shape=None, arguments={})
 ```
-本函数用以对上一层的输入实现任何Theano/TensorFlow表达式
+本函数用以对上一层的输出施以任何Theano/TensorFlow表达式
 
 ### 参数
 

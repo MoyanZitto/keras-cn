@@ -34,7 +34,7 @@ keras.regularizers.ActivityRegularizer(l1=0., l2=0.)
 
 * l1(l=0.01)：L1正则项，又称LASSO
 
-* l2(l=0.01)：L1正则项，又称权重衰减或Ridge
+* l2(l=0.01)：L2正则项，又称权重衰减或Ridge
 
 * l1l2(l1=0.01, l2=0.01)： L1-L2混合正则项, 又称ElasticNet
 

@@ -211,9 +211,9 @@ model.fit([data_a, data_b], labels, nb_epoch=10)
 
 无论何时，当你在某个输入上调用层时，你就创建了一个新的张量（即该层的输出），同时你也在为这个层增加一个“（计算）节点”。这个节点将输入张量映射为输出张量。当你多次调用该层时，这个层就有了多个节点，其下标分别为0，1，2...
 
-在上一版本的Keras中，你可以通过```layer.get_ouput()```方法来获得层的输出张量，或者通过```layer.output_shape```获得其输出张量的shape。这个版本的Keras你仍然可以这么做（除了```layer.get_ouput()```被```ouput()```替换）。但如果一个层与多个输入相连，会出现什么情况呢？
+在上一版本的Keras中，你可以通过```layer.get_output()```方法来获得层的输出张量，或者通过```layer.output_shape```获得其输出张量的shape。这个版本的Keras你仍然可以这么做（除了```layer.get_output()```被```output()```替换）。但如果一个层与多个输入相连，会出现什么情况呢？
 
-如果层只与一个输入相连，那没有任何困惑的地方。```.ouput()```将会返回该层唯一的输出
+如果层只与一个输入相连，那没有任何困惑的地方。```.output()```将会返回该层唯一的输出
 
 ```python
 a = Input(shape=(140, 256))
@@ -309,8 +309,8 @@ from keras.layers import merge, Convolution2D, Input
 
 # input tensor for a 3-channel 256x256 image
 x = Input(shape=(3, 256, 256))
-# 3x3 conv with 16 output channels
-y = Convolution2D(16, 3, 3, border_mode='same')
+# 3x3 conv with 3 output channels(same as input channels)
+y = Convolution2D(3, 3, 3, border_mode='same')(x)
 # this returns x + y.
 z = merge([x, y], mode='sum')
 ```
