@@ -98,7 +98,7 @@ lstm_out = LSTM(32)(x)
 然后，我们插入一个额外的损失，使得即使在主损失很高的情况下，LSTM和Embedding层也可以平滑的训练。
 
 ```python
-auxiliary_output = Dense(1, activation='sigmoid', name='aux_output')(lstm_out)
+auxiliary_loss = Dense(1, activation='sigmoid', name='aux_output')(lstm_out)
 ```	
 
 再然后，我们将LSTM与额外的输入数据串联起来组成输入，送入模型中：
@@ -113,12 +113,12 @@ x = Dense(64, activation='relu')(x)
 x = Dense(64, activation='relu')(x)
 
 # and finally we add the main logistic regression layer
-main_output = Dense(1, activation='sigmoid', name='main_output')(x)
+main_loss = Dense(1, activation='sigmoid', name='main_output')(x)
 ```
 最后，我们定义整个2输入，2输出的模型：
 
 ```python
-model = Model(input=[main_input, auxiliary_input], output=[main_output, auxiliary_output])
+model = Model(input=[main_input, auxiliary_input], output=[main_loss, auxiliary_loss])
 ```
 
 模型定义完毕，下一步编译模型。我们给额外的损失赋0.2的权重。我们可以通过关键字参数```loss_weights```或```loss```来为不同的输出设置不同的损失函数或权值。这两个参数均可为Python的列表或字典。这里我们给```loss```传递单个损失函数，这个损失函数会被应用于所有输出上。

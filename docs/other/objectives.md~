@@ -42,14 +42,7 @@ model.compile(loss='mean_squared_error', optimizer='sgd')
 
 * cosine_proximity：即预测值与真实标签的余弦距离平均值的相反数
 
-
-**注意**: 当使用"categorical_crossentropy"作为目标函数时,标签应该为多类模式,即one-hot编码的向量,而不是单个数值. 可以使用工具中的`to_categorical`函数完成该转换.示例如下:
-```python
-from keras.utils.np_utils import to_categorical
-
-categorical_labels = to_categorical(int_labels, nb_classes=None)
-```
-
+## 注意
 
 
 【Tips】过一段时间（等我或者谁有时间吧……）我们将把各种目标函数的表达式和常用场景总结一下。

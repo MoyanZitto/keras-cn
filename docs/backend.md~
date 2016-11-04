@@ -80,7 +80,6 @@ a = concatenate([b, c], axis=-1)
 
 ## Kera后端函数
 
-
 ###epsilon
 ```python
 epsilon()
@@ -292,12 +291,6 @@ prod(x, axis=None, keepdims=False)
 ```
 在给定轴上计算张量中元素之积
 
-### var
-```python
-var(x, axis=None, keepdims=False)
-```
-在给定轴上计算张量方差
-
 ### std
 ```python
 std(x, axis=None, keepdims=False)
@@ -461,12 +454,6 @@ batch_normalization(x, mean, var, beta, gamma, epsilon=0.0001)
 对一个batch的数据进行batch_normalization，计算公式为：
 output = (x-mean)/(sqrt(var)+epsilon)*gamma+beta
 
-###batch_normalization
-```python
-batch_normalization(x, mean, var, beta, gamma, epsilon=0.0001)
-```
-给定均值,方差,gamma和beta后进行batchnormalization
-
 ###concatenate
 ```python
 concatenate(tensors, axis=-1)
@@ -503,7 +490,7 @@ resize_volumes(X, depth_factor, height_factor, width_factor, dim_ordering)
 ```python
 repeat_elements(x, rep, axis)
 ```
-在给定轴上重复张量元素```rep```次，与```np.repeat```类似。例如，若xshape```(s1, s2, s3) ```并且给定轴为```axis=1`，输出张量的shape为`(s1, s2 * rep, s3)```
+在给定轴上重复张量元素```rep```次，与```np.repeat```类似。例如，若xshape```(s1, s2, s3) ```并且给定轴为```axis=1```，输出张量的shape为```(s1, s2 * rep, s3)```
 
 ###repeat
 ```python
@@ -511,19 +498,19 @@ repeat(x, n)
 ```
 重复2D张量，例如若xshape是```(samples, dim)```且n为2，则输出张量的shape是```(samples, 2, dim)```
 
-### batch_flatten
+###batch_flatten
 ```python
 batch_flatten(x)
 ```
 将一个n阶张量转变为2阶张量，其第一维度保留不变
 
-### expand_dims
+###expand_dims
 ```python
 expand_dims(x, dim=-1)
 ```
 在下标为```dim```的轴上增加一维
 
-### squeeze
+###squeeze
 ```python
 squeeze(x, axis)
 ```
@@ -535,24 +522,11 @@ temporal_padding(x, padding=1)
 ```
 向3D张量中间的那个维度的左右两端填充```padding```个0值
 
-###asymmetric_temporal_padding
-```python
-asymmetric_temporal_padding(x, left_pad=1, right_pad=1)
-```
-向3D张量中间的那个维度的一端填充```padding```个0值
-
 ###spatial_2d_padding
 ```python
 spatial_2d_padding(x, padding=(1, 1), dim_ordering='th')
 ```
 向4D张量第二和第三维度的左右两端填充```padding[0]```和```padding[1]```个0值.
-
-###asymmetric_spatial_2d_padding
-```python
-asymmetric_spatial_2d_padding(x, top_pad=1, bottom_pad=1, left_pad=1, right_pad=1, dim_ordering='th')
-```
-对4D张量的部分方向进行填充
-
 
 ###spatial_3d_padding
 ```python
@@ -700,16 +674,6 @@ relu(x, alpha=0.0, max_value=None)
 * alpha：负半区斜率
 * max_value: 饱和门限
 
-###elu
-```python
-elu(x, alpha=1.0)
-
-```
-指数线性单元
-
-* x：输入张量
-* alpha: 标量
-
 ### softmax
 ```python
 softmax(x)
@@ -777,17 +741,6 @@ Arguments
 l2_normalize(x, axis)
 ```
 在给定轴上对张量进行L2范数规范化
-
-
-###in_top_k
-```python
-in_top_k(predictions, targets, k)
-```
-判断目标是否在predictions的前k大值位置
-
-* predictions:预测值张量, shape为(batch_size, classes), 数据类型float32
-* targets:真值张量, shape为(batch_size,),数据类型为int32或int64
-* k:整数
 
 ###conv2d
 ```python
