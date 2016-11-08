@@ -182,7 +182,7 @@ for old_value, new_value in layer.updates:
 ```
 注意如果你使用Keras模型，model.updates将与上面的代码作用相同（收集模型中所有更新）
 
-另外，如果你需要显式的手机一个层的可训练权重，你可以通过layer.trainable_weights来实现，对模型而言是model.trainable_weights，它是一个tensorflow变量对象的列表：
+另外，如果你需要显式的收集一个层的可训练权重，你可以通过layer.trainable_weights来实现，对模型而言是model.trainable_weights，它是一个tensorflow变量对象的列表：
 ```python
 from keras.layers import Dense
 
@@ -220,13 +220,13 @@ model.add(Dense(10, activation='softmax'))
 
 在这个阶段，你可以调用model.load_weights(weights_file)来加载预训练的权重
 
-然后，你或许会首席该模型的输出张量：
+然后，你或许会收集该模型的输出张量：
 ```python
 output_tensor = model.output
 ```
 #### 对TensorFlow张量中调用Keras模型
 
-Keras模型与Keras层的行为一直，因此可以被调用于TensorFlow张量上：
+Keras模型与Keras层的行为一致，因此可以被调用于TensorFlow张量上：
 ```python
 from keras.models import Sequential
 
