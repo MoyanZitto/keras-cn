@@ -3,7 +3,7 @@
 
 
 ## 这就是Keras
-Keras是一个极简和高度模块化的神经网络库，Keras由纯Python编写而成并基Tensorflow或Theano。Keras
+Keras是一个高层神经网络库，Keras由纯Python编写而成并基Tensorflow或Theano。Keras
 为支持快速实验而生，能够把你的idea迅速转换为结果，如果你有如下需求，请选择Keras：
 
 * 简易和快速的原型设计（keras具有高度模块化，极简，和可扩充特性）
@@ -82,16 +82,14 @@ Keras从2015年3月开始启动，经过一年多的开发，目前Keras进入�
 
 * 我们的中文文档没有及时更新：如果是这种情况，请发邮件给我，我会尽快更新
 
-目前文档的版本号是1.1.0，对应于官方的1.1.0 release 版本, 本次更新的主要内容是：
+目前文档的版本号是1.1.1，对应于官方的1.1.1 release 版本, 本次更新的主要内容是：
 
-* 将默认后端切换为TensorFlow：现在Keras的默认后端是TensorFlow，而不是Theano
-* 支持将权重载入不匹配的模型中：现在可以在使用```model.load_weights()```时指定参数```by_name=True```来将保存的权重载入一个框架不匹配的模型中，只有名字匹配到的权重会被载入
-* 增加了两种新的Dropout，```SpatialDropout2D```和```SpatialDropout3D```两种Dropout，注意这两种Dropout不是断开单个神经元的连接，而是断开整个featuremap
+* 加入了新模块"评价指标", 提供了更丰富的评价模型的方法
+* 加入了常用工具模块的文档,对应于源代码的utils文件夹,尽管内容目前还很简单
+* application模块加入了两种新的模型,Xception和MusicTaggerCRNN,后者用于音乐风格标定
 * 增加了一种卷积层，```AtrousConvolution1D```，带有孔洞的1D卷积。
-* 增加了一套新的Crop层，包含```Cropping1D```,```Cropping2D```,```Cropping3D```，用于裁剪输出的尺寸，以```Cropping2D```为例，它将剪掉每个特征图的周围一圈。
-
-* 增加了最新版本Keras在Linux和Windows上的详细配置指南，鸣谢三当家的**SCP-173**
-
+* 增加了用于简单介绍Keras example的文档,这部分文档将在未来逐渐丰富
+* 增加了若干后端函数
 * 修正了一些文档错误
 
 注意，keras在github上的master往往要高于当前的release版本，如果你从源码编译keras，可能某些模块与文档说明不相符，请以官方Github代码为准
@@ -202,7 +200,10 @@ Keras默认使用TensorFlow作为后端来进行张量操作，如需切换到Th
 
 ##技术支持
 
-你可以在[<font color=FF0000>Keras Google group</font>](https://groups.google.com/forum/#!forum/keras-users)里提问以获得帮助，如果你生活在中国大陆的话，梯子请自备
+你可以在下列网址提问或加入Keras开发讨论:
+
+- [<font color=FF0000>Keras Google group</font>](https://groups.google.com/forum/#!forum/keras-users)
+- [<font color=FF0000>Keras Gitter channel</font>](https://gitter.im/Keras-io/Lobby)
 
 你也可以在[<font color=FF0000>Github issues</font>](https://github.com/fchollet/keras/issues)里提问。在提问之前请确保你阅读过我们的[<font color=FF0000>指导</font>](https://github.com/fchollet/keras/blob/master/CONTRIBUTING.md)
 

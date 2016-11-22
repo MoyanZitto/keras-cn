@@ -98,7 +98,7 @@ lstm_out = LSTM(32)(x)
 然后，我们插入一个额外的损失，使得即使在主损失很高的情况下，LSTM和Embedding层也可以平滑的训练。
 
 ```python
-auxiliary_loss = Dense(1, activation='sigmoid', name='aux_output')(lstm_out)
+auxiliary_output = Dense(1, activation='sigmoid', name='aux_output')(lstm_out)
 ```	
 
 再然后，我们将LSTM与额外的输入数据串联起来组成输入，送入模型中：
@@ -113,12 +113,12 @@ x = Dense(64, activation='relu')(x)
 x = Dense(64, activation='relu')(x)
 
 # and finally we add the main logistic regression layer
-main_loss = Dense(1, activation='sigmoid', name='main_output')(x)
+main_output = Dense(1, activation='sigmoid', name='main_output')(x)
 ```
 最后，我们定义整个2输入，2输出的模型：
 
 ```python
-model = Model(input=[main_input, auxiliary_input], output=[main_loss, auxiliary_loss])
+model = Model(input=[main_input, auxiliary_input], output=[main_output, auxiliary_output])
 ```
 
 模型定义完毕，下一步编译模型。我们给额外的损失赋0.2的权重。我们可以通过关键字参数```loss_weights```或```loss```来为不同的输出设置不同的损失函数或权值。这两个参数均可为Python的列表或字典。这里我们给```loss```传递单个损失函数，这个损失函数会被应用于所有输出上。
@@ -211,9 +211,9 @@ model.fit([data_a, data_b], labels, nb_epoch=10)
 
 无论何时，当你在某个输入上调用层时，你就创建了一个新的张量（即该层的输出），同时你也在为这个层增加一个“（计算）节点”。这个节点将输入张量映射为输出张量。当你多次调用该层时，这个层就有了多个节点，其下标分别为0，1，2...
 
-在上一版本的Keras中，你可以通过```layer.get_ouput()```方法来获得层的输出张量，或者通过```layer.output_shape```获得其输出张量的shape。这个版本的Keras你仍然可以这么做（除了```layer.get_ouput()```被```ouput()```替换）。但如果一个层与多个输入相连，会出现什么情况呢？
+在上一版本的Keras中，你可以通过```layer.get_output()```方法来获得层的输出张量，或者通过```layer.output_shape```获得其输出张量的shape。这个版本的Keras你仍然可以这么做（除了```layer.get_output()```被```output()```替换）。但如果一个层与多个输入相连，会出现什么情况呢？
 
-如果层只与一个输入相连，那没有任何困惑的地方。```.ouput()```将会返回该层唯一的输出
+如果层只与一个输入相连，那没有任何困惑的地方。```.output()```将会返回该层唯一的输出
 
 ```python
 a = Input(shape=(140, 256))

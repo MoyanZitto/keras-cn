@@ -56,7 +56,7 @@ keras.preprocessing.image.ImageDataGenerator(featurewise_center=False,
 
 * rescale: 重放缩因子,默认为None. 如果为None或0则不进行放缩,否则会将该数值乘到数据上(在应用其他变换之前)
 
-* dim_ordering：‘tf’和‘th’之一，规定数据的维度顺序。‘tf’模式下数据的形状为```samples, width, height, channels```，‘th’下形状为```(samples, channels, width, height).```该参数的默认值是Keras配置文件```~/.keras/keras.json```的```image_dim_ordering```值,如果你从未设置过的话,就是'th'
+* dim_ordering：‘tf’和‘th’之一，规定数据的维度顺序。‘tf’模式下数据的形状为```samples, width, height, channels```，‘th’下形状为```(samples, channels, width, height).```该参数的默认值是Keras配置文件```~/.keras/keras.json```的```image_dim_ordering```值,如果你从未设置过的话,就是'tf'
 
 ***
 
@@ -69,6 +69,8 @@ keras.preprocessing.image.ImageDataGenerator(featurewise_center=False,
 	* augment：布尔值，确定是否使用随即提升过的数据
 	
 	* round：若设```augment=True```，确定要在数据上进行多少轮数据提升，默认值为1
+	
+	* seed: 整数,随机数种子
 	
 * flow(self, X, y, batch_size=32, shuffle=True, seed=None, save_to_dir=None, save_prefix='', save_format='jpeg')：接收numpy数组和标签为参数,生成经过数据提升或标准化后的batch数据,并在一个无限循环中不断的返回batch数据
 
@@ -88,6 +90,8 @@ keras.preprocessing.image.ImageDataGenerator(featurewise_center=False,
 	
 	* _yields:形如(x,y)的tuple,x是代表图像数据的numpy数组.y是代表标签的numpy数组.该迭代器无限循环.
 
+	* seed: 整数,随机数种子
+
 * flow_from_directory(directory): 以文件夹路径为参数,生成经过数据提升/归一化后的数据,在一个无限循环中无限产生batch数据
 
 	* directory: 目标文件夹路径,对于每一个类,该文件夹都要包含一个子文件夹.子文件夹应只包含JPG或PNG格式的图片.详情请查看[<font color='#FF0000'>此脚本</font>](https://gist.github.com/fchollet/0830affa1f7f19fd47b06d4cf89ed44d)
@@ -97,7 +101,7 @@ keras.preprocessing.image.ImageDataGenerator(featurewise_center=False,
     * class_mode: "categorical", "binary", "sparse"或None之一. 默认为"categorical. 该参数决定了返回的标签数组的形式, "categorical"会返回2D的one-hot编码标签,"binary"返回1D的二值标签."sparse"返回1D的整数标签,如果为None则不返回任何标签, 生成器将仅仅生成batch数据, 这种情况在使用```model.predict_generator()```和```model.evaluate_generator()```等函数时会用到.
     * batch_size: batch数据的大小,默认32
     * shuffle: 是否打乱数据,默认为True
-    * seed: 可选参数,打乱数据时的随机数种子
+    * seed: 可选参数,打乱数据和进行变换时的随机数种子
 	* save_to_dir: None或字符串，该参数能让你将提升后的图片保存起来，用以可视化
 	* save_prefix：字符串，保存提升后图片时使用的前缀, 仅当设置了```save_to_dir```时生效
 	* save_format："png"或"jpeg"之一，指定保存图片的数据格式,默认"jpeg"
@@ -169,4 +173,41 @@ model.fit_generator(
         nb_epoch=50,
         validation_data=validation_generator,
         nb_val_samples=800)
+```
+
+同时变换图像和mask
+
+```python
+# we create two instances with the same arguments
+data_gen_args = dict(featurewise_center=True,
+                     featurewise_std_normalization=True,
+                     rotation_range=90.,
+                     width_shift_range=0.1,
+                     height_shift_range=0.1,
+                     zoom_range=0.2)
+image_datagen = ImageDataGenerator(**data_gen_args)
+mask_datagen = ImageDataGenerator(**data_gen_args)
+
+# Provide the same seed and keyword arguments to the fit and flow methods
+seed = 1
+image_datagen.fit(images, augment=True, seed=seed)
+mask_datagen.fit(masks, augment=True, seed=seed)
+
+image_generator = image_datagen.flow_from_directory(
+    'data/images',
+    class_mode=None,
+    seed=seed)
+
+mask_generator = mask_datagen.flow_from_directory(
+    'data/masks',
+    class_mode=None,
+    seed=seed)
+
+# combine generators into one which yields image and masks
+train_generator = zip(image_generator, mask_generator)
+
+model.fit_generator(
+    train_generator,
+    samples_per_epoch=2000,
+    nb_epoch=50)
 ```

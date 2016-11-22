@@ -15,6 +15,7 @@
 |SCP-173|快速开始|Keras安装和配置指南(Windows)|编写|
 |Bigmoyan|深度学习与Keras|面向小数据集构建图像分类模型|翻译|
 |leo-nlp|深度学习与Keras|在Keras模型中使用预训练的词向量|翻译|
+|zhourunlai|工具|I/O工具|翻译|
 
 ## Tips
 
@@ -24,6 +25,7 @@
 |3rduncle|Tips处标注|
 |白菜|Tips处标记|
 |我是小将|Tips处标记|
+|zhourunlai|可视化|
 
 ## Keras陷阱提示
 
@@ -57,6 +59,8 @@
 |毛毛熊|正则项|缩写|
 |木子天一|局部连接层LocallyConnceted|LocallyConnected2D层|
 |QiaXi|Pooling层|GlobalMax/GlobalAve|
+|shawn|Callback|ModelCheckpoint|
+|smallYoki|快速开始|泛型模型|
 
 ## 示例程序
 

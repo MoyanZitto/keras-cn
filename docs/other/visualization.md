@@ -21,3 +21,5 @@ from keras.utils.visualize_util import model_to_dot
 
 SVG(model_to_dot(model).create(prog='dot', format='svg'))
 ```
+
+【Tips】依赖 pydot-ng 和 graphviz，命令行输入```pip install pydot-ng & brew install graphviz```

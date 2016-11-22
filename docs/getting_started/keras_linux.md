@@ -89,7 +89,7 @@ export CUDA_HOME=/usr/local/cuda-8.0
 export PATH=/usr/local/cuda-8.0/bin${PATH:+:${PATH}}
 export LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 ```
-之后`source gedit /etc/bash.bashrc`即可
+之后`source gedit /etc/.bashrc`即可
 同样，在`终端`输入：
 ```
 >>> sudo gedit ~/.bashrc
@@ -147,6 +147,7 @@ Linux目前就是cudnn-8.0-win-x64-v5.1-prod.zip。
 ```
 并写入以下：
 ```
+[global]
 openmp=False 
 device = gpu   
 floatX = float32  

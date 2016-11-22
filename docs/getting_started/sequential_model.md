@@ -129,7 +129,7 @@ merged = Merge([left_branch, right_branch], mode=lambda x: x[0] - x[1])
 
 * 损失函数loss：该参数为模型试图最小化的目标函数，它可为预定义的损失函数名，如```categorical_crossentropy```、```mse```，也可以为一个损失函数。详情见[<font color=#FF0000>objectives</font>](../other/objectives.md)
 
-* 指标列表metrics：对分类问题，我们一般将该列表设置为```metrics=['accuracy']```。指标可以是一个预定义指标的名字（目前仅支持```accuracy```），也可以是一个一般的函数。
+* 指标列表metrics：对分类问题，我们一般将该列表设置为```metrics=['accuracy']```。指标可以是一个预定义指标的名字,也可以是一个用户定制的函数.指标函数应该返回单个张量,或一个完成`metric_name - > metric_value`映射的字典.请参考[性能评估](../other/metrices.md)
 	
 
 ```python
@@ -146,6 +146,27 @@ metrics=['accuracy'])
 # for a mean squared error regression problem
 model.compile(optimizer='rmsprop',
 loss='mse')
+
+# for custom metrices
+
+
+# for custom metrics
+import keras.backend as K
+
+def mean_pred(y_true, y_pred):
+    return K.mean(y_pred)
+
+def false_rates(y_true, y_pred):
+    false_neg = ...
+    false_pos = ...
+    return {
+        'false_neg': false_neg,
+        'false_pos': false_pos,
+    }
+
+model.compile(optimizer='rmsprop',
+              loss='binary_crossentropy',
+              metrics=['accuracy', mean_pred, false_rates])
 ```
 
 ***
