@@ -461,12 +461,6 @@ batch_normalization(x, mean, var, beta, gamma, epsilon=0.0001)
 对一个batch的数据进行batch_normalization，计算公式为：
 output = (x-mean)/(sqrt(var)+epsilon)*gamma+beta
 
-###batch_normalization
-```python
-batch_normalization(x, mean, var, beta, gamma, epsilon=0.0001)
-```
-给定均值,方差,gamma和beta后进行batchnormalization
-
 ###concatenate
 ```python
 concatenate(tensors, axis=-1)

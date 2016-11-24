@@ -5,7 +5,7 @@
 keras.layers.convolutional.Convolution1D(nb_filter, filter_length, init='uniform', activation='linear', weights=None, border_mode='valid', subsample_length=1, W_regularizer=None, b_regularizer=None, activity_regularizer=None, W_constraint=None, b_constraint=None, bias=True, input_dim=None, input_length=None)
 ```
 
-一维卷积层，用以在一维输入信号上进行领域滤波。当使用该层作为首层时，需要提供关键字参数```input_dim```或```input_shape```。例如```input_dim=128```长为128的向量序列输入，而```input_shape=(10,128)```代表一个长为10的128向量序列
+一维卷积层，用以在一维输入信号上进行邻域滤波。当使用该层作为首层时，需要提供关键字参数```input_dim```或```input_shape```。例如```input_dim=128```长为128的向量序列输入，而```input_shape=(10,128)```代表一个长为10的128向量序列
 
 ### 参数
 
