@@ -71,6 +71,7 @@ from keras.metrics import categorical_accuracy as accuracy
 acc_value = accuracy(labels, preds)
 with sess.as_default():
     print acc_value.eval(feed_dict={img: mnist_data.test.images,
+                                    labels: mnist_data.test.labels})
 ```
 
 我们只是将Keras作为生成从tensor到tensor的函数（op）的快捷方法而已，优化过程完全采用的原生tensorflow的优化器，而不是Keras优化器，我们压根不需要Keras的Model
