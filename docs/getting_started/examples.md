@@ -16,6 +16,8 @@
 
 * conv_filter_visualization.py: 通过在输入空间上梯度上升可视化VGG16的滤波器
 
+* conv_lstm.py: 展示了一个卷积LSTM网络的应用
+
 * deep_dream.py: Google DeepDream的Keras实现
 
 * image_ocr.py:训练了一个卷积+循环网络+CTC logloss来进行OCR
