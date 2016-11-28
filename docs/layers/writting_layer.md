@@ -5,7 +5,7 @@
 
 这里是一个Keras层应该具有的框架结构，要定制自己的层，你需要实现下面三个方法
 
-* ```build(input_shape)```：这是定义权重的方法，可训练的权应该在这里被加入列表````self.trainable_weights```中。其他的属性还包括```self.non_trainabe_weights```（列表）和```self.updates```（需要更新的形如（tensor, new_tensor）的tuple的列表）。你可以参考```BatchNormalization```层的实现来学习如何使用上面两个属性。
+* ```build(input_shape)```：这是定义权重的方法，可训练的权应该在这里被加入列表````self.trainable_weights```中。其他的属性还包括```self.non_trainabe_weights```（列表）和```self.updates```（需要更新的形如（tensor, new_tensor）的tuple的列表）。你可以参考```BatchNormalization```层的实现来学习如何使用上面两个属性。这个方法必须设置```self.built = True```，可通过调用```super([layer],self).build()```实现
 
 * ```call(x)```：这是定义层功能的方法，除非你希望你写的层支持masking，否则你只需要关心```call```的第一个参数：输入张量
 
@@ -25,6 +25,7 @@ class MyLayer(Layer):
         initial_weight_value = np.random.random((input_dim, output_dim))
         self.W = K.variable(initial_weight_value)
         self.trainable_weights = [self.W]
+	super(MyLayer, self).build()  # be sure you call this somewhere! 
 
     def call(self, x, mask=None):
         return K.dot(x, self.W)
