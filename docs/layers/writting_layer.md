@@ -25,6 +25,7 @@ class MyLayer(Layer):
         initial_weight_value = np.random.random((input_dim, output_dim))
         self.W = K.variable(initial_weight_value)
         self.trainable_weights = [self.W]
+	super(MyLayer, self).build()  # be sure you call this somewhere! 
 
     def call(self, x, mask=None):
         return K.dot(x, self.W)
