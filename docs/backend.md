@@ -99,7 +99,7 @@ set_epsilon()
 ```python
 floatx()
 ```
-返回默认的浮点数数据类型，为字符串，如 'float16', 'float32', 'float64'.
+返回默认的浮点数数据类型，为字符串，如 'float16', 'float32', 'float64'
 
 ### cast_to_floatx
 ```python
@@ -123,20 +123,20 @@ set_image_dim_ordering()
 ```python
 clear_session()
 ```
-
+结束当前的TF网络，并新建一个。有效的避免模型/层的混乱
 
 ### manual_variable_initialization
 ```python
 manual_variable_initialization(value)
 ```
-指出变量应该以其默认值被初始化还是由用户手动初始化，参数value为布尔值，默认False代表变量由其默认值初始化。
+指出变量应该以其默认值被初始化还是由用户手动初始化，参数value为布尔值，默认False代表变量由其默认值初始化
 
 ### learning_phase
 
 ```python
 learning_phase()
 ```
-返回训练模式/测试模式的flag，该flag是一个用以传入Keras模型的标记，以决定当前模型执行于训练模式下还是测试模式下。
+返回训练模式/测试模式的flag，该flag是一个用以传入Keras模型的标记，以决定当前模型执行于训练模式下还是测试模式下
 
 ### set_learning_phase
 
@@ -151,10 +151,10 @@ variable(value, dtype='float32', name=None)
 ```
 实例化一个张量，返回之
 
+参数：
+
 * value：用来初始化张量的值
-
 * dtype：张量数据类型
-
 * name：张量的名字（可选）
 
 ### placeholder
@@ -163,12 +163,11 @@ placeholder(shape=None, ndim=None, dtype='float32', name=None)
 ```
 实例化一个占位符，返回之
 
+参数：
+
 * shape：占位符的shape（整数tuple，可能包含None） 
-
 * ndim: 占位符张量的阶数，要初始化一个占位符，至少指定```shape```和```ndim```之一，如果都指定则使用```shape```
-
 * dtype: 占位符数据类型
-
 * name: 占位符名称（可选）
 
 ### shape
@@ -308,7 +307,7 @@ output = (x-mean)/(sqrt(var)+epsilon)*gamma+beta
 ```python
 concatenate(tensors, axis=-1)
 ```
-在给定轴上将一个列表中的张量串联为一个张量 specified axis.
+在给定轴上将一个列表中的张量串联为一个张量 specified axis
 
 ###reshape
 ```python
@@ -321,6 +320,8 @@ reshape(x, shape)
 permute_dimensions(x, pattern)
 ```
 按照给定的模式重排一个张量的轴
+
+参数：
 
 * pattern:：代表维度下标的tuple如```(0, 2, 1)```.
 
@@ -382,7 +383,7 @@ asymmetric_temporal_padding(x, left_pad=1, right_pad=1)
 ```python
 spatial_2d_padding(x, padding=(1, 1), dim_ordering='th')
 ```
-向4D张量第二和第三维度的左右两端填充```padding[0]```和```padding[1]```个0值.
+向4D张量第二和第三维度的左右两端填充```padding[0]```和```padding[1]```个0值
 
 ###asymmetric_spatial_2d_padding
 ```python
@@ -390,12 +391,11 @@ asymmetric_spatial_2d_padding(x, top_pad=1, bottom_pad=1, left_pad=1, right_pad=
 ```
 对4D张量的部分方向进行填充
 
-
 ###spatial_3d_padding
 ```python
 spatial_3d_padding(x, padding=(1, 1, 1), dim_ordering='th')
 ```
-向5D张量深度、高度和宽度三个维度上填充```padding[0]```，```padding[1]```和```padding[2]```个0值.
+向5D张量深度、高度和宽度三个维度上填充```padding[0]```，```padding[1]```和```padding[2]```个0值
 
 ### ones
 ```python
@@ -444,12 +444,12 @@ dot(x, y)
 batch_dot(x, y, axes=None)
 ```
 按批进行张量乘法，该函数将产生比输入张量维度低的张量，如果张量的维度被减至1，则通过```expand_dims```保证其维度至少为2
+例如，假设```x = [[1, 2],[3,4]]``` ， ```y = [[5, 6],[7, 8]]```，则``` batch_dot(x, y, axes=1) = [[17, 53]] ```，即```x.dot(y.T)```的主对角元素，此过程中我们没有计算过反对角元素的值
 
-例如，假设```x = [[1, 2],[3,4]]``` ， ```y = [[5, 6],[7, 8]]```，则``` batch_dot(x, y, axes=1) = [[17, 53]] ```，即```x.dot(y.T)```的主对角元素，此过程中我们没有计算过反对角元素的值。 
+参数：
 
 * x,y：阶数大于等于2的张量
-
-* axes：目标结果的维度，为整数或整数列表。
+* axes：目标结果的维度，为整数或整数列表
 
 ### transpose
 ```python
@@ -601,6 +601,8 @@ set_value(x, value)
 batch_set_value(tuples)
 ```
 将多个值载入多个张量变量中
+
+参数：
 
 * tuples: 列表，其中的元素形如```(tensor, value)```。```value```是要载入的Numpy array数据
 
@@ -782,7 +784,6 @@ l2_normalize(x, axis)
 ```
 在给定轴上对张量进行L2范数规范化
 
-
 ###in_top_k
 ```python
 in_top_k(predictions, targets, k)
@@ -829,7 +830,6 @@ deconv2d(x, kernel, output_shape, strides=(1, 1), border_mode='valid', dim_order
 参数：
 
 * x：输入张量
-
 * kernel：卷积核张量
 * output_shape: 输出shape的1D的整数张量
 * strides：步长，tuple类型
@@ -917,9 +917,9 @@ map_fn(fn, elems, name=None)
 
 参数：
 
-* fn：
+* fn：函数
 * elems：张量
-* name：
+* name：节点的名字
 
 返回值：返回一个张量，该张量的第一维度等于elems，第二维度取决于fn
 
@@ -927,14 +927,14 @@ map_fn(fn, elems, name=None)
 ```python
 foldl(fn, elems, initializer=None, name=None)
 ```
-~~~~~~~~
+减少elems，用fn从左到右连接它们
 
 参数：
 
-* fn：
+* fn：函数，例如：lambda acc, x: acc + x
 * elems：张量
-* initializer：
-* name：
+* initializer：初始化的值(elems[0])
+* name：节点名
 
 返回值：与initializer的类型和形状一致
 
@@ -942,14 +942,14 @@ foldl(fn, elems, initializer=None, name=None)
 ```python
 foldr(fn, elems, initializer=None, name=None)
 ```
-~~~~~~~~
+减少elems，用fn从右到左连接它们
 
 参数：
 
-* fn：
+* fn：函数，例如：lambda acc, x: acc + x
 * elems：张量	
-* initializer：
-* name：
+* initializer：初始化的值（elems[-1]）
+* name：节点名
 
 返回值：与initializer的类型和形状一致
 
