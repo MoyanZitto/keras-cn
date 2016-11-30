@@ -429,8 +429,6 @@ keras.layers.convolutional.Convolution3D(nb_filter, kernel_dim1, kernel_dim2, ke
 ```
 三维卷积对三维的输入进行滑动窗卷积，当使用该层作为第一层时，应提供```input_shape```参数。例如```input_shape = (3,10,128,128)```代表对10帧128*128的彩色RGB图像进行卷积
 
-目前，该层仅仅在使用Theano作为后端时可用
-
 ### 参数
 
 * nb_filter：卷积核的数目
