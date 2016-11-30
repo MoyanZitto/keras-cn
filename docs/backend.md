@@ -906,7 +906,7 @@ ctc_decode(y_pred, input_length, greedy=True, beam_width=None, dict_seq_lens=Non
 * dict_seq_lens：dic_values列表中各元素的长度
 * dict_values：列表的列表，代表字典
 
-返回值：形如(samples，time_steps，num_catgories)的张量，包含了路径可能性（以softmax概率的形式）。注意仍然需要一个用来取出argmax和处理空白标签的函数。
+返回值：形如(samples，time_steps，num_catgories)的张量，包含了路径可能性（以softmax概率的形式）。注意仍然需要一个用来取出argmax和处理空白标签的函数
 
 ### map_fn
 ```python
