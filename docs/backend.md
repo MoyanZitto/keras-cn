@@ -634,8 +634,7 @@ gradients(loss, variables)
 ```python
 stop_gradient(variables)
 ```
-英文原句：“Returns `variables` but with zero gradient with respect to every other
-    variables.”
+Returns `variables` but with zero gradient with respect to every other variables.
 
 ###rnn
 ```python
@@ -792,9 +791,9 @@ in_top_k(predictions, targets, k)
 
 参数：
 
-* predictions:预测值张量, shape为(batch_size, classes), 数据类型float32
-* targets:真值张量, shape为(batch_size,),数据类型为int32或int64
-* k:整数
+* predictions：预测值张量, shape为(batch_size, classes), 数据类型float32
+* targets：真值张量, shape为(batch_size,),数据类型为int32或int64
+* k：整数
 
 ###conv1d
 ```python
@@ -859,7 +858,7 @@ pool2d(x, pool_size, strides=(1, 1), border_mode='valid', dim_ordering='th', poo
 参数：
 
 * pool_size：含有两个整数的tuple，池的大小
-* strides: 含有两个整数的tuple，步长
+* strides：含有两个整数的tuple，步长
 * border_mode：“same”，“valid”之一的字符串
 * dim_ordering：“tf”和“th”之一，维度排列顺序
 * pool_mode: “max”，“avg”之一，池化方式
@@ -873,7 +872,7 @@ pool3d(x, pool_size, strides=(1, 1, 1), border_mode='valid', dim_ordering='th', 
 参数：
 
 * pool_size：含有3个整数的tuple，池的大小
-* strides: 含有3个整数的tuple，步长
+* strides：含有3个整数的tuple，步长
 * border_mode：“same”，“valid”之一的字符串
 * dim_ordering：“tf”和“th”之一，维度排列顺序
 * pool_mode: “max”，“avg”之一，池化方式
