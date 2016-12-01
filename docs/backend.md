@@ -323,7 +323,7 @@ permute_dimensions(x, pattern)
 
 参数：
 
-* pattern:：代表维度下标的tuple如```(0, 2, 1)```.
+* pattern：代表维度下标的tuple如```(0, 2, 1)```
 
 ###resize_images
 ```python
