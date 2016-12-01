@@ -143,7 +143,7 @@ learning_phase()
 ```python
 set_learning_phase()
 ```
-
+设置训练模式/测试模式0或1
 
 ### variable
 ```python
@@ -832,8 +832,8 @@ deconv2d(x, kernel, output_shape, strides=(1, 1), border_mode='valid', dim_order
 * kernel：卷积核张量
 * output_shape: 输出shape的1D的整数张量
 * strides：步长，tuple类型
-* border_mode：‘same’或‘valid’
-* dim_ordering：‘tf’或‘th’
+* border_mode：“same”或“valid”
+* dim_ordering：“tf”或“th”
 
 ### conv3d
 ```python
@@ -846,8 +846,8 @@ conv3d(x, kernel, strides=(1, 1, 1), border_mode='valid', dim_ordering='th', vol
 * x：输入张量
 * kernel：卷积核张量
 * strides：步长，tuple类型
-* border_mode：‘same’或‘valid’
-* dim_ordering：‘tf’或‘th’
+* border_mode：“same”或“valid”
+* dim_ordering：“tf”或“th”
 
 ### pool2d
 ```python
