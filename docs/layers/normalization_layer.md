@@ -12,11 +12,9 @@ keras.layers.normalization.BatchNormalization(epsilon=1e-06, mode=0, axis=-1, mo
 
 * mode：整数，指定规范化的模式，取0或1
 	
-	* 0：按特征规范化，输入的各个特征图将独立被规范化。规范化的轴由参数```axis```指定。注意，如果输入是形如（samples，channels，rows，cols）的4D图像张量，则应设置规范化的轴为1，即沿着通道轴规范化。输入格式是‘tf’同理。
-	
-	
+	* 0：按特征规范化，输入的各个特征图将独立被规范化。规范化的轴由参数```axis```指定。注意，如果输入是‘th’格式形状的（samples，channels，rows，cols）的4D图像张量，则应设置规范化的轴为1，即沿着通道轴规范化。在训练阶段，我们使用每个batch数据的统计信息（如：均值、标准差等）来对训练数据进行规范化，而在测试阶段，我们使用训练时得到的统计信息的滑动平均来对测试数据进行规范化。	
 	* 1：按样本规范化，该模式默认输入为2D
-
+	* 2: 按特征规范化, 与模式0相似, 但不同之处在于：在训练和测试过程中，均使用每个batch数据的统计信息而分别对训练数据和测试数据进行规范化。
 * axis：整数，指定当```mode=0```时规范化的轴。例如输入是形如（samples，channels，rows，cols）的4D图像张量，则应设置规范化的轴为1，意味着对每个特征图进行规范化
 
 * momentum：在按特征规范化时，计算数据的指数平均数和标准差时的动量
@@ -26,6 +24,11 @@ keras.layers.normalization.BatchNormalization(epsilon=1e-06, mode=0, axis=-1, mo
 * beta_init：beta的初始化方法，为预定义初始化方法名的字符串，或用于初始化权重的Theano函数。该参数仅在不传递```weights```参数时有意义。
 
 * gamma_init：gamma的初始化方法，为预定义初始化方法名的字符串，或用于初始化权重的Theano函数。该参数仅在不传递```weights```参数时有意义。
+
+* gamma_regularizer：WeightRegularizer(如L1或L2正则化)的实例，作用在gamma向量上。
+
+* beta_regularizer：WeightRegularizer的实例，作用在beta向量上。
+
 
 ### 输入shape
 
