@@ -92,7 +92,7 @@ Tokenizer是一个用于向量化文本，或将文本转换为序列（即单�
 	
 * sequences_to_matrix(sequences):
 	
-	* texts：待向量化的文本列表
+	* sequences：待向量化的序列列表
 	
 	* mode：‘binary’，‘count’，‘tfidf’，‘freq’之一，默认为‘binary’
 	
