@@ -168,7 +168,7 @@ model = InceptionV3(input_tensor=input_tensor, weights='imagenet', include_top=T
 </font>
 </a>
 ```python
-keras.applications.xception.Xception(include_top=True, weights='imagenet', input_tensor=None)
+keras.applications.xception.Xception(include_top=True, weights='imagenet', input_tensor=None，input_shape=None)
 ```
 
 Xception V1 模型, 权重由ImageNet训练而言
@@ -183,7 +183,7 @@ Xception V1 模型, 权重由ImageNet训练而言
 * include_top：是否保留顶层的3个全连接网络
 * weights：None代表随机初始化，即不加载预训练权重。'imagenet'代表加载预训练权重
 * input_tensor：可填入Keras tensor作为模型的图像输出tensor
-
+* input_shape: 可选参数，仅当`include_top=False`时才应指定该参数。input_shape须为长3的tuple，图片的宽和高不得小于71.
 ### 返回值
 
 Keras 模型对象
@@ -203,7 +203,7 @@ Keras 模型对象
 </font>
 </a>
 ```python
-keras.applications.vgg16.VGG16(include_top=True, weights='imagenet', input_tensor=None)
+keras.applications.vgg16.VGG16(include_top=True, weights='imagenet', input_tensor=None， input_shape=None)
 ```
 
 VGG16模型,权重由ImageNet训练而来
@@ -216,7 +216,7 @@ VGG16模型,权重由ImageNet训练而来
 * include_top：是否保留顶层的3个全连接网络
 * weights：None代表随机初始化，即不加载预训练权重。'imagenet'代表加载预训练权重
 * input_tensor：可填入Keras tensor作为模型的图像输出tensor
-
+* input_shape: 可选参数，仅当`include_top=False`时才应指定该参数。input_shape须为长3的tuple，维度顺序依赖于`image_dim_ordering`，图片的宽和高不得小于48.
 ### 返回值
 
 Keras 模型对象
@@ -236,7 +236,7 @@ Keras 模型对象
 </font>
 </a>
 ```python
-keras.applications.vgg19.VGG19(include_top=True, weights='imagenet', input_tensor=None)
+keras.applications.vgg19.VGG19(include_top=True, weights='imagenet', input_tensor=None， input_shape=None)
 ```
 VGG19模型,权重由ImageNet训练而来
 
@@ -247,7 +247,7 @@ VGG19模型,权重由ImageNet训练而来
 * include_top：是否保留顶层的3个全连接网络
 * weights：None代表随机初始化，即不加载预训练权重。'imagenet'代表加载预训练权重
 * input_tensor：可填入Keras tensor作为模型的图像输出tensor
-
+* input_shape: 可选参数，仅当`include_top=False`时才应指定该参数。input_shape须为长3的tuple，维度顺序依赖于`image_dim_ordering`，图片的宽和高不得小于48.
 ### 返回值
 
 Keras 模型对象
@@ -267,7 +267,7 @@ Keras 模型对象
 </font>
 </a>
 ```python
-keras.applications.resnet50.ResNet50(include_top=True, weights='imagenet', input_tensor=None)
+keras.applications.resnet50.ResNet50(include_top=True, weights='imagenet', input_tensor=None, input_shape=None)
 ```
 
 50层残差网络模型,权重训练自ImageNet
@@ -280,7 +280,7 @@ keras.applications.resnet50.ResNet50(include_top=True, weights='imagenet', input
 * include_top：是否保留顶层的全连接网络
 * weights：None代表随机初始化，即不加载预训练权重。'imagenet'代表加载预训练权重
 * input_tensor：可填入Keras tensor作为模型的图像输出tensor
-
+* input_shape: 可选参数，仅当`include_top=False`时才应指定该参数。input_shape须为长3的tuple，维度顺序依赖于`image_dim_ordering`，图片的宽和高不得小于197.
 ### 返回值
 
 Keras 模型对象
@@ -300,18 +300,18 @@ Keras 模型对象
 </font>
 </a>
 ```python
-keras.applications.inception_v3.InceptionV3(include_top=True, weights='imagenet', input_tensor=None)
+keras.applications.inception_v3.InceptionV3(include_top=True, weights='imagenet', input_tensor=None，input_shape=None)
 ```
 InceptionV3网络,权重训练自ImageNet
 
 该模型再Theano和TensorFlow后端均可使用,并接受th和tf两种输入维度顺序
 
-模型的默认输入尺寸时229x229
+模型的默认输入尺寸时299x299
 ### 参数
 * include_top：是否保留顶层的全连接网络
 * weights：None代表随机初始化，即不加载预训练权重。'imagenet'代表加载预训练权重
 * input_tensor：可填入Keras tensor作为模型的图像输出tensor
-
+* input_shape: 可选参数，仅当`include_top=False`时才应指定该参数。input_shape须为长3的tuple，其维度顺序依赖于所使用的`image_dim_ordering`，图片的宽和高不得小于139.
 ### 返回值
 
 Keras 模型对象
