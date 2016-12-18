@@ -92,13 +92,15 @@ Tokenizer是一个用于向量化文本，或将文本转换为序列（即单�
 	
 * sequences_to_matrix(sequences):
 	
-	* texts：待向量化的文本列表
+	* sequences：待向量化的序列列表
 	
 	* mode：‘binary’，‘count’，‘tfidf’，‘freq’之一，默认为‘binary’
 	
 	* 返回值：形如```(len(sequences), nb_words)```的numpy array
+
 ### 属性
 * word_counts:字典，将单词（字符串）映射为它们在训练期间出现的次数。仅在调用fit_on_texts之后设置。
 * word_docs: 字典，将单词（字符串）映射为它们在训练期间所出现的文档或文本的数量。仅在调用fit_on_texts之后设置。
 * word_index: 字典，将单词（字符串）映射为它们的排名或者索引。仅在调用fit_on_texts之后设置。
 * document_count: 整数。分词器被训练的文档（文本或者序列）数量。仅在调用fit_on_texts或fit_on_sequences之后设置。
+
