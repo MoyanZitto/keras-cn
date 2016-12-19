@@ -224,7 +224,12 @@ python mnist_mlp.py
 ```
 程序无错进行，至此，keras安装完成。
 
-
+## 一个Anaconda3中配置遇到的异常解决方式
+ 目前发现使用Anaconda3安装theano时可能会有一个冲突：
+AttributeError：module ‘configparser’ has no attribute ‘SafeConfigParser’
+暂时只有用以下方法处理：
+对Anaconda3\Lib\site-packages\theano\configparser.py更改文件名，比如改为config_parser.py,在pycharm或其他IDE中随意运行一个cnn脚本，对遇到的每一个提示错误手动更改引用到的文件名为theano.config_parser,在讲所有引用到这个文件的位置都改正后，应该就没有问题了。
+ 
 ## 声明与联系方式 ##
 
 由于作者水平和研究方向所限，无法对所有模块都非常精通，因此文档中不可避免的会出现各种错误、疏漏和不足之处。如果您在使用过程中有任何意见、建议和疑问，欢迎发送邮件到scp173.cool@gmail.com与中文文档作者取得联系.
