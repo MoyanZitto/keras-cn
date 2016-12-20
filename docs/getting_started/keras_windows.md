@@ -226,12 +226,12 @@ python mnist_mlp.py
 
 ## 一个Anaconda3中配置遇到的异常解决方式
 目前发现使用Anaconda3安装theano时可能会有一个冲突：
-
+```
 AttributeError：module ‘configparser’ has no attribute ‘SafeConfigParser’
-
+```
 暂时只有用以下方法处理：
 
-对Anaconda3\Lib\site-packages\theano\configparser.py更改文件名，比如改为config_parser.py,在pycharm或其他IDE中随意运行一个cnn脚本，对遇到的每一个提示错误手动更改引用到的文件名为theano.config_parser,在将所有引用到这个文件的位置都改正后，应该就没有问题了。
+对Anaconda3\Lib\site-packages\theano\configparser.py更改文件名，比如改为config_parser.py，在pycharm或其他IDE中随意运行一个cnn脚本，对遇到的每一个提示错误手动更改引用到的文件名为theano.config_parser,在将所有引用到这个文件的位置都改正后，应该就没有问题了。
  
 ## 声明与联系方式 ##
 
