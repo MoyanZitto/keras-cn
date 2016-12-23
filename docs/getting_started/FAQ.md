@@ -4,7 +4,7 @@
 * [如何使Keras调用GPU？](#GPU)
 * [如何保存Keras模型？](#save_model)
 * [为什么训练误差(loss)比测试误差高很多？](#loss)
-* [如何观察中间层的输出？](#intermediate_layer)
+* [如何获取中间层的输出？](#intermediate_layer)
 * [如何利用Keras处理超过机器内存的数据集？](#dataset)
 * [当验证集的loss不再下降时，如何中断训练？](#stop_train)
 * [验证集是如何从训练集中分割出来的？](#validation_spilt)
@@ -170,11 +170,25 @@ model.load_weights(fname, by_name=True)
 
 <a name='intermediate_layer'>
 <font color='#404040'>
-## 如何观察中间层的输出？
+## 如何获取中间层的输出？
 </font>
 </a>
 
-我们可以建立一个Keras的函数来将获得给定输入时特定层的输出：
+一种简单的方法是创建一个新的`Model`，使得它的输出是你想要的那个输出
+
+```python
+from keras.models import Model
+
+model = ...  # create the original model
+
+layer_name = 'my_layer'
+intermediate_layer_model = Model(input=model.input,
+                                 output=model.get_layer(layer_name).output)
+intermediate_output = intermediate_layer_model.predict(data
+```
+
+此外，我们也可以建立一个Keras的函数来达到这一目的：
+
 ```python
 from keras import backend as K
 
@@ -195,22 +209,6 @@ layer_output = get_3rd_layer_output([X, 0])[0]
 
 # output in train mode = 1
 layer_output = get_3rd_layer_output([X, 1])[0]
-```
-另一种更灵活的获取中间层输出的方法是使用[<font color="FF0000">泛型模型</font>](functional_API.md)，例如，假如我们已经有一个
-编写一个自编码器并从MNIST数据集训练：
-
-```python
-inputs = Input(shape=(784,))
-encoded = Dense(32, activation='relu')(inputs)
-decoded = Dense(784)(encoded)
-model = Model(input=inputs, output=decoded)
-```
-
-编译和训练该模型后，我们可以通过下面的方法得到encoder的输出：
-
-```python
-encoder = Model(input=inputs, output=encoded)
-X_encoded = encoder.predict(X)
 ```
 
 ***
@@ -252,7 +250,7 @@ model.fit(X, y, validation_split=0.2, callbacks=[early_stopping])
 </font>
 </a>
 
-如果在```model.fit```中设置```validation_spilt```的值，则可将数据分为训练集和验证集，例如，设置该值为0.1，则训练集的最后10%数据将作为验证集，设置其他数字同理。
+如果在```model.fit```中设置```validation_spilt```的值，则可将数据分为训练集和验证集，例如，设置该值为0.1，则训练集的最后10%数据将作为验证集，设置其他数字同理。注意，原数据在进行验证集分割前并没有被shuffle，所以这里的验证集严格的就是你输入数据最末的x%。
 
 
 ***

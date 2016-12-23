@@ -24,11 +24,11 @@ keras.preprocessing.image.ImageDataGenerator(featurewise_center=False,
 
 ### 参数
 
-* featurewise_center：布尔值，使输入数据集去中心化（均值为0）
+* featurewise_center：布尔值，使输入数据集去中心化（均值为0）, 按feature执行
 
 * samplewise_center：布尔值，使输入数据的每个样本均值为0
 
-* featurewise_std_normalization：布尔值，将输入除以数据集的标准差以完成标准化
+* featurewise_std_normalization：布尔值，将输入除以数据集的标准差以完成标准化, 按feature执行
 
 * samplewise_std_normalization：布尔值，将输入的每个样本除以其自身的标准差
 
@@ -56,7 +56,7 @@ keras.preprocessing.image.ImageDataGenerator(featurewise_center=False,
 
 * rescale: 重放缩因子,默认为None. 如果为None或0则不进行放缩,否则会将该数值乘到数据上(在应用其他变换之前)
 
-* dim_ordering：‘tf’和‘th’之一，规定数据的维度顺序。‘tf’模式下数据的形状为```samples, width, height, channels```，‘th’下形状为```(samples, channels, width, height).```该参数的默认值是Keras配置文件```~/.keras/keras.json```的```image_dim_ordering```值,如果你从未设置过的话,就是'tf'
+* dim_ordering：‘tf’和‘th’之一，规定数据的维度顺序。‘tf’模式下数据的形状为```samples, height, width, channels```，‘th’下形状为```(samples, channels, height, width).```该参数的默认值是Keras配置文件```~/.keras/keras.json```的```image_dim_ordering```值,如果你从未设置过的话,就是'tf'
 
 ***
 
@@ -64,7 +64,7 @@ keras.preprocessing.image.ImageDataGenerator(featurewise_center=False,
 
 * fit(X, augment=False, rounds=1)：计算依赖于数据的变换所需要的统计信息(均值方差等),只有使用```featurewise_center```，```featurewise_std_normalization```或```zca_whitening```时需要此函数。
 
-	* X：numpy array，样本数据
+	* X：numpy array，样本数据，秩应为4.在黑白图像的情况下channel轴的值为1，在彩色图像情况下值为3
 	
 	* augment：布尔值，确定是否使用随即提升过的数据
 	
@@ -74,7 +74,7 @@ keras.preprocessing.image.ImageDataGenerator(featurewise_center=False,
 	
 * flow(self, X, y, batch_size=32, shuffle=True, seed=None, save_to_dir=None, save_prefix='', save_format='jpeg')：接收numpy数组和标签为参数,生成经过数据提升或标准化后的batch数据,并在一个无限循环中不断的返回batch数据
 
-	* X：数据
+	* X：样本数据，秩应为4.在黑白图像的情况下channel轴的值为1，在彩色图像情况下值为3
 	
 	* y：标签
 	
@@ -88,13 +88,13 @@ keras.preprocessing.image.ImageDataGenerator(featurewise_center=False,
 	
 	* save_format："png"或"jpeg"之一，指定保存图片的数据格式,默认"jpeg"
 	
-	* _yields:形如(x,y)的tuple,x是代表图像数据的numpy数组.y是代表标签的numpy数组.该迭代器无限循环.
+	* yields:形如(x,y)的tuple,x是代表图像数据的numpy数组.y是代表标签的numpy数组.该迭代器无限循环.
 
 	* seed: 整数,随机数种子
 
 * flow_from_directory(directory): 以文件夹路径为参数,生成经过数据提升/归一化后的数据,在一个无限循环中无限产生batch数据
 
-	* directory: 目标文件夹路径,对于每一个类,该文件夹都要包含一个子文件夹.子文件夹应只包含JPG或PNG格式的图片.详情请查看[<font color='#FF0000'>此脚本</font>](https://gist.github.com/fchollet/0830affa1f7f19fd47b06d4cf89ed44d)
+	* directory: 目标文件夹路径,对于每一个类,该文件夹都要包含一个子文件夹.子文件夹中任何JPG、PNG和BNP的图片都会被生成器使用.详情请查看[<font color='#FF0000'>此脚本</font>](https://gist.github.com/fchollet/0830affa1f7f19fd47b06d4cf89ed44d)
     * target_size: 整数tuple,默认为(256, 256). 图像将被resize成该尺寸
     * color_mode: 颜色模式,为"grayscale","rgb"之一,默认为"rgb".代表这些图片是否会被转换为单通道或三通道的图片.
     * classes: 可选参数,为子文件夹的列表,如['dogs','cats']默认为None. 若未提供,则该类别列表将自动推断(类别的顺序将按照字母表顺序映射到标签值)
@@ -105,7 +105,7 @@ keras.preprocessing.image.ImageDataGenerator(featurewise_center=False,
 	* save_to_dir: None或字符串，该参数能让你将提升后的图片保存起来，用以可视化
 	* save_prefix：字符串，保存提升后图片时使用的前缀, 仅当设置了```save_to_dir```时生效
 	* save_format："png"或"jpeg"之一，指定保存图片的数据格式,默认"jpeg"
-
+    * flollow_links: 是否访问子文件夹中的软链接
 
 	
 ### 例子

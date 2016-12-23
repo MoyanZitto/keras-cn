@@ -19,7 +19,7 @@ keras.layers.convolutional.Convolution1D(nb_filter, filter_length, init='uniform
 
 * weights：权值，为numpy array的list。该list应含有一个形如（input_dim,output_dim）的权重矩阵和一个形如(output_dim,)的偏置向量。
 
-* border_mode：边界模式，为“valid”或“same”
+* border_mode：边界模式，为“valid”, “same” 或“full”，full需要以theano为后端
 
 * subsample_length：输出对输入的下采样因子
 
@@ -82,7 +82,7 @@ AtrousConvolution1D层用于对1D信号进行滤波，是膨胀/带孔洞的卷�
 
 * weights：权值，为numpy array的list。该list应含有一个形如（input_dim,output_dim）的权重矩阵和一个形如(output_dim,)的偏置向量。
 
-* border_mode：边界模式，为“valid”或“same”
+* border_mode：边界模式，为“valid”，“same”或“full”，full需要以theano为后端
 
 * subsample_length：输出对输入的下采样因子
 
@@ -146,7 +146,7 @@ keras.layers.convolutional.Convolution2D(nb_filter, nb_row, nb_col, init='glorot
 
 * weights：权值，为numpy array的list。该list应含有一个形如（input_dim,output_dim）的权重矩阵和一个形如(output_dim,)的偏置向量。
 
-* border_mode：边界模式，为“valid”或“same”
+* border_mode：边界模式，为“valid”，“same”或“full”，full需要以theano为后端
 
 * subsample：长为2的tuple，输出对输入的下采样因子，更普遍的称呼是“strides”
 
@@ -215,7 +215,7 @@ keras.layers.convolutional.AtrousConvolution2D(nb_filter, nb_row, nb_col, init='
 
 * weights：权值，为numpy array的list。该list应含有一个形如（input_dim,output_dim）的权重矩阵和一个形如(output_dim,)的偏置向量。
 
-* border_mode：边界模式，为“valid”或“same”
+* border_mode：边界模式，为“valid”，“same”，或“full”，full需要以theano为后端
 
 * subsample：长为2的tuple，输出对输入的下采样因子，更普遍的称呼是“strides”
 
@@ -297,7 +297,7 @@ keras.layers.convolutional.SeparableConvolution2D(nb_filter, nb_row, nb_col, ini
 
 * weights：权值，为numpy array的list。该list应含有一个形如（input_dim,output_dim）的权重矩阵和一个形如(output_dim,)的偏置向量。
 
-* border_mode：边界模式，为“valid”或“same”
+* border_mode：边界模式，为“valid”，“same”，或“full”，full需要以theano为后端
 
 * subsample：长为2的tuple，输出对输入的下采样因子，更普遍的称呼是“strides”
 
@@ -367,7 +367,7 @@ keras.layers.convolutional.Deconvolution2D(nb_filter, nb_row, nb_col, output_sha
 
 * weights：权值，为numpy array的list。该list应含有一个形如（input_dim,output_dim）的权重矩阵和一个形如(output_dim,)的偏置向量。
 
-* border_mode：边界模式，为“valid”或“same”
+* border_mode：边界模式，为“valid”，“same”，或“full”，full需要以theano为后端
 
 * subsample：长为2的tuple，输出对输入的下采样因子，更普遍的称呼是“strides”
 
@@ -445,7 +445,7 @@ keras.layers.convolutional.Convolution3D(nb_filter, kernel_dim1, kernel_dim2, ke
 
 * weights：权值，为numpy array的list。该list应含有一个形如（input_dim,output_dim）的权重矩阵和一个形如(output_dim,)的偏置向量。
 
-* border_mode：边界模式，为“valid”或“same”
+* border_mode：边界模式，为“valid”，“same”，或“full”，full需要以theano为后端
 
 * subsample：长为3的tuple，输出对输入的下采样因子，更普遍的称呼是“strides”
 	

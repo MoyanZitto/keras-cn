@@ -82,12 +82,17 @@ Keras从2015年3月开始启动，经过一年多的开发，目前Keras进入�
 
 * 我们的中文文档没有及时更新：如果是这种情况，请发邮件给我，我会尽快更新
 
-目前文档的版本号是1.1.2，对应于官方的1.1.2 release 版本, 本次更新的主要内容是：
+目前文档的版本号是1.2.0，对应于官方的1.2.0 release 版本, 本次更新的主要内容是：
 
-* 增加了一种卷积层：```SpatialCovolution1D```
-* 增加了用于简单介绍Keras example的文档,这部分文档将在未来逐渐丰富
-* 增加了若干后端函数
-* 修正了一些文档错误
+* 为一大批backend函数提供了更详细的说明和使用范例，现在理解这些函数将会变得更简单
+* 增加了“ReduceLROnPlatue”，“CSVLogger”和“LambdaCallback”三种回调函数，具体说明请参考文档
+* 增加了三种metrics，分别是精确率percision，召回率recall和f-measure
+* 为Application中的模型添加了input_shape关键字，并在注释中给出了其合法范围，在不加载全连接层时，用户可以在合法范围内自己设定input_shape
+* 修改了FAQ关于获取中间层数据的方法，提供了一种更为简洁的方法
+* 增加了关于`~/.kears/keras.json`文件中的参数说明
+* 为PRelu类的激活函数增加了关键字参数shared_axes，现在你可以指定某些维度上共享可训练的p参数
+* 为卷积层的border_mode增加了新类型“full”，该类型目前仅能用于Theano后端
+* 增加了若干backend函数，并修正了部分文档错误
 
 注意，keras在github上的master往往要高于当前的release版本，如果你从源码编译keras，可能某些模块与文档说明不相符，请以官方Github代码为准
 
@@ -200,9 +205,9 @@ Keras默认使用TensorFlow作为后端来进行张量操作，如需切换到Th
 你可以在下列网址提问或加入Keras开发讨论:
 
 - [<font color=FF0000>Keras Google group</font>](https://groups.google.com/forum/#!forum/keras-users)
-- [<font color=FF0000>Keras Gitter channel</font>](https://gitter.im/Keras-io/Lobby)
+- [<font color=FF0000>Keras Slack channel</font>](https://kerasteam.slack.com/),[<font color=FF0000>点击这里</font>]获得邀请.
 
-你也可以在[<font color=FF0000>Github issues</font>](https://github.com/fchollet/keras/issues)里提问。在提问之前请确保你阅读过我们的[<font color=FF0000>指导</font>](https://github.com/fchollet/keras/blob/master/CONTRIBUTING.md)
+你也可以在[<font color=FF0000>Github issues</font>](https://github.com/fchollet/keras/issues)里提问或请求新特性。在提问之前请确保你阅读过我们的[<font color=FF0000>指导</font>](https://github.com/fchollet/keras/blob/master/CONTRIBUTING.md)
 
 同时，我们也欢迎同学们加我们的QQ群119427073进行讨论（潜水和灌水会被T，入群说明公司/学校-职位/年级）
 

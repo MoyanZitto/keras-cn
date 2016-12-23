@@ -2,7 +2,7 @@
 
 来自```constraints```模块的函数在优化过程中为网络的参数施加约束
 
-惩罚项基于层进行惩罚，目前惩罚项的接口与层有关，但```Dense, TimeDistributedDense, MaxoutDense, Covolution1D, Covolution2D```具有共同的接口。
+惩罚项基于层进行惩罚，目前惩罚项的接口与层有关，但```Dense, TimeDistributedDense, MaxoutDense, Covolution1D, Covolution2D, Convolution3D```具有共同的接口。
 
 这些层通过一下关键字施加约束项
 

@@ -22,7 +22,7 @@ LeakyRelU是修正线性单元（Rectified Linear Unit，ReLU）的特殊版本�
 
 ## PReLU层
 ```python
-keras.layers.advanced_activations.PReLU(init='zero', weights=None)
+keras.layers.advanced_activations.PReLU(init='zero', weights=None, shared_axes=None)
 ```
 该层为参数化的ReLU（Parametric ReLU），表达式是：```f(x) = alpha * x for x < 0```, ```f(x) = x for x>=0```，此处的```alpha```为一个与xshape相同的可学习的参数向量。
 
@@ -31,6 +31,8 @@ keras.layers.advanced_activations.PReLU(init='zero', weights=None)
 * init：alpha的初始化函数
 
 * weights：alpha的初始化值，为具有单个numpy array的list
+
+- shared_axes：该参数指定的轴将共享同一组科学系参数，例如假如输入特征图是从2D卷积过来的，具有形如`(batch, height, width, channels)`这样的shape，则或许你会希望在空域共享参数，这样每个filter就只有一组参数，设定`shared_axes=[1,2]`可完成该目标
 
 ### 输入shape
 
@@ -73,7 +75,7 @@ ELU层是指数线性单元（Exponential Linera Unit），表达式为：
 
 ## ParametricSoftplus层
 ```python
-keras.layers.advanced_activations.ParametricSoftplus(alpha_init=0.2, beta_init=5.0, weights=None)
+keras.layers.advanced_activations.ParametricSoftplus(alpha_init=0.2, beta_init=5.0, weights=None, shared_axes=None)
 ```
 该层是参数化的Softplus，表达式是：```f(x) = alpha * log(1 + exp(beta * x))```
 
@@ -84,6 +86,8 @@ keras.layers.advanced_activations.ParametricSoftplus(alpha_init=0.2, beta_init=5
 * beta_init：浮点数，beta的初始值
 
 * weights：初始化权重，为含有两个numpy array的list
+
+- shared_axes：该参数指定的轴将共享同一组科学系参数，例如假如输入特征图是从2D卷积过来的，具有形如`(batch, height, width, channels)`这样的shape，则或许你会希望在空域共享参数，这样每个filter就只有一组参数，设定`shared_axes=[1,2]`可完成该目标
 
 ### 输入shape
 
@@ -127,7 +131,7 @@ keras.layers.advanced_activations.ThresholdedReLU(theta=1.0)
 
 ## SReLU层
 ```python
-keras.layers.advanced_activations.SReLU(t_left_init='zero', a_left_init='glorot_uniform', t_right_init='glorot_uniform', a_right_init='one')
+keras.layers.advanced_activations.SReLU(t_left_init='zero', a_left_init='glorot_uniform', t_right_init='glorot_uniform', a_right_init='one', shared_axes=None)
 ```
 该层是S形的ReLU
 
@@ -140,6 +144,8 @@ keras.layers.advanced_activations.SReLU(t_left_init='zero', a_left_init='glorot_
 * t_right_init：右侧截断初始化函数
 
 * a_right_init：右侧斜率初始化函数
+
+- shared_axes：该参数指定的轴将共享同一组科学系参数，例如假如输入特征图是从2D卷积过来的，具有形如`(batch, height, width, channels)`这样的shape，则或许你会希望在空域共享参数，这样每个filter就只有一组参数，设定`shared_axes=[1,2]`可完成该目标
 
 ### 输入shape
 

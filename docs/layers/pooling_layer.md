@@ -13,7 +13,6 @@ keras.layers.convolutional.MaxPooling1D(pool_length=2, stride=None, border_mode=
 * stride：整数或None，步长值
 
 * border_mode：‘valid’或者‘same’
-	* 注意，目前‘same’模式只能在TensorFlow作为后端时使用
 	
 ### 输入shape
 
@@ -38,7 +37,7 @@ keras.layers.convolutional.MaxPooling2D(pool_size=(2, 2), strides=None, border_m
 * strides：长为2的整数tuple，或者None，步长值。
 
 * border_mode：‘valid’或者‘same’
-	* 注意，目前‘same’模式只能在TensorFlow作为后端时使用
+
 
 * dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第3个位置。例如128*128的三通道彩色图片，在‘th’模式中```input_shape```应写为（3，128，128），而在‘tf’模式中应写为（128，128，3），注意这里3出现在第0个位置，因为```input_shape```不包含样本数的维度，在其内部实现中，实际上是（None，3，128，128）和（None，128，128，3）。默认是```image_dim_ordering```指定的模式，可在```~/.keras/keras.json```中查看，若没有设置过则为'tf'。
 
@@ -126,7 +125,6 @@ keras.layers.convolutional.AveragePooling2D(pool_size=(2, 2), strides=None, bord
 * strides：长为2的整数tuple，或者None，步长值。
 
 * border_mode：‘valid’或者‘same’
-	* 注意，目前‘same’模式只能在TensorFlow作为后端时使用
 
 dim_ordering：‘th’或‘tf’。‘th’模式中通道维（如彩色图像的3通道）位于第1个位置（维度从0开始算），而在‘tf’模式中，通道维位于第3个位置。例如128*128的三通道彩色图片，在‘th’模式中```input_shape```应写为（3，128，128），而在‘tf’模式中应写为（128，128，3），注意这里3出现在第0个位置，因为```input_shape```不包含样本数的维度，在其内部实现中，实际上是（None，3，128，128）和（None，128，128，3）。默认是```image_dim_ordering```指定的模式，可在```~/.keras/keras.json```中查看，若没有设置过则为'tf'。
 

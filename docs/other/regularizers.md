@@ -2,7 +2,7 @@
 
 正则项在优化过程中层的参数或层的激活值添加惩罚项，这些惩罚项将与损失函数一起作为网络的最终优化目标
 
-惩罚项基于层进行惩罚，目前惩罚项的接口与层有关，但```Dense, TimeDistributedDense, MaxoutDense, Covolution1D, Covolution2D```具有共同的接口。
+惩罚项基于层进行惩罚，目前惩罚项的接口与层有关，但```Dense, TimeDistributedDense, MaxoutDense, Covolution1D, Covolution2D, Convolution3D```具有共同的接口。
 
 这些层有三个关键字参数以施加正则项：
 

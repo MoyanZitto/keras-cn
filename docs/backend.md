@@ -38,6 +38,23 @@ KERAS_BACKEND=tensorflow python -c "from keras import backend;"
 Using TensorFlow backend.
 ```
 
+## keras.json 细节
+```python
+{
+    "image_dim_ordering": "tf",
+    "epsilon": 1e-07,
+    "floatx": "float32",
+    "backend": "tensorflow"
+}
+```
+你可以更改以上`~/.keras/keras.json`中的配置
+
+- `image_dim_ordering`：字符串，"tf"或"th"，该选项指定了Keras将要使用的维度顺序，可通过`keras.backend.image_dim_ordering()`来获取当前的维度顺序。对2D数据来说，`tf`假定维度顺序为(rows,cols,channels)而`th`假定维度顺序为(channels, rows, cols)。对3D数据而言，`tf`假定(conv_dim1, conv_dim2, conv_dim3, channels)，`th`则是(channels, conv_dim1, conv_dim2, conv_dim3)
+
+- `epsilon`：浮点数，防止除0错误的小数字
+- `floatx`：字符串，"float16", "float32", "float64"之一，为浮点数精度
+- `backend`：字符串，所使用的后端，为"tensorflow"或"theano"
+
 
 
 ## 使用抽象的Keras后端来编写代码
@@ -86,14 +103,22 @@ a = concatenate([b, c], axis=-1)
 epsilon()
 ```
 
-以数值形式返回一个（一般来说很小的）数，即fuzz factor
+以数值形式返回一个（一般来说很小的）数，用以防止除0错误
 
 ###set_epsilon
 ```python
-set_epsilon()
+set_epsilon(e)
 ```
 
-设置在数值表达式中使用的fuzz factor
+设置在数值表达式中使用的fuzz factor，用于防止除0错误，该值应该是一个较小的浮点数，示例：
+```python
+>>> from keras import backend as K
+>>> K.epsilon()
+1e-08
+>>> K.set_epsilon(1e-05)
+>>> K.epsilon()
+1e-05
+```
 
 ### floatx
 ```python
@@ -101,29 +126,96 @@ floatx()
 ```
 返回默认的浮点数数据类型，为字符串，如 'float16', 'float32', 'float64'
 
+### set_floatx(floatx)
+```python
+floatx()
+```
+设置默认的浮点数数据类型，为字符串，如 'float16', 'float32', 'float64',示例：
+```python
+>>> from keras import backend as K
+>>> K.floatx()
+'float32'
+>>> K.set_floatx('float16')
+>>> K.floatx()
+'float16'
+```
+
+
 ### cast_to_floatx
 ```python
 cast_to_floatx(x)
 ```
-将numpy array转换为floatx
+将numpy array转换为默认的Keras floatx类型，x为numpy array，返回值也为numpy array但其数据类型变为floatx。示例：
+```python
+>>> from keras import backend as K
+>>> K.floatx()
+'float32'
+>>> arr = numpy.array([1.0, 2.0], dtype='float64')
+>>> arr.dtype
+dtype('float64')
+>>> new_arr = K.cast_to_floatx(arr)
+>>> new_arr
+array([ 1.,  2.], dtype=float32)
+>>> new_arr.dtype
+dtype('float32')
+```
 
 ### image_dim_ordering
 ```python
 image_dim_ordering()
 ```
-返回图像的维度顺序（‘tf’或‘th’）
+返回默认的图像的维度顺序（‘tf’或‘th’）
 
 ### set_image_dim_ordering
 ```python
-set_image_dim_ordering()
+set_image_dim_ordering(dim_ordering)
 ```
-设置图像的维度顺序（‘tf’或‘th’）
+设置图像的维度顺序（‘tf’或‘th’）,示例：
+```python
+>>> from keras import backend as K
+>>> K.image_dim_ordering()
+'th'
+>>> K.set_image_dim_ordering('tf')
+>>> K.image_dim_ordering()
+'tf'
+```
+
+### get_uid
+```python
+get_uid(prefix='')
+```
+依据给定的前缀提供一个唯一的UID，参数为表示前缀的字符串，返回值为整数，示例：
+```python
+>>> keras.backend.get_uid('dense')
+>>> 1
+>>> keras.backend.get_uid('dense')
+>>> 2
+```
+
+### is_keras_tensor
+```python
+is_keras_tensor(x)
+```
+
+判断x是否是一个Keras tensor，返回一个布尔值，示例
+```python
+>>> from keras import backend as K
+>>> np_var = numpy.array([1, 2])
+>>> K.is_keras_tensor(np_var)
+False
+>>> keras_var = K.variable(np_var)
+>>> K.is_keras_tensor(keras_var)  # A variable is not a Tensor.
+False
+>>> keras_placeholder = K.placeholder(shape=(2, 4, 5))
+>>> K.is_keras_tensor(keras_placeholder)  # A placeholder is a Tensor.
+True
+```
 
 ### clear_session
 ```python
 clear_session()
 ```
-结束当前的TF网络，并新建一个。有效的避免模型/层的混乱
+结束当前的TF计算图，并新建一个。有效的避免模型/层的混乱
 
 ### manual_variable_initialization
 ```python
@@ -145,6 +237,36 @@ set_learning_phase()
 ```
 设置训练模式/测试模式0或1
 
+### is_sparse
+```python
+is_sparse(tensor)
+```
+判断一个tensor是不是一个稀疏的tensor(稀不稀疏由tensor的类型决定，而不是tensor实际上有多稀疏)，返回值是一个布尔值，示例：
+```python
+>>> from keras import backend as K
+>>> a = K.placeholder((2, 2), sparse=False)
+>>> print(K.is_sparse(a))
+False
+>>> b = K.placeholder((2, 2), sparse=True)
+>>> print(K.is_sparse(b))
+True
+```
+
+### to_dense
+```python
+to_dense(tensor)
+```
+将一个稀疏tensor转换一个不稀疏的tensor并返回之，示例：
+```python
+>>> from keras import backend as K
+>>> b = K.placeholder((2, 2), sparse=True)
+>>> print(K.is_sparse(b))
+True
+>>> c = K.to_dense(b)
+>>> print(K.is_sparse(c))
+False
+```
+
 ### variable
 ```python
 variable(value, dtype='float32', name=None)
@@ -156,6 +278,20 @@ variable(value, dtype='float32', name=None)
 * value：用来初始化张量的值
 * dtype：张量数据类型
 * name：张量的名字（可选）
+
+示例：
+```python
+>>> from keras import backend as K
+>>> val = np.array([[1, 2], [3, 4]])
+>>> kvar = K.variable(value=val, dtype='float64', name='example_var')
+>>> K.dtype(kvar)
+'float64'
+>>> print(kvar)
+example_var
+>>> kvar.eval()
+array([[ 1.,  2.],
+   [ 3.,  4.]])
+```
 
 ### placeholder
 ```python
@@ -170,41 +306,435 @@ placeholder(shape=None, ndim=None, dtype='float32', name=None)
 * dtype: 占位符数据类型
 * name: 占位符名称（可选）
 
+示例：
+```python
+>>> from keras import backend as K
+>>> input_ph = K.placeholder(shape=(2, 4, 5))
+>>> input_ph._keras_shape
+(2, 4, 5)
+>>> input_ph
+<tf.Tensor 'Placeholder_4:0' shape=(2, 4, 5) dtype=float32>
+```
+
 ### shape
 ```python
 shape(x)
 ```
-返回一个张量的符号shape
+返回一个张量的符号shape，符号shape的意思是返回值本身也是一个tensor，示例：
+```python
+>>> from keras import backend as K
+>>> tf_session = K.get_session()
+>>> val = np.array([[1, 2], [3, 4]])
+>>> kvar = K.variable(value=val)
+>>> input = keras.backend.placeholder(shape=(2, 4, 5))
+>>> K.shape(kvar)
+<tf.Tensor 'Shape_8:0' shape=(2,) dtype=int32>
+>>> K.shape(input)
+<tf.Tensor 'Shape_9:0' shape=(3,) dtype=int32>
+__To get integer shape (Instead, you can use K.int_shape(x))__
+
+>>> K.shape(kvar).eval(session=tf_session)
+array([2, 2], dtype=int32)
+>>> K.shape(input).eval(session=tf_session)
+array([2, 4, 5], dtype=int32)
+```
 
 ### int_shape
 ```python
 int_shape(x)
 ```
-以整数Tuple或None的形式返回张量shape
+以整数Tuple或None的形式返回张量shape，示例：
+```python
+>>> from keras import backend as K
+>>> input = K.placeholder(shape=(2, 4, 5))
+>>> K.int_shape(input)
+(2, 4, 5)
+>>> val = np.array([[1, 2], [3, 4]])
+>>> kvar = K.variable(value=val)
+>>> K.int_shape(kvar)
+(2, 2)
+```
 
 ### ndim
 ```python
 ndim(x)
 ```
-返回张量的阶数，为整数
+返回张量的阶数，为整数，示例：
+```python
+>>> from keras import backend as K
+>>> input = K.placeholder(shape=(2, 4, 5))
+>>> val = np.array([[1, 2], [3, 4]])
+>>> kvar = K.variable(value=val)
+>>> K.ndim(input)
+3
+>>> K.ndim(kvar)
+2
+```
 
 ### dtype
 ```python
 dtype(x)
 ```
-返回张量的数据类型，为字符串
+返回张量的数据类型，为字符串，示例：
+```python
+>>> from keras import backend as K
+>>> K.dtype(K.placeholder(shape=(2,4,5)))
+'float32'
+>>> K.dtype(K.placeholder(shape=(2,4,5), dtype='float32'))
+'float32'
+>>> K.dtype(K.placeholder(shape=(2,4,5), dtype='float64'))
+'float64'
+__Keras variable__
+
+>>> kvar = K.variable(np.array([[1, 2], [3, 4]]))
+>>> K.dtype(kvar)
+'float32_ref'
+>>> kvar = K.variable(np.array([[1, 2], [3, 4]]), dtype='float32')
+>>> K.dtype(kvar)
+'float32_ref'
+```
 
 ### eval
 ```python
 eval(x)
 ```
-求得张量的值，返回一个Numpy array
+求得张量的值，返回一个Numpy array，示例：
+```python
+>>> from keras import backend as K
+>>> kvar = K.variable(np.array([[1, 2], [3, 4]]), dtype='float32')
+>>> K.eval(kvar)
+array([[ 1.,  2.],
+   [ 3.,  4.]], dtype=float32)
+```
 
 ### zeros
 ```python
 zeros(shape, dtype='float32', name=None)
 ```
-生成一个全0张量
+生成一个全0张量，示例：
+```python
+>>> from keras import backend as K
+>>> kvar = K.zeros((3,4))
+>>> K.eval(kvar)
+array([[ 0.,  0.,  0.,  0.],
+   [ 0.,  0.,  0.,  0.],
+   [ 0.,  0.,  0.,  0.]], dtype=float32)
+```
+
+### ones
+```python
+ones(shape, dtype='float32', name=None)
+```
+生成一个全1张量，示例
+```python
+>>> from keras import backend as K
+>>> kvar = K.ones((3,4))
+>>> K.eval(kvar)
+array([[ 1.,  1.,  1.,  1.],
+   [ 1.,  1.,  1.,  1.],
+   [ 1.,  1.,  1.,  1.]], dtype=float32)
+```
+
+### eye
+```python
+eye(size, dtype='float32', name=None)
+```
+生成一个单位矩阵，示例：
+```python
+>>> from keras import backend as K
+>>> kvar = K.eye(3)
+>>> K.eval(kvar)
+array([[ 1.,  0.,  0.],
+   [ 0.,  1.,  0.],
+   [ 0.,  0.,  1.]], dtype=float32)
+```
+
+
+### zeros_like
+```python
+zeros_like(x, name=None)
+```
+生成与另一个张量x的shape相同的全0张量，示例：
+```python
+>>> from keras import backend as K
+>>> kvar = K.variable(np.random.random((2,3)))
+>>> kvar_zeros = K.zeros_like(kvar)
+>>> K.eval(kvar_zeros)
+array([[ 0.,  0.,  0.],
+   [ 0.,  0.,  0.]], dtype=float32)
+```
+
+### ones_like
+```python
+ones_like(x, name=None)
+```
+生成与另一个张量shape相同的全1张量，示例：
+```python
+>>> from keras import backend as K
+>>> kvar = K.variable(np.random.random((2,3)))
+>>> kvar_ones = K.ones_like(kvar)
+>>> K.eval(kvar_ones)
+array([[ 1.,  1.,  1.],
+   [ 1.,  1.,  1.]], dtype=float32)
+```
+
+### random_uniform_variable
+```python
+random_uniform_variable(shape, low, high, dtype=None, name=None, seed=None)
+```
+初始化一个Keras变量，其数值为从一个均匀分布中采样的样本，返回之。
+
+参数：
+
+- shape：张量shape
+- low：浮点数，均匀分布之下界
+- high：浮点数，均匀分布之上界
+- dtype：数据类型
+- name：张量名
+- seed：随机数种子
+
+示例：
+```python
+>>> kvar = K.random_uniform_variable((2,3), 0, 1)
+>>> kvar
+<tensorflow.python.ops.variables.Variable object at 0x10ab40b10>
+>>> K.eval(kvar)
+array([[ 0.10940075,  0.10047495,  0.476143  ],
+   [ 0.66137183,  0.00869417,  0.89220798]], dtype=float32)
+```
+
+### count_params
+```python
+count_params(x)
+```
+返回张量中标量的个数，示例：
+```python
+>>> kvar = K.zeros((2,3))
+>>> K.count_params(kvar)
+6
+>>> K.eval(kvar)
+array([[ 0.,  0.,  0.],
+   [ 0.,  0.,  0.]], dtype=float32)
+```
+
+
+###cast
+```python
+cast(x, dtype)
+```
+改变张量的数据类型，dtype只能是`float16`, `float32`或`float64`之一，示例：
+```python
+>>> from keras import backend as K
+>>> input = K.placeholder((2, 3), dtype='float32')
+>>> input
+<tf.Tensor 'Placeholder_2:0' shape=(2, 3) dtype=float32>
+__It doesn't work in-place as below.__
+
+>>> K.cast(input, dtype='float16')
+<tf.Tensor 'Cast_1:0' shape=(2, 3) dtype=float16>
+>>> input
+<tf.Tensor 'Placeholder_2:0' shape=(2, 3) dtype=float32>
+__you need to assign it.__
+
+>>> input = K.cast(input, dtype='float16')
+>>> input
+<tf.Tensor 'Cast_2:0' shape=(2, 3) dtype=float16>```
+```
+
+### dot
+```python
+dot(x, y)
+```
+求两个张量的乘积。当试图计算两个N阶张量的乘积时，与Theano行为相同，如```(2, 3).(4, 3, 5) = (2, 4, 5))```，示例：
+```python
+>>> x = K.placeholder(shape=(2, 3))
+>>> y = K.placeholder(shape=(3, 4))
+>>> xy = K.dot(x, y)
+>>> xy
+<tf.Tensor 'MatMul_9:0' shape=(2, 4) dtype=float32>
+```
+
+```python
+>>> x = K.placeholder(shape=(32, 28, 3))
+>>> y = K.placeholder(shape=(3, 4))
+>>> xy = K.dot(x, y)
+>>> xy
+<tf.Tensor 'MatMul_9:0' shape=(32, 28, 4) dtype=float32>
+```
+
+Theano-like的行为示例：
+```python
+>>> x = K.random_uniform_variable(shape=(2, 3), low=0, high=1)
+>>> y = K.ones((4, 3, 5))
+>>> xy = K.dot(x, y)
+>>> K.int_shape(xy)
+(2, 4, 5)
+```
+### batch_dot
+```python
+batch_dot(x, y, axes=None)
+```
+按批进行张量乘法，该函数用于计算x和y的点积，其中x和y都是成batch出现的数据。即它的数据shape形如`(batch_size,:)`。batch_dot将产生比输入张量维度低的张量，如果张量的维度被减至1，则通过```expand_dims```保证其维度至少为2
+例如，假设```x = [[1, 2],[3,4]]``` ， ```y = [[5, 6],[7, 8]]```，则``` batch_dot(x, y, axes=1) = [[17, 53]] ```，即```x.dot(y.T)```的主对角元素，此过程中我们没有计算过反对角元素的值
+
+参数：
+
+* x,y：阶数大于等于2的张量，在tensorflow下，只支持大于等于3阶的张量
+* axes：目标结果的维度，为整数或整数列表，`axes[0]`和`axes[1]`应相同
+
+示例：
+假设`x=[[1,2],[3,4]]`，`y=[[5,6],[7,8]]`，则`batch_dot(x, y, axes=1) `为`[[17, 53]]`，恰好为`x.dot(y.T)`的主对角元，整个过程没有计算反对角元的元素。
+
+我们做一下shape的推导，假设x是一个shape为(100,20)的tensor，y是一个shape为(100,30,20)的tensor，假设`axes=(1,2)`，则输出tensor的shape通过循环x.shape和y.shape确定：
+
+- `x.shape[0]`：值为100，加入到输入shape里
+- `x.shape[1]`：20，不加入输出shape里，因为该维度的值会被求和(dot_axes[0]=1)
+- `y.shape[0]`：值为100，不加入到输出shape里，y的第一维总是被忽略
+- `y.shape[1]`：30，加入到输出shape里
+- `y.shape[2]`：20，不加到output shape里，y的第二个维度会被求和(dot_axes[1]=2)
+
+- 结果为(100, 30)
+
+```python
+>>> x_batch = K.ones(shape=(32, 20, 1))
+>>> y_batch = K.ones(shape=(32, 30, 20))
+>>> xy_batch_dot = K.batch_dot(x_batch, y_batch, axes=[1, 2])
+>>> K.int_shape(xy_batch_dot)
+(32, 1, 30)
+```
+### transpose
+```python
+transpose(x)
+```
+张量转置，返回转置后的tensor，示例：
+```python
+>>> var = K.variable([[1, 2, 3], [4, 5, 6]])
+>>> K.eval(var)
+array([[ 1.,  2.,  3.],
+   [ 4.,  5.,  6.]], dtype=float32)
+>>> var_transposed = K.transpose(var)
+>>> K.eval(var_transposed)
+array([[ 1.,  4.],
+   [ 2.,  5.],
+   [ 3.,  6.]], dtype=float32)
+
+>>> input = K.placeholder((2, 3))
+>>> input
+<tf.Tensor 'Placeholder_11:0' shape=(2, 3) dtype=float32>
+>>> input_transposed = K.transpose(input)
+>>> input_transposed
+<tf.Tensor 'transpose_4:0' shape=(3, 2) dtype=float32>
+
+```
+
+### gather
+```python
+gather(reference, indices)
+```
+在给定的2D张量中检索给定下标的向量
+
+参数：
+
+* reference：2D张量
+* indices：整数张量，其元素为要查询的下标
+
+返回值：一个与```reference```数据类型相同的3D张量
+
+### max
+```python
+max(x, axis=None, keepdims=False)
+```
+求张量中的最大值
+
+###min
+```python
+min(x, axis=None, keepdims=False)
+```
+求张量中的最小值
+
+###sum
+```python
+sum(x, axis=None, keepdims=False)
+```
+在给定轴上计算张量中元素之和
+
+### prod
+```python
+prod(x, axis=None, keepdims=False)
+```
+在给定轴上计算张量中元素之积
+
+### var
+```python
+var(x, axis=None, keepdims=False)
+```
+在给定轴上计算张量方差
+
+### std
+```python
+std(x, axis=None, keepdims=False)
+```
+在给定轴上求张量元素之标准差
+
+### mean
+```python
+mean(x, axis=None, keepdims=False)
+```
+在给定轴上求张量元素之均值
+
+### any
+```python
+any(x, axis=None, keepdims=False)
+```
+按位或，返回数据类型为uint8的张量（元素为0或1）
+
+### all
+```python
+any(x, axis=None, keepdims=False)
+```
+按位与，返回类型为uint8de tensor
+
+### argmax
+```python
+argmax(x, axis=-1)
+```
+在给定轴上求张量之最大元素下标
+
+### argmin
+```python
+argmin(x, axis=-1)
+```
+在给定轴上求张量之最小元素下标
+
+###square
+```python
+square(x)
+```
+逐元素平方
+
+### abs
+```python
+abs(x)
+```
+逐元素绝对值
+
+###sqrt
+```python
+sqrt(x)
+```
+逐元素开方
+
+###exp
+```python
+exp(x)
+```
+逐元素求自然指数
+
+###log
+```python
+log(x)
+```
+逐元素求自然对数
 
 ###round
 ```python
@@ -217,6 +747,7 @@ round(x)
 sign(x)
 ```
 逐元素求元素的符号（+1或-1）
+
 
 ###pow
 ```python
@@ -349,6 +880,14 @@ repeat(x, n)
 ```
 重复2D张量，例如若xshape是```(samples, dim)```且n为2，则输出张量的shape是```(samples, 2, dim)```
 
+###arange
+```python
+arange(start, stop=None, step=1, dtype='int32')
+```
+生成1D的整数序列张量，该函数的参数与Theano的arange函数含义相同，如果只有一个参数被提供了，那么它实际上就是`stop`参数的值
+
+为了与tensorflow的默认保持匹配，函数返回张量的默认数据类型是`int32`
+
 ### batch_flatten
 ```python
 batch_flatten(x)
@@ -397,174 +936,6 @@ spatial_3d_padding(x, padding=(1, 1, 1), dim_ordering='th')
 ```
 向5D张量深度、高度和宽度三个维度上填充```padding[0]```，```padding[1]```和```padding[2]```个0值
 
-### ones
-```python
-ones(shape, dtype='float32', name=None)
-```
-生成一个全1张量
-
-### eye
-```python
-eye(size, dtype='float32', name=None)
-```
-生成一个单位矩阵
-
-### zeros_like
-```python
-zeros_like(x, name=None)
-```
-生成与另一个张量shape相同的全0张量
-
-### ones_like
-```python
-ones_like(x, name=None)
-```
-生成与另一个张量shape相同的全1张量
-
-### count_params
-```python
-count_params(x)
-```
-返回张量中标量的个数
-
-###cast
-```python
-cast(x, dtype)
-```
-改变张量的数据类型
-
-### dot
-```python
-dot(x, y)
-```
-求两个张量的乘积。当试图计算两个N阶张量的乘积时，与Theano行为相同，如```(2, 3).(4, 3, 5) = (2, 4, 5))```
-
-### batch_dot
-```python
-batch_dot(x, y, axes=None)
-```
-按批进行张量乘法，该函数将产生比输入张量维度低的张量，如果张量的维度被减至1，则通过```expand_dims```保证其维度至少为2
-例如，假设```x = [[1, 2],[3,4]]``` ， ```y = [[5, 6],[7, 8]]```，则``` batch_dot(x, y, axes=1) = [[17, 53]] ```，即```x.dot(y.T)```的主对角元素，此过程中我们没有计算过反对角元素的值
-
-参数：
-
-* x,y：阶数大于等于2的张量
-* axes：目标结果的维度，为整数或整数列表
-
-### transpose
-```python
-transpose(x)
-```
-矩阵转置
-
-### gather
-```python
-gather(reference, indices)
-```
-在给定的2D张量中检索给定下标的向量
-
-参数：
-
-* reference：2D张量
-* indices：整数张量，其元素为要查询的下标
-
-返回值：一个与```reference```数据类型相同的3D张量
-
-### max
-```python
-max(x, axis=None, keepdims=False)
-```
-求张量中的最大值
-
-###min
-```python
-min(x, axis=None, keepdims=False)
-```
-求张量中的最小值
-
-###sum
-```python
-sum(x, axis=None, keepdims=False)
-```
-在给定轴上计算张量中元素之和
-
-### prod
-```python
-prod(x, axis=None, keepdims=False)
-```
-在给定轴上计算张量中元素之积
-
-### var
-```python
-var(x, axis=None, keepdims=False)
-```
-在给定轴上计算张量方差
-
-### std
-```python
-std(x, axis=None, keepdims=False)
-```
-在给定轴上求张量元素之标准差
-
-### mean
-```python
-mean(x, axis=None, keepdims=False)
-```
-在给定轴上求张量元素之均值
-
-### any
-```python
-any(x, axis=None, keepdims=False)
-```
-按位或，返回数据类型为uint8的张量（元素为0或1）
-
-### all
-```python
-any(x, axis=None, keepdims=False)
-```
-按位与，返回类型为uint8de tensor
-
-### argmax
-```python
-argmax(x, axis=-1)
-```
-在给定轴上求张量之最大元素下标
-
-### argmin
-```python
-argmin(x, axis=-1)
-```
-在给定轴上求张量之最小元素下标
-
-###square
-```python
-square(x)
-```
-逐元素平方
-
-### abs
-```python
-abs(x)
-```
-逐元素绝对值
-
-###sqrt
-```python
-sqrt(x)
-```
-逐元素开方
-
-###exp
-```python
-exp(x)
-```
-逐元素求自然指数
-
-###log
-```python
-log(x)
-```
-逐元素求自然对数
 
 ### one-hot
 ```python

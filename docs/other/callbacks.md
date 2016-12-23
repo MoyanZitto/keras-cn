@@ -61,7 +61,7 @@ keras.callbacks.History()
 
 ## ModelCheckpoint
 ```python
-keras.callbacks.ModelCheckpoint(filepath, monitor='val_loss', verbose=0, save_best_only=False, save_weights_only=False, mode='auto')
+keras.callbacks.ModelCheckpoint(filepath, monitor='val_loss', verbose=0, save_best_only=False, save_weights_only=False, mode='auto', period=1)
 ```
 该回调函数将在每个epoch后保存模型到```filepath```
 
@@ -82,6 +82,8 @@ keras.callbacks.ModelCheckpoint(filepath, monitor='val_loss', verbose=0, save_be
 * mode：‘auto’，‘min’，‘max’之一，在```save_best_only=True```时决定性能最佳模型的评判准则，例如，当监测值为```val_acc```时，模式应为```max```，当检测值为```val_loss```时，模式应为```min```。在```auto```模式下，评价准则由被监测值的名字自动推断。
 
 * save_weights_only：若设置为True，则只保存模型权重，否则将保存整个模型（包括模型结构，配置信息等）
+
+* period：CheckPoint之间的间隔的epoch数
 
 ***
 
@@ -149,6 +151,85 @@ tensorboard --logdir=/full_path_to_your_logs
 * histogram_freq：计算各个层激活值直方图的频率（每多少个epoch计算一次），如果设置为0则不计算。
 
 ***
+
+## ReduceLROnPlateau
+```python
+keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=10, verbose=0, mode='auto', epsilon=0.0001, cooldown=0, min_lr=0)
+```
+当评价指标不在提升时，减少学习率
+
+当学习停滞时，减少2倍或10倍的学习率常常能获得较好的效果。该回调函数检测指标的情况，如果在`patience`个epoch中看不到模型性能提升，则减少学习率
+
+### 参数
+
+- monitor：被监测的量
+- factor：每次减少学习率的因子，学习率将以`lr = lr*factor`的形式被减少
+- patience：当patience个epoch过去而模型性能不提升时，学习率减少的动作会被触发
+- mode：‘auto’，‘min’，‘max’之一，在```min```模式下，如果检测值触发学习率减少。在```max```模式下，当检测值不再上升则触发学习率减少。
+- epsilon：阈值，用来确定是否进入检测值的“平原区”
+- cooldown：学习率减少后，会经过cooldown个epoch才重新进行正常操作
+- min_lr：学习率的下限
+
+### 示例：
+```python
+reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.2,
+            patience=5, min_lr=0.001)
+model.fit(X_train, Y_train, callbacks=[reduce_lr])
+``` 
+
+##CSVLogger
+```python
+keras.callbacks.CSVLogger(filename, separator=',', append=False)
+```
+将epoch的训练结果保存在csv文件中，支持所有可被转换为string的值，包括1D的可迭代数值如np.ndarray.
+
+###参数
+
+- fiename：保存的csv文件名，如`run/log.csv`
+- separator：字符串，csv分隔符
+- append：默认为False，为True时csv文件如果存在则继续写入，为False时总是覆盖csv文件
+
+### 示例
+
+```python
+csv_logger = CSVLogger('training.log')
+model.fit(X_train, Y_train, callbacks=[csv_logger])
+```
+
+## LambdaCallback
+```python
+keras.callbacks.LambdaCallback(on_epoch_begin=None, on_epoch_end=None, on_batch_begin=None, on_batch_end=None, on_train_begin=None, on_train_end=None)
+```
+用于创建简单的callback的callback类
+
+该callback的匿名函数将会在适当的时候调用，注意，该回调函数假定了一些位置参数`on_eopoch_begin`和`on_epoch_end`假定输入的参数是`epoch, logs`. `on_batch_begin`和`on_batch_end`假定输入的参数是`batch, logs`，`on_train_begin`和`on_train_end`假定输入的参数是`logs`
+
+### 参数
+
+- on_epoch_begin: 在每个epoch开始时调用
+- on_epoch_end: 在每个epoch结束时调用
+- on_batch_begin: 在每个batch开始时调用
+- on_batch_end: 在每个batch结束时调用
+- on_train_begin: 在训练开始时调用
+- on_train_end: 在训练结束时调用
+
+### 示例
+
+```python
+# Print the batch number at the beginning of every batch.
+batch_print_callback = LambdaCallback(on_batch_begin=lambda batch, logs: print(batch))
+
+# Plot the loss after every epoch.
+import numpy as np
+import matplotlib.pyplot as plt
+plot_loss_callback = LambdaCallback(on_epoch_end=lambda epoch, logs: plt.plot(np.arange(epoch), logs['loss']))
+
+# Terminate some processes after having finished model training.
+processes = ...
+cleanup_callback = LambdaCallback(on_train_end=lambda logs: [p.terminate() for p in processes if p.is_alive()])
+
+model.fit(..., callbacks=[batch_print_callback, plot_loss_callback, cleanup_callback])
+```
 
 ## 编写自己的回调函数
 

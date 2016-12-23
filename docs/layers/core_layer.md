@@ -50,11 +50,11 @@ model.add(Dense(32))
 
 ### 输入
 
-形如（nb_samples, input_dim）的2D张量
+形如(nb_samples, ..., input_dim)的nD张量，最常见的情况为(nb_samples, input_dim)的2D张量
 
 ### 输出
 
-形如 （nb_samples, output_dim）的2D张量
+形如(nb_samples, ..., output_dim)的nD张量，最常见的情况为(nb_samples, output_dim)的2D张量
 
 ***
 
