@@ -6,7 +6,7 @@
 
 * addition_rnn.py: 序列到序列学习, 实现两个数的加法
 
-* antirectifier.py: 展示了如何再Keras中定制自己的层
+* antirectifier.py: 展示了如何在Keras中定制自己的层
 
 * babi_memnn.py: 在bAbI数据集上训练一个记忆网络,用于阅读理解
 
