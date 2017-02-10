@@ -36,6 +36,8 @@
 
 * lstm_text_generation.py: 从尼采的作品中生成文本
 
+* mnist_acgan.py：AC-GAN(Auxiliary Classifier GAN)实现的示例
+
 * mnist_cnn.py: 训练一个用于mnist数据集识别的卷积神经网络
 
 * mnist_hierarchical_rnn.py: 训练了一个HRNN网络用于MNIST数字识别

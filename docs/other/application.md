@@ -158,6 +158,12 @@ model = InceptionV3(input_tensor=input_tensor, weights='imagenet', include_top=T
 ***
 
 ## 模型文档
+* [Xception](#xception)
+* [VGG16](#vgg16)
+* [VGG19](#vgg19)
+* [ResNet50](#resnet50)
+* [InceptionV3](#inceptionv3)
+* [MusicTaggerCRNN](#music)
 
 
 ***
@@ -168,7 +174,7 @@ model = InceptionV3(input_tensor=input_tensor, weights='imagenet', include_top=T
 </font>
 </a>
 ```python
-keras.applications.xception.Xception(include_top=True, weights='imagenet', input_tensor=None)
+keras.applications.xception.Xception(include_top=True, weights='imagenet', input_tensor=None, input_shape=None, classes=1000)
 ```
 
 Xception V1 模型, 权重由ImageNet训练而言
@@ -183,6 +189,9 @@ Xception V1 模型, 权重由ImageNet训练而言
 * include_top：是否保留顶层的3个全连接网络
 * weights：None代表随机初始化，即不加载预训练权重。'imagenet'代表加载预训练权重
 * input_tensor：可填入Keras tensor作为模型的图像输出tensor
+* input_shape：可选，仅当`include_top=False`有效，应为长为3的tuple，指明输入图片的shape，图片的宽高必须大于71，如(150,150,3)
+* classes：可选，图片分类的类别数，仅当`include_top=True`并且不加载预训练权重时可用。
+
 
 ### 返回值
 
@@ -203,7 +212,7 @@ Keras 模型对象
 </font>
 </a>
 ```python
-keras.applications.vgg16.VGG16(include_top=True, weights='imagenet', input_tensor=None)
+keras.applications.vgg16.VGG16(include_top=True, weights='imagenet', input_tensor=None, input_shape=None, classes=1000)
 ```
 
 VGG16模型,权重由ImageNet训练而来
@@ -216,8 +225,9 @@ VGG16模型,权重由ImageNet训练而来
 * include_top：是否保留顶层的3个全连接网络
 * weights：None代表随机初始化，即不加载预训练权重。'imagenet'代表加载预训练权重
 * input_tensor：可填入Keras tensor作为模型的图像输出tensor
-
+* input_shape：可选，仅当`include_top=False`有效，应为长为3的tuple，指明输入图片的shape，图片的宽高必须大于48，如(200,200,3)
 ### 返回值
+* classes：可选，图片分类的类别数，仅当`include_top=True`并且不加载预训练权重时可用。
 
 Keras 模型对象
 
@@ -236,7 +246,7 @@ Keras 模型对象
 </font>
 </a>
 ```python
-keras.applications.vgg19.VGG19(include_top=True, weights='imagenet', input_tensor=None)
+keras.applications.vgg19.VGG19(include_top=True, weights='imagenet', input_tensor=None, input_shape=None, classes=1000)
 ```
 VGG19模型,权重由ImageNet训练而来
 
@@ -247,7 +257,9 @@ VGG19模型,权重由ImageNet训练而来
 * include_top：是否保留顶层的3个全连接网络
 * weights：None代表随机初始化，即不加载预训练权重。'imagenet'代表加载预训练权重
 * input_tensor：可填入Keras tensor作为模型的图像输出tensor
-
+* input_shape：可选，仅当`include_top=False`有效，应为长为3的tuple，指明输入图片的shape，图片的宽高必须大于48，如(200,200,3)
+* classes：可选，图片分类的类别数，仅当`include_top=True`并且不加载预训练权重时可用。
+### 返回值
 ### 返回值
 
 Keras 模型对象
@@ -267,7 +279,7 @@ Keras 模型对象
 </font>
 </a>
 ```python
-keras.applications.resnet50.ResNet50(include_top=True, weights='imagenet', input_tensor=None)
+keras.applications.resnet50.ResNet50(include_top=True, weights='imagenet', input_tensor=None, input_shape=None, classes=1000)
 ```
 
 50层残差网络模型,权重训练自ImageNet
@@ -280,7 +292,8 @@ keras.applications.resnet50.ResNet50(include_top=True, weights='imagenet', input
 * include_top：是否保留顶层的全连接网络
 * weights：None代表随机初始化，即不加载预训练权重。'imagenet'代表加载预训练权重
 * input_tensor：可填入Keras tensor作为模型的图像输出tensor
-
+* input_shape：可选，仅当`include_top=False`有效，应为长为3的tuple，指明输入图片的shape，图片的宽高必须大于197，如(200,200,3)
+* classes：可选，图片分类的类别数，仅当`include_top=True`并且不加载预训练权重时可用。
 ### 返回值
 
 Keras 模型对象
@@ -300,7 +313,7 @@ Keras 模型对象
 </font>
 </a>
 ```python
-keras.applications.inception_v3.InceptionV3(include_top=True, weights='imagenet', input_tensor=None)
+keras.applications.inception_v3.InceptionV3(include_top=True, weights='imagenet', input_tensor=None, input_shape=None, classes=1000)
 ```
 InceptionV3网络,权重训练自ImageNet
 
@@ -311,7 +324,7 @@ InceptionV3网络,权重训练自ImageNet
 * include_top：是否保留顶层的全连接网络
 * weights：None代表随机初始化，即不加载预训练权重。'imagenet'代表加载预训练权重
 * input_tensor：可填入Keras tensor作为模型的图像输出tensor
-
+* classes：可选，图片分类的类别数，仅当`include_top=True`并且不加载预训练权重时可用。
 ### 返回值
 
 Keras 模型对象
@@ -325,13 +338,13 @@ Keras 模型对象
 
 ***
 
-<a name='inceptionv3'>
+<a name='music'>
 <font color='#404040'>
 ## MusicTaggerCRNN模型
 </font>
 </a>
 ```python
-keras.applications.music_tagger_crnn.MusicTaggerCRNN(weights='msd', input_tensor=None, include_top=True)
+keras.applications.music_tagger_crnn.MusicTaggerCRNN(weights='msd', input_tensor=None, include_top=True, classes=50)
 ```
 该模型时一个卷积循环模型,以向量化的MelSpectrogram音乐数据为输入,能够输出音乐的风格. 你可以用`keras.applications.music_tagger_crnn.preprocess_input`来将一个音乐文件向量化为spectrogram.注意,使用该功能需要安装[Librosa](http://librosa.github.io/librosa/),请参考下面的使用范例.
 ### 参数

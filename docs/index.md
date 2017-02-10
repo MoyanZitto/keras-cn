@@ -43,13 +43,7 @@ Keras从2015年3月开始启动，经过一年多的开发，目前Keras进入�
 
 ## 关于Keras-cn
 
-本文档是Keras文档的中文版，包括[<font color=#FF0000>keras.io</font>](http://keras.io/)的全部内容，以及更多的例子、解释和建议，目前，文档的计划是：
-
-* 1.x版本：现有keras.io文档的中文翻译，保持与官方文档的同步
-
-* 2.x版本：完善所有【Tips】模块，澄清深度学习中的相关概念和Keras模块的使用方法
-
-* 3.x版本：增加Keras相关模块的实现原理和部分细节，帮助用户更准确的把握Keras，并添加更多的示例代码
+本文档是Keras文档的中文版，包括[<font color=#FF0000>keras.io</font>](http://keras.io/)的全部内容，以及更多的例子、解释和建议
 
 现在，keras-cn的版本号将简单的跟随最新的keras release版本
 
@@ -82,17 +76,12 @@ Keras从2015年3月开始启动，经过一年多的开发，目前Keras进入�
 
 * 我们的中文文档没有及时更新：如果是这种情况，请发邮件给我，我会尽快更新
 
-目前文档的版本号是1.2.0，对应于官方的1.2.0 release 版本, 本次更新的主要内容是：
+目前文档的版本号是1.2.1，对应于官方的1.2.1 release 版本, 本次更新的主要内容是：
 
-* 为一大批backend函数提供了更详细的说明和使用范例，现在理解这些函数将会变得更简单
-* 增加了“ReduceLROnPlatue”，“CSVLogger”和“LambdaCallback”三种回调函数，具体说明请参考文档
-* 增加了三种metrics，分别是精确率percision，召回率recall和f-measure
-* 为Application中的模型添加了input_shape关键字，并在注释中给出了其合法范围，在不加载全连接层时，用户可以在合法范围内自己设定input_shape
-* 修改了FAQ关于获取中间层数据的方法，提供了一种更为简洁的方法
-* 增加了关于`~/.kears/keras.json`文件中的参数说明
-* 为PRelu类的激活函数增加了关键字参数shared_axes，现在你可以指定某些维度上共享可训练的p参数
-* 为卷积层的border_mode增加了新类型“full”，该类型目前仅能用于Theano后端
-* 增加了若干backend函数，并修正了部分文档错误
+* 为Application中的图片分类模型增加了`classes`和`input_shape`，但`classes`的说明在原文档中缺失
+* 暂时移除了SpatialDropout1D,SpatialDropout2D,SpatialDropout3D的文档，但它们的源代码仍然保留在个keras中，你仍然可以用这些layer
+* 1.2.0和当前版本均可使用ConvLSTM2D层，这个层在代码中有说明但没有体现在文档中，我们暂时也不提供这个层的说明，如需使用请查看源代码中的说明
+* 增加了AC-GAN的例子
 
 注意，keras在github上的master往往要高于当前的release版本，如果你从源码编译keras，可能某些模块与文档说明不相符，请以官方Github代码为准
 

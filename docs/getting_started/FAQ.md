@@ -491,11 +491,6 @@ model = VGG16(weights='imagenet', include_top=True)
 
 这些代码的使用示例请参考```.Application```模型的[<font color='#FF0000'>文档</font>](../other/application.md)
 
-下面的图像分类模型提供了模型搭建的代码和相应的预训练权重
-
-* [<font color='#FF0000'>VGG-16</font>](https://gist.github.com/baraldilorenzo/07d7802847aaad0a35d3)
-* [<font color='#FF0000'>VGG-19</font>](https://gist.github.com/baraldilorenzo/8d096f48a1be4a2d660d)
-* [<font color='#FF0000'>AlexNet</font>](https://github.com/heuritech/convnets-keras)
 
 使用这些预训练模型进行特征抽取或fine-tune的例子可以参考[<font color='#FF0000'>此博客</font>](http://blog.keras.io/building-powerful-image-classification-models-using-very-little-data.html)
 
