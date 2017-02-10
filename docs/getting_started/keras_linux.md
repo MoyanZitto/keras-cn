@@ -195,7 +195,7 @@ x = shared(numpy.asarray(rng.rand(vlen), config.floatX))
 f = function([], T.exp(x))
 print(f.maker.fgraph.toposort())
 t0 = time.time()
-for i in xrange(iters):
+for i in range(iters):
     r = f()
 t1 = time.time()
 print("Looping %d times took %f seconds" % (iters, t1 - t0))
