@@ -34,7 +34,7 @@
 |Bigmoyan|tf与th卷积核陷阱|
 |Bigmoyan|向BN层载入权重陷阱|
 |Yin|validation_spilit与shuffle陷阱|
-
+|Hui Liu|merge与Merge的区别|
 ## Reviewers
 
 | Reviewer | 页面 | 章节 |
