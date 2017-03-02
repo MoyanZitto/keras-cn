@@ -481,10 +481,10 @@ print(len(model.layers))  # "1"
 可通过```keras.applications```载入这些模型：
 
 ```python
-from keras.applications.vgg16 impoprt VGG16
-from keras.applications.vgg19 impoprt VGG19
-from keras.applications.resnet50 impoprt ResNet50
-from keras.applications.inception_v3 impoprt InceptionV3
+from keras.applications.vgg16 import VGG16
+from keras.applications.vgg19 import VGG19
+from keras.applications.resnet50 import ResNet50
+from keras.applications.inception_v3 import InceptionV3
 
 model = VGG16(weights='imagenet', include_top=True)
 ```
