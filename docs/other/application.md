@@ -319,7 +319,7 @@ InceptionV3网络,权重训练自ImageNet
 
 该模型再Theano和TensorFlow后端均可使用,并接受th和tf两种输入维度顺序
 
-模型的默认输入尺寸时229x229
+模型的默认输入尺寸时299x299
 ### 参数
 * include_top：是否保留顶层的全连接网络
 * weights：None代表随机初始化，即不加载预训练权重。'imagenet'代表加载预训练权重
