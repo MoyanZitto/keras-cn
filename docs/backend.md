@@ -12,6 +12,8 @@ Keras是一个模型级的库，提供了快速构建深度学习网络的模块
 
 ## 切换后端
 
+注意：Windows用户请把`$Home`换为`%USERPROFILE%`
+
 如果你至少运行过一次Keras，你将在下面的目录下找到Keras的配置文件：
 
 ```$HOME/.keras/keras.json```
