@@ -5,11 +5,11 @@
 该函数将画出模型结构图，并保存成图片：
 
 ```python
-from keras.utils.visualize_util import plot
-plot(model, to_file='model.png')
+from keras.utils import plot_model
+plot_model(model, to_file='model.png')
 ```
 
-```plot```接收两个可选参数：
+```plot_model```接收两个可选参数：
 
 * ```show_shapes```：指定是否显示输出数据的形状，默认为```False```
 * ```show_layer_names```:指定是否显示层名称,默认为```True```
@@ -22,4 +22,4 @@ from keras.utils.visualize_util import model_to_dot
 SVG(model_to_dot(model).create(prog='dot', format='svg'))
 ```
 
-【Tips】依赖 pydot-ng 和 graphviz，命令行输入```pip install pydot-ng & brew install graphviz```
+【Tips】依赖 pydot-ng 和 graphviz，若出现错误，用命令行输入```pip install pydot-ng & brew install graphviz```

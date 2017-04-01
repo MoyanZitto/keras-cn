@@ -2,7 +2,8 @@
 
 ## 填充序列pad_sequences
 ```python
-keras.preprocessing.sequence.pad_sequences(sequences, maxlen=None, dtype='int32'，padding='pre', truncating='pre', value=0)
+keras.preprocessing.sequence.pad_sequences(sequences, maxlen=None, dtype='int32',
+    padding='pre', truncating='pre', value=0.)
 ```
 将长为```nb_samples```的序列（标量序列）转化为形如```(nb_samples,nb_timesteps)```2D numpy array。如果提供了参数```maxlen```，```nb_timesteps=maxlen```，否则其值为最长序列的长度。其他短于该长度的序列都会在后部填充0以达到该长度。长于`nb_timesteps`的序列将会被截断，以使其匹配目标长度。padding和截断发生的位置分别取决于`padding`和`truncating`.
 
@@ -28,8 +29,8 @@ keras.preprocessing.sequence.pad_sequences(sequences, maxlen=None, dtype='int32'
 
 ## 跳字skipgrams
 ```python
-keras.preprocessing.sequence.skipgrams(sequence, vocabulary_size, 
-    window_size=4, negative_samples=1., shuffle=True, 
+keras.preprocessing.sequence.skipgrams(sequence, vocabulary_size,
+    window_size=4, negative_samples=1., shuffle=True,
     categorical=False, sampling_table=None)
 ```
 skipgrams将一个词向量下标的序列转化为下面的一对tuple：
@@ -50,7 +51,7 @@ the rain，rain in，in Spain，Spain falls，falls mainly，mainly on，on the�
 
 the in, rain Spain, in falls, Spain mainly, falls on, mainly the, on plain.
 
-更多详情请参考[<font color='FF0000'>Efficient Estimation of Word Representations in Vector Space</font>](http://arxiv.org/pdf/1301.3781v3.pdf)【@BigMoyan】
+更多详情请参考[Efficient Estimation of Word Representations in Vector Space](http://arxiv.org/pdf/1301.3781v3.pdf)
 
 ### 参数
 

@@ -4,20 +4,21 @@
 
 ## Dense层
 ```python
-keras.layers.core.Dense(output_dim, init='glorot_uniform', activation='linear', weights=None, W_regularizer=None, b_regularizer=None, activity_regularizer=None, W_constraint=None, b_constraint=None, bias=True, input_dim=None)
+keras.layers.core.Dense(units, activation=None, use_bias=True, kernel_initializer='glorot_uniform', bias_initializer='zeros', kernel_regularizer=None, bias_regularizer=None, activity_regularizer=None, kernel_constraint=None, bias_constraint=None)
 ```
-Dense就是常用的全连接层，这里是一个使用示例：
+Dense就是常用的全连接层，所实现的运算是```output = activation(dot(input, kernel)+bias)```。其中```activation```是逐元素计算的激活函数，```kernel````是本层的权值矩阵，```bias```为偏置向量，只有当```use_bias=True```才会添加。
+
+如果本层的输入数据的维度大于2，则会先被压为与```kernel```相匹配的大小。
+
+这里是一个使用示例：
 
 ```python
 # as first layer in a sequential model:
-model = Sequential()
-model.add(Dense(32, input_dim=16))
-# now the model will take as input arrays of shape (*, 16)
-# and output arrays of shape (*, 32)
-
-# this is equivalent to the above:
+# as first layer in a sequential model:
 model = Sequential()
 model.add(Dense(32, input_shape=(16,)))
+# now the model will take as input arrays of shape (*, 16)
+# and output arrays of shape (*, 32)
 
 # after the first layer, you don't need to specify
 # the size of the input anymore:
@@ -26,35 +27,34 @@ model.add(Dense(32))
 
 ### 参数：
 
-* output_dim：大于0的整数，代表该层的输出维度。模型中非首层的全连接层其输入维度可以自动推断，因此非首层的全连接定义时不需要指定输入维度。
+* units：大于0的整数，代表该层的输出维度。
 
-* init：初始化方法，为预定义初始化方法名的字符串，或用于初始化权重的Theano函数。该参数仅在不传递```weights```参数时才有意义。
+* activation：激活函数，为预定义的激活函数名（参考[激活函数](../other/activations)），或逐元素（element-wise）的Theano函数。如果不指定该参数，将不会使用任何激活函数（即使用线性激活函数：a(x)=x）
 
-* activation：激活函数，为预定义的激活函数名（参考[<font color='#FF0000'>激活函数</font>](../other/activations)），或逐元素（element-wise）的Theano函数。如果不指定该参数，将不会使用任何激活函数（即使用线性激活函数：a(x)=x）
+* use_bias: 布尔值，是否使用偏置项
 
-* weights：权值，为numpy array的list。该list应含有一个形如（input_dim,output_dim）的权重矩阵和一个形如(output_dim,)的偏置向量。
+* kernel_initializer：权值初始化方法，为预定义初始化方法名的字符串，或用于初始化权重的初始化器。参考[initializers](../other/initializations)
 
-* W_regularizer：施加在权重上的正则项，为[<font color='FF0000'>WeightRegularizer</font>](../other/regularizers)对象
+* bias_initializer：权值初始化方法，为预定义初始化方法名的字符串，或用于初始化权重的初始化器。参考[initializers](../other/initializations)
 
-* b_regularizer：施加在偏置向量上的正则项，为[<font color='FF0000'>WeightRegularizer</font>](../other/regularizers)对象
+* kernel_regularizer：施加在权重上的正则项，为[Regularizer](../other/regularizers)对象
 
-* activity_regularizer：施加在输出上的正则项，为[<font color='FF0000'>ActivityRegularizer</font>](../other/regularizers)对象
+* bias_regularizer：施加在偏置向量上的正则项，为[Regularizer](../other/regularizers)对象
 
-* W_constraints：施加在权重上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
+* activity_regularizer：施加在输出上的正则项，为[Regularizer](../other/regularizers)对象
 
-* b_constraints：施加在偏置上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
+* kernel_constraints：施加在权重上的约束项，为[Constraints](../other/constraints)对象
 
-* bias：布尔值，是否包含偏置向量（即层对输入做线性变换还是仿射变换）
+* bias_constraints：施加在偏置上的约束项，为[Constraints](../other/constraints)对象
 
-* input_dim：整数，输入数据的维度。当Dense层作为网络的第一层时，必须指定该参数或```input_shape```参数。
 
 ### 输入
 
-形如(nb_samples, ..., input_dim)的nD张量，最常见的情况为(nb_samples, input_dim)的2D张量
+形如(nb_samples, ..., input_shape[1])的nD张量，最常见的情况为(nb_samples, input_dim)的2D张量
 
 ### 输出
 
-形如(nb_samples, ..., output_dim)的nD张量，最常见的情况为(nb_samples, output_dim)的2D张量
+形如(nb_samples, ..., units)的nD张量，最常见的情况为(nb_samples, output_dim)的2D张量
 
 ***
 
@@ -69,7 +69,7 @@ keras.layers.core.Activation(activation)
 
 ### 参数
 
-* activation：将要使用的激活函数，为预定义激活函数名或一个Tensorflow/Theano的函数。参考[<font color='#FF0000'>激活函数</font>](../other/activations)
+* activation：将要使用的激活函数，为预定义激活函数名或一个Tensorflow/Theano的函数。参考[激活函数](../other/activations)
 
 ### 输入shape
 
@@ -85,17 +85,21 @@ keras.layers.core.Activation(activation)
 ## Dropout层
 </font></a>
 ```python
-keras.layers.core.Dropout(p)
+keras.layers.core.Dropout(rate, noise_shape=None, seed=None)
 ```
-为输入数据施加Dropout。Dropout将在训练过程中每次更新参数时随机断开一定百分比（p）的输入神经元连接，Dropout层用于防止过拟合。
+为输入数据施加Dropout。Dropout将在训练过程中每次更新参数时随机断开一定百分比（rate）的输入神经元，Dropout层用于防止过拟合。
 
 ### 参数
 
-* p：0~1的浮点数，控制需要断开的链接的比例
+* rate：0~1的浮点数，控制需要断开的神经元的比例
+
+* noise_shape：整数张量，为将要应用在输入上的二值Dropout mask的shape，例如你的输入为(batch_size, timesteps, features)，并且你希望在各个时间步上的Dropout mask都相同，则可传入noise_shape=(batch_size, 1, features)。
+
+* seed：整数，使用的随机数种子
 
 ### 参考文献
 
-* [<font color='FF0000'>Dropout: A Simple Way to Prevent Neural Networks from Overfitting</font>](http://www.cs.toronto.edu/~rsalakhu/papers/srivastava14a.pdf)
+* [Dropout: A Simple Way to Prevent Neural Networks from Overfitting](http://www.cs.toronto.edu/~rsalakhu/papers/srivastava14a.pdf)
 
 ***
 
@@ -109,7 +113,9 @@ Flatten层用来将输入“压平”，即把多维的输入一维化，常用�
 ### 例子
 ```python
 model = Sequential()
-model.add(Convolution2D(64, 3, 3, border_mode='same', input_shape=(3, 32, 32)))
+model.add(Convolution2D(64, 3, 3,
+            border_mode='same',
+            input_shape=(3, 32, 32)))
 # now: model.output_shape == (None, 64, 32, 32)
 
 model.add(Flatten())
@@ -148,6 +154,10 @@ model.add(Reshape((3, 4), input_shape=(12,)))
 # as intermediate layer in a Sequential model
 model.add(Reshape((6, 2)))
 # now: model.output_shape == (None, 6, 2)
+
+# also supports shape inference using `-1` as dimension
+model.add(Reshape((-1, 2, 2)))
+# now: model.output_shape == (None, 3, 2, 2)
 ```
 
 ***
@@ -208,52 +218,14 @@ model.add(Dense(32, input_dim=32))
 
 model.add(RepeatVector(3))
 # now: model.output_shape == (None, 3, 32)
-```
 
-***
-
-## Merge层
-```python
-keras.engine.topology.Merge(layers=None, mode='sum', concat_axis=-1, dot_axes=-1, output_shape=None, node_indices=None, tensor_indices=None, name=None)
-```
-Merge层根据给定的模式，将一个张量列表中的若干张量合并为一个单独的张量
-
-### 参数
-
-* layers：该参数为Keras张量的列表，或Keras层对象的列表。该列表的元素数目必须大于1。
-* mode：合并模式，为预定义合并模式名的字符串或lambda函数或普通函数，如果为lambda函数或普通函数，则该函数必须接受一个张量的list作为输入，并返回一个张量。如果为字符串，则必须是下列值之一：
-	* “sum”，“mul”，“concat”，“ave”，“cos”，“dot”
-
-* concat_axis：整数，当```mode=concat```时指定需要串联的轴
-
-* dot_axes：整数或整数tuple，当```mode=dot```时，指定要消去的轴
-
-* output_shape：整数tuple或lambda函数/普通函数（当mode为函数时）。如果output_shape是函数时，该函数的输入值应为一一对应于输入shape的list，并返回输出张量的shape。
-
-* node_indices：可选，为整数list，如果有些层具有多个输出节点（node）的话，该参数可以指定需要merge的那些节点的下标。如果没有提供，该参数的默认值为全0向量，即合并输入层0号节点的输出值。
-
-* tensor_indices：可选，为整数list，如果有些层返回多个输出张量的话，该参数用以指定需要合并的那些张量。
-
-### 例子
-```python
-model1 = Sequential()
-model1.add(Dense(32))
-
-model2 = Sequential()
-model2.add(Dense(32))
-
-merged_model = Sequential()
-merged_model.add(Merge([model1, model2], mode='concat', concat_axis=1)
-- ____TODO__: would this actually work? it needs to.__
-
-# achieve this with get_source_inputs in Sequential.
 ```
 
 ***
 
 ## Lambda层
 ```python
-keras.layers.core.Lambda(function, output_shape=None, arguments={})
+keras.layers.core.Lambda(function, output_shape=None, mask=None, arguments=None)
 ```
 本函数用以对上一层的输出施以任何Theano/TensorFlow表达式
 
@@ -262,6 +234,8 @@ keras.layers.core.Lambda(function, output_shape=None, arguments={})
 * function：要实现的函数，该函数仅接受一个变量，即上一层的输出
 
 * output_shape：函数应该返回的值的shape，可以是一个tuple，也可以是一个根据输入shape计算输出shape的函数
+
+* mask: 掩膜
 
 * arguments：可选，字典，用来记录向函数中传递的其他关键字参数
 
@@ -289,7 +263,8 @@ def antirectifier_output_shape(input_shape):
     shape[-1] *= 2
     return tuple(shape)
 
-model.add(Lambda(antirectifier, output_shape=antirectifier_output_shape))
+model.add(Lambda(antirectifier,
+         output_shape=antirectifier_output_shape))
 ```
 ### 输入shape
 
@@ -297,7 +272,7 @@ model.add(Lambda(antirectifier, output_shape=antirectifier_output_shape))
 
 ### 输出shape
 
-由```output_shape```参数指定的输出shape
+由```output_shape```参数指定的输出shape，当使用tensorflow时可自动推断
 
 ***
 
@@ -348,106 +323,4 @@ model = Sequential()
 model.add(Masking(mask_value=0., input_shape=(timesteps, features)))
 model.add(LSTM(32))
 ```
-
-***
-
-## Highway层
-```python
-keras.layers.core.Highway(init='glorot_uniform', transform_bias=-2, activation='linear', weights=None, W_regularizer=None, b_regularizer=None, activity_regularizer=None, W_constraint=None, b_constraint=None, bias=True, input_dim=None)
-```
-
-Highway层建立全连接的Highway网络，这是LSTM在前馈神经网络中的推广
-
-### 参数：
-
-* output_dim：大于0的整数，代表该层的输出维度。模型中非首层的全连接层其输入维度可以自动推断，因此非首层的全连接定义时不需要指定输入维度。
-
-* init：初始化方法，为预定义初始化方法名的字符串，或用于初始化权重的Theano函数。该参数仅在不传递```weights```参数时有意义。
-
-* activation：激活函数，为预定义的激活函数名（参考[<font color='#FF0000'>激活函数</font>](../other/activations)），或逐元素（element-wise）的Theano函数。如果不指定该参数，将不会使用任何激活函数（即使用线性激活函数：a(x)=x）
-
-* weights：权值，为numpy array的list。该list应含有一个形如（input_dim,output_dim）的权重矩阵和一个形如(output_dim,)的偏置向量。
-
-* W_regularizer：施加在权重上的正则项，为[<font color='FF0000'>WeightRegularizer</font>](../other/regularizers)对象
-
-* b_regularizer：施加在偏置向量上的正则项，为[<font color='FF0000'>WeightRegularizer</font>](../other/regularizers)对象
-
-* activity_regularizer：施加在输出上的正则项，为[<font color='FF0000'>ActivityRegularizer</font>](../other/regularizers)对象
-
-* W_constraints：施加在权重上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
-
-* b_constraints：施加在偏置上的约束项，为[<font color='FF0000'>Constraints</font>](../other/constraints)对象
-
-* bias：布尔值，是否包含偏置向量（即层对输入做线性变换还是仿射变换）
-
-* input_dim：整数，输入数据的维度。当该层作为网络的第一层时，必须指定该参数或```input_shape```参数。
-
-* transform_bias：用以初始化传递参数，默认为-2（请参考文献理解本参数的含义）
-
-### 输入shape
-
-形如（nb_samples, input_dim）的2D张量
-
-### 输出shape
-
-形如（nb_samples, output_dim）的2D张量
-
-### 参考文献
-
-* [<font color='FF0000'>Highway Networks</font>](http://arxiv.org/pdf/1505.00387v2.pdf)
-
-***
-
-## MaxoutDense层
-
-全连接的Maxout层
-
-```MaxoutDense```层以```nb_features```个```Dense(input_dim,output_dim)```线性层的输出的最大值为输出。```MaxoutDense```可对输入学习出一个凸的、分段线性的激活函数。
-
-### 参数
-
-* nb_features：内部使用的全连接层的数目
-
-### 输入shape
-
-形如（nb_samples, input_dim）的2D张量
-
-### 输出shape
-
-形如（nb_samples, output_dim）的2D张量
-
-### 参考文献
-
-* [<font color='FF0000'>Maxout Networks</font>](http://arxiv.org/pdf/1302.4389.pdf)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

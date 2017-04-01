@@ -2,12 +2,14 @@
 
 优化器是编译Keras模型必要的两个参数之一
 ```python
+from keras import optimizers
+
 model = Sequential()
-model.add(Dense(64, init='uniform', input_dim=10))
+model.add(Dense(64, init='uniform', input_shape=(10,)))
 model.add(Activation('tanh'))
 model.add(Activation('softmax'))
 
-sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
+sgd = optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
 model.compile(loss='mean_squared_error', optimizer=sgd)
 ```
 
@@ -19,15 +21,19 @@ model.compile(loss='mean_squared_error', optimizer='sgd')
 ## 所有优化器都可用的参数
 参数```clipnorm```和```clipvalue```是所有优化器都可以使用的参数,用于对梯度进行裁剪.示例如下:
 ```python
-# all parameter gradients will be clipped to
+from keras import optimizers
+
+# All parameter gradients will be clipped to
 # a maximum norm of 1.
-sgd = SGD(lr=0.01, clipnorm=1.)
+sgd = optimizers.SGD(lr=0.01, clipnorm=1.)
 ```
 ```python
-# all parameter gradients will be clipped to
+from keras import optimizers
+
+# All parameter gradients will be clipped to
 # a maximum value of 0.5 and
 # a minimum value of -0.5.
-sgd = SGD(lr=0.01, clipvalue=0.5)
+sgd = optimizers.SGD(lr=0.01, clipvalue=0.5)
 ```
 
 ## SGD
@@ -98,7 +104,7 @@ keras.optimizers.Adadelta(lr=1.0, rho=0.95, epsilon=1e-06)
 
 ***
 
-* [<font color='#FF0000'>Adadelta - an adaptive learning rate method</font>](http://arxiv.org/abs/1212.5701)
+* [Adadelta - an adaptive learning rate method](http://arxiv.org/abs/1212.5701)
 
 ## Adam
 ```python
@@ -117,7 +123,7 @@ keras.optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
 
 ### 参考文献
 
-* [<font color='#FF0000'>Adam - A Method for Stochastic Optimization</font>](http://arxiv.org/abs/1412.6980v8)
+* [Adam - A Method for Stochastic Optimization](http://arxiv.org/abs/1412.6980v8)
 
 ***
 
@@ -140,7 +146,7 @@ Adamax优化器来自于Adam的论文的Section7，该方法是基于无穷范�
 
 ### 参考文献
 
-* [<font color='#FF0000'>Adam - A Method for Stochastic Optimization</font>](http://arxiv.org/abs/1412.6980v8)
+* [Adam - A Method for Stochastic Optimization](http://arxiv.org/abs/1412.6980v8)
 
 ***
 
@@ -164,8 +170,8 @@ Nesterov Adam optimizer: Adam本质上像是带有动量项的RMSprop，Nadam就
 
 ### 参考文献
 
-* [<font color='#FF0000'>Nadam report</font>](http://cs229.stanford.edu/proj2015/054_report.pdf)
+* [Nadam report](http://cs229.stanford.edu/proj2015/054_report.pdf)
 
-* [<font color='#FF0000'>On the importance of initialization and momentum in deep learning</font>](http://www.cs.toronto.edu/~fritz/absps/momentum.pdf)
+* [On the importance of initialization and momentum in deep learning](http://www.cs.toronto.edu/~fritz/absps/momentum.pdf)
 
-【Tips】很快（过两天）我们会将各种优化器的算法及特点总结一下，敬请关注
+

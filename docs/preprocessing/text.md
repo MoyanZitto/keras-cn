@@ -31,7 +31,7 @@ keras.preprocessing.text.one_hot(text, n,
 本函数将一段文本编码为one-hot形式的码，即仅记录词在词典中的下标。
 
 【Tips】
-从定义上，当字典长为n时，每个单词应形成一个长为n的向量，其中仅有单词本身在字典中下标的位置为1，其余均为0，这称为one-hot。【@Bigmoyan】
+从定义上，当字典长为n时，每个单词应形成一个长为n的向量，其中仅有单词本身在字典中下标的位置为1，其余均为0，这称为one-hot。
 
 为了方便起见，函数在这里仅把“1”的位置，即字典中词的下标记录下来。
 
@@ -47,7 +47,7 @@ keras.preprocessing.text.one_hot(text, n,
 
 ## 分词器Tokenizer
 ```python
-keras.preprocessing.text.Tokenizer(nb_words=None, filters=base_filter(), 
+keras.preprocessing.text.Tokenizer(num_words=None, filters=base_filter(), 
     lower=True, split=" ")
 ```
 Tokenizer是一个用于向量化文本，或将文本转换为序列（即单词在字典中的下标构成的列表，从1算起）的类。

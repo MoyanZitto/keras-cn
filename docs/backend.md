@@ -8,13 +8,13 @@ Keras是一个模型级的库，提供了快速构建深度学习网络的模块
 
 * TensorFlow是一个符号主义的张量操作框架，由Google开发
 
-在未来，我们有可能要添加更多的后端选项，如果你有兴趣开发后端，请与我联系~
+在未来，我们有可能要添加更多的后端选项。下一步我们很可能加入的是CNTK后端。
 
 ## 切换后端
 
 如果你至少运行过一次Keras，你将在下面的目录下找到Keras的配置文件：
 
-```~/.keras/keras.json```
+```$HOME/.keras/keras.json```
 
 如果该目录下没有该文件，你可以手动创建一个
 
@@ -22,10 +22,10 @@ Keras是一个模型级的库，提供了快速构建深度学习网络的模块
 
 ```
 {
-"image_dim_ordering":"tf",
-"epsilon":1e-07,
-"floatx":"float32",
-"backend":"tensorflow"
+    "image_data_format": "channels_last",
+    "epsilon": 1e-07,
+    "floatx": "float32",
+    "backend": "tensorflow"
 }
 ```
 
@@ -41,7 +41,7 @@ Using TensorFlow backend.
 ## keras.json 细节
 ```python
 {
-    "image_dim_ordering": "tf",
+    "image_data_format": "channels_last",
     "epsilon": 1e-07,
     "floatx": "float32",
     "backend": "tensorflow"
@@ -49,7 +49,7 @@ Using TensorFlow backend.
 ```
 你可以更改以上`~/.keras/keras.json`中的配置
 
-- `image_dim_ordering`：字符串，"tf"或"th"，该选项指定了Keras将要使用的维度顺序，可通过`keras.backend.image_dim_ordering()`来获取当前的维度顺序。对2D数据来说，`tf`假定维度顺序为(rows,cols,channels)而`th`假定维度顺序为(channels, rows, cols)。对3D数据而言，`tf`假定(conv_dim1, conv_dim2, conv_dim3, channels)，`th`则是(channels, conv_dim1, conv_dim2, conv_dim3)
+- `iamge_data_format`：字符串，"channels_last"或"channels_first"，该选项指定了Keras将要使用的维度顺序，可通过`keras.backend.image_data_format()`来获取当前的维度顺序。对2D数据来说，"channels_last"假定维度顺序为(rows,cols,channels)而"channels_first"假定维度顺序为(channels, rows, cols)。对3D数据而言，"channels_last"假定(conv_dim1, conv_dim2, conv_dim3, channels)，"channels_first"则是(channels, conv_dim1, conv_dim2, conv_dim3)
 
 - `epsilon`：浮点数，防止除0错误的小数字
 - `floatx`：字符串，"float16", "float32", "float64"之一，为浮点数精度
@@ -97,6 +97,11 @@ a = concatenate([b, c], axis=-1)
 
 ## Kera后端函数
 
+### backend
+```python
+backend()
+```
+返回当前后端
 
 ###epsilon
 ```python
@@ -160,24 +165,42 @@ array([ 1.,  2.], dtype=float32)
 dtype('float32')
 ```
 
-### image_dim_ordering
+### image_data_format
 ```python
-image_dim_ordering()
+image_data_format()
 ```
-返回默认的图像的维度顺序（‘tf’或‘th’）
+返回默认的图像的维度顺序（‘channels_last’或‘channels_first’）
 
-### set_image_dim_ordering
+### set_image_data_format
 ```python
-set_image_dim_ordering(dim_ordering)
+set_image_data_format(data_format)
 ```
 设置图像的维度顺序（‘tf’或‘th’）,示例：
+>>> from keras import backend as K
+>>> K.image_data_format()
+'channels_first'
+>>> K.set_image_data_format('channels_last')
+>>> K.image_data_format()
+'channels_last'
+```
+
+### is_keras_tensor()
+```python
+is_keras_tensor(x)
+```
+判断x是否是keras tensor对象的谓词函数
+
 ```python
 >>> from keras import backend as K
->>> K.image_dim_ordering()
-'th'
->>> K.set_image_dim_ordering('tf')
->>> K.image_dim_ordering()
-'tf'
+>>> np_var = numpy.array([1, 2])
+>>> K.is_keras_tensor(np_var)
+False
+>>> keras_var = K.variable(np_var)
+>>> K.is_keras_tensor(keras_var)  # A variable is not a Tensor.
+False
+>>> keras_placeholder = K.placeholder(shape=(2, 4, 5))
+>>> K.is_keras_tensor(keras_placeholder)  # A placeholder is a Tensor.
+True
 ```
 
 ### get_uid
@@ -541,6 +564,36 @@ __you need to assign it.__
 <tf.Tensor 'Cast_2:0' shape=(2, 3) dtype=float16>```
 ```
 
+### update
+```python
+update(x, new_x)
+```
+
+### update
+```python
+update(x, new_x)
+```
+用new_x更新x
+
+### update_add
+```python
+update_add(x, increment)
+```
+通过将x增加increment更新x
+
+### update_sub
+```python
+update_sub(x, decrement)
+```
+通过将x减少decrement更新x
+
+
+### moving_average_update
+```python
+moving_average_update(x, value, momentum)
+```
+含义暂不明确
+
 ### dot
 ```python
 dot(x, y)
@@ -888,6 +941,12 @@ arange(start, stop=None, step=1, dtype='int32')
 
 为了与tensorflow的默认保持匹配，函数返回张量的默认数据类型是`int32`
 
+### tile
+```python
+tile(x, n)
+```
+将x在各个维度上重复n次，x为张量，n为与x维度数目相同的列表
+
 ### batch_flatten
 ```python
 batch_flatten(x)
@@ -924,11 +983,6 @@ spatial_2d_padding(x, padding=(1, 1), dim_ordering='th')
 ```
 向4D张量第二和第三维度的左右两端填充```padding[0]```和```padding[1]```个0值
 
-###asymmetric_spatial_2d_padding
-```python
-asymmetric_spatial_2d_padding(x, top_pad=1, bottom_pad=1, left_pad=1, right_pad=1, dim_ordering='th')
-```
-对4D张量的部分方向进行填充
 
 ###spatial_3d_padding
 ```python
@@ -936,6 +990,11 @@ spatial_3d_padding(x, padding=(1, 1, 1), dim_ordering='th')
 ```
 向5D张量深度、高度和宽度三个维度上填充```padding[0]```，```padding[1]```和```padding[2]```个0值
 
+### stack
+```python
+stack(x, axis=0)
+```
+将一个列表中维度数目为R的张量堆积起来形成维度为R+1的新张量
 
 ### one-hot
 ```python
@@ -1248,6 +1307,44 @@ pool3d(x, pool_size, strides=(1, 1, 1), border_mode='valid', dim_ordering='th', 
 * dim_ordering：“tf”和“th”之一，维度排列顺序
 * pool_mode: “max”，“avg”之一，池化方式
 
+### bias_add
+```python
+bias_add(x, bias, data_format=None)
+```
+为张量增加一个偏置项
+
+### random_normal
+```python
+random_normal(shape, mean=0.0, stddev=1.0, dtype=None, seed=None)
+```
+返回具有正态分布值的张量，mean和stddev为均值和标准差
+
+
+### random_uniform
+```python
+random_uniform(shape, minval=0.0, maxval=1.0, dtype=None, seed=None)
+```
+返回具有均匀分布值的张量，minval和maxval是均匀分布的下上界
+
+### random_binomial
+```python
+random_binomial(shape, p=0.0, dtype=None, seed=None)
+```
+返回具有二项分布值的张量，p是二项分布参数
+
+### truncated_normall
+```python
+truncated_normal(shape, mean=0.0, stddev=1.0, dtype=None, seed=None)
+```
+返回具有截尾正态分布值的张量，在距离均值两个标准差之外的数据将会被截断并重新生成
+
+
+### ctc_label_dense_to_sparse
+```python
+ctc_label_dense_to_sparse(labels, label_lengths)
+```
+将ctc标签从稠密形式转换为稀疏形式
+
 ### ctc_batch_cost
 ```python
 ctc_batch_cost(y_true, y_pred, input_length, label_length)
@@ -1323,8 +1420,3 @@ foldr(fn, elems, initializer=None, name=None)
 
 返回值：与initializer的类型和形状一致
 
-### backend
-```python
-backend()
-```
-确定当前使用的后端

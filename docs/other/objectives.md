@@ -11,10 +11,14 @@ model.compile(loss='mean_squared_error', optimizer='sgd')
 * y_true：真实的数据标签，Theano/TensorFlow张量
 
 * y_pred：预测值，与y_true相同shape的Theano/TensorFlow张量
+```python
+from keras import losses
 
+model.compile(loss=losses.mean_squared_error, optimizer='sgd')
+```
 真实的优化目标函数是在各个数据点得到的损失函数值之和的均值
 
-请参考[<font color='#FF0000'>目标实现代码</font>](https://github.com/fchollet/keras/blob/master/keras/objectives.py)获取更多信息
+请参考[目标实现代码](https://github.com/fchollet/keras/blob/master/keras/objectives.py)获取更多信息
 
 ## 可用的目标函数
 
@@ -47,9 +51,6 @@ model.compile(loss='mean_squared_error', optimizer='sgd')
 ```python
 from keras.utils.np_utils import to_categorical
 
-categorical_labels = to_categorical(int_labels, nb_classes=None)
+categorical_labels = to_categorical(int_labels, num_classes=None)
 ```
 
-
-
-【Tips】过一段时间（等我或者谁有时间吧……）我们将把各种目标函数的表达式和常用场景总结一下。

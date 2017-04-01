@@ -1,6 +1,6 @@
 # 关于Keras模型
 
-Keras有两种类型的模型，[<font color='#FF0000'>顺序模型（Sequential）</font>](sequential.md)和[<font color='#FF0000'>泛型模型（Model）</font>](model.md)
+Keras有两种类型的模型，[序贯模型（Sequential）](sequential.md)和[函数式模型（Model）](model.md)，函数式模型应用更为广泛，序贯模型是函数式模型的一种特殊情况。
 
 两类模型有一些方法是相同的：
 
@@ -8,12 +8,15 @@ Keras有两种类型的模型，[<font color='#FF0000'>顺序模型（Sequential
 
 * ```model.get_config()```:返回包含模型配置信息的Python字典。模型也可以从它的config信息中重构回去
 
+
 ```python	
 config = model.get_config()
 model = Model.from_config(config)
-# or, for Sequential
+# or, for Sequential:
 model = Sequential.from_config(config)
 ```
+
+* ```model.get_layer()```：依据层名或下标获得层对象
 
 * ```model.get_weights()```：返回模型权重张量的列表，类型为numpy array
 

@@ -1,6 +1,6 @@
 # Sequential模型接口
 
-如果刚开始学习Sequential模型，请首先移步[<font color='#FF0000'>这里</font>](../getting_started/sequential_model.md)阅读文档
+如果刚开始学习Sequential模型，请首先移步[这里](../getting_started/sequential_model.md)阅读文档，本节内容是Sequential的API和参数介绍。
 
 ## 常用Sequential属性
 
@@ -10,16 +10,35 @@
 
 ## Sequential模型方法
 
+### add
+```python
+add(self, layer)
+```
+向模型中添加一个层
+
+* layer: Layer对象
+
+***
+
+### pop
+```python
+pop(self)
+```
+弹出模型最后的一层，无返回值
+
+
+***
+
 ### compile
 
 ```python
-compile(self, optimizer, loss, metrics=[], sample_weight_mode=None)
+compile(self, optimizer, loss, metrics=None, sample_weight_mode=None)
 ```
 编译用来配置模型的学习过程，其参数有
 
-* optimizer：字符串（预定义优化器名）或优化器对象，参考[<font color='#FF0000'>优化器</font>](../other/optimizers.md)
+* optimizer：字符串（预定义优化器名）或优化器对象，参考[优化器](../other/optimizers.md)
 
-* loss：字符串（预定义损失函数名）或目标函数，参考[<font color='#FF0000'>目标函数</font>](../other/objectives.md)
+* loss：字符串（预定义损失函数名）或目标函数，参考[损失函数](../other/objectives.md)
 
 * metrics：列表，包含评估模型在训练和测试时的网络性能的指标，典型用法是```metrics=['accuracy']```
 
@@ -36,10 +55,12 @@ model.compile(optimizer='rmsprop',
 	  metrics=['accuracy'])
 ```
 
+模型在使用前必须编译，否则在调用fit或evaluate时会抛出异常。
+
 ### fit
 
 ```python
-fit(self, x, y, batch_size=32, nb_epoch=10, verbose=1, callbacks=[], validation_split=0.0, validation_data=None, shuffle=True, class_weight=None, sample_weight=None)
+fit(self, x, y, batch_size=32, epochs=10, verbose=1, callbacks=None, validation_split=0.0, validation_data=None, shuffle=True, class_weight=None, sample_weight=None, initial_epoch=0)
 ```
 本函数将模型训练```nb_epoch```轮，其参数有：
 
@@ -49,13 +70,13 @@ fit(self, x, y, batch_size=32, nb_epoch=10, verbose=1, callbacks=[], validation_
 
 * batch_size：整数，指定进行梯度下降时每个batch包含的样本数。训练时一个batch的样本会被计算一次梯度下降，使目标函数优化一步。
 
-* nb_epoch：整数，训练的轮数，训练数据将会被遍历nb_epoch次。Keras中nb开头的变量均为"number of"的意思
+* epochs：整数，训练的轮数，每个epoch会把训练集轮一遍。
 
 * verbose：日志显示，0为不在标准输出流输出日志信息，1为输出进度条记录，2为每个epoch输出一行记录
 
-* callbacks：list，其中的元素是```keras.callbacks.Callback```的对象。这个list中的回调函数将会在训练过程中的适当时机被调用，参考[<font color='#FF0000'>回调函数</font>](../other/callbacks.md)
+* callbacks：list，其中的元素是```keras.callbacks.Callback```的对象。这个list中的回调函数将会在训练过程中的适当时机被调用，参考[回调函数](../other/callbacks.md)
 
-* validation_split：0~1之间的浮点数，用来指定训练集的一定比例数据作为验证集。验证集将不参与训练，并在每个epoch结束后测试的模型的指标，如损失函数、精确度等。
+* validation_split：0~1之间的浮点数，用来指定训练集的一定比例数据作为验证集。验证集将不参与训练，并在每个epoch结束后测试的模型的指标，如损失函数、精确度等。注意，validation_split的划分在shuffle之后，因此如果你的数据本身是有序的，需要先手工打乱再指定validation_split，否则可能会出现验证集样本不均匀。
 
 * validation_data：形式为（X，y）的tuple，是指定的验证集。此参数将覆盖validation_spilt。
 
@@ -64,6 +85,8 @@ fit(self, x, y, batch_size=32, nb_epoch=10, verbose=1, callbacks=[], validation_
 * class_weight：字典，将不同的类别映射为不同的权值，该参数用来在训练过程中调整损失函数（只能用于训练）
 
 * sample_weight：权值的numpy array，用于在训练时调整损失函数（仅用于训练）。可以传递一个1D的与样本等长的向量用于对样本进行1对1的加权，或者在面对时序数据时，传递一个的形式为（samples，sequence_length）的矩阵来为每个时间步上的样本赋不同的权。这种情况下请确定在编译模型时添加了```sample_weight_mode='temporal'```。
+
+* initial_epoch: 从该参数指定的epoch开始训练，在继续之前的训练时有用。
 
 ```fit```函数返回一个```History```的对象，其```History.history```属性记录了损失函数和其他指标的数值随epoch变化的情况，如果有验证集的话，也包含了验证集的这些指标变化情况
 
@@ -161,7 +184,7 @@ predict_on_batch(self, x)
 
 ### fit_generator
 ```python
-fit_generator(self, generator, samples_per_epoch, nb_epoch, verbose=1, callbacks=[], validation_data=None, nb_val_samples=None, class_weight=None, max_q_size=10)
+fit_generator(self, generator, steps_per_epoch, epochs=1, verbose=1, callbacks=None, validation_data=None, validation_steps=None, class_weight=None, max_q_size=10, workers=1, pickle_safe=False, initial_epoch=0)
 ```
 利用Python的生成器，逐个生成数据的batch并进行训练。生成器与模型将并行执行以提高效率。例如，该函数允许我们在CPU上进行实时的数据提升，同时在GPU上进行模型训练
 
@@ -172,7 +195,9 @@ fit_generator(self, generator, samples_per_epoch, nb_epoch, verbose=1, callbacks
 	
 	* 一个形如（inputs, targets,sample_weight）的tuple。所有的返回值都应该包含相同数目的样本。生成器将无限在数据集上循环。每个epoch以经过模型的样本数达到```samples_per_epoch```时，记一个epoch结束
 
-* samples_per_epoch：整数，当模型处理的样本达到此数目时计一个epoch结束，执行下一个epoch
+* steps_per_epoch：整数，当生成器返回```steps_per_epoch```次数据时计一个epoch结束，执行下一个epoch
+
+* epochs：整数，数据迭代的轮数
 
 * verbose：日志显示，0为不在标准输出流输出日志信息，1为输出进度条记录，2为每个epoch输出一行记录
 
@@ -182,10 +207,21 @@ fit_generator(self, generator, samples_per_epoch, nb_epoch, verbose=1, callbacks
 	* 一个形如（inputs,targets）的tuple
 	
 	* 一个形如（inputs,targets，sample_weights）的tuple
+
+* validation_steps: 当validation_data为生成器时，本参数指定验证集的生成器返回次数
 	
-* nb_val_samples：仅当```validation_data```是生成器时使用，用以限制在每个epoch结束时用来验证模型的验证集样本数，功能类似于```samples_per_epoch```
+* class_weight：规定类别权重的字典，将类别映射为权重，常用于处理样本不均衡问题。
+
+* sample_weight：权值的numpy array，用于在训练时调整损失函数（仅用于训练）。可以传递一个1D的与样本等长的向量用于对样本进行1对1的加权，或者在面对时序数据时，传递一个的形式为（samples，sequence_length）的矩阵来为每个时间步上的样本赋不同的权。这种情况下请确定在编译模型时添加了```sample_weight_mode='temporal'```。
+
+* workers：最大进程数
 
 * max_q_size：生成器队列的最大容量
+
+* pickle_safe: 若为真，则使用基于进程的线程。由于该实现依赖多进程，不能传递non picklable（无法被pickle序列化）的参数到生成器中，因为无法轻易将它们传入子进程中。
+
+* initial_epoch: 从该参数指定的epoch开始训练，在继续之前的训练时有用。
+
 
 函数返回一个```History```对象
 
@@ -194,22 +230,32 @@ fit_generator(self, generator, samples_per_epoch, nb_epoch, verbose=1, callbacks
 ```python
 def generate_arrays_from_file(path):
     while 1:
-    	f = open(path)
-		for line in f:
-			# create numpy arrays of input data
-			# and labels, from each line in the file
-			x, y = process_line(line)
-			yield (x, y)
+    		f = open(path)
+    		for line in f:
+        		# create Numpy arrays of input data
+        		# and labels, from each line in the file
+        		x, y = process_line(line)
+        		yield (x, y)
     	f.close()
 
 model.fit_generator(generate_arrays_from_file('/my_file.txt'),
-        samples_per_epoch=10000, nb_epoch=10)
+        samples_per_epoch=10000, epochs=10)
 ```
 
 ***
 
 ### evaluate_generator
 ```python
-evaluate_generator(self, generator, val_samples, max_q_size=10)
+evaluate(self, x, y, batch_size=32, verbose=1, sample_weight=None)
 ```
-本函数使用一个生成器作为数据源评估模型，生成器应返回与```test_on_batch```的输入数据相同类型的数据。该函数的参数与```fit_generator```同名参数含义相同
+本函数使用一个生成器作为数据源评估模型，生成器应返回与```test_on_batch```的输入数据相同类型的数据。该函数的参数与```fit_generator```同名参数含义相同，steps是生成器要返回数据的轮数。
+
+***
+
+### predcit_generator
+```python
+predict_generator(self, generator, steps, max_q_size=10, workers=1, pickle_safe=False, verbose=0)
+```
+本函数使用一个生成器作为数据源预测模型，生成器应返回与```test_on_batch```的输入数据相同类型的数据。该函数的参数与```fit_generator```同名参数含义相同，steps是生成器要返回数据的轮数。
+
+***

@@ -4,10 +4,6 @@
 
 【Tips】虽然我们称之为回调“函数”，但事实上Keras的回调函数是一个类，回调函数只是习惯性称呼
 
-## CallbackList
-```python
-keras.callbacks.CallbackList(callbacks=[], queue_length=10)
-```
 
 ## Callback
 ```python
@@ -170,12 +166,6 @@ keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=10, v
 - cooldown：学习率减少后，会经过cooldown个epoch才重新进行正常操作
 - min_lr：学习率的下限
 
-### 示例：
-```python
-reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.2,
-            patience=5, min_lr=0.001)
-model.fit(X_train, Y_train, callbacks=[reduce_lr])
-``` 
 
 ##CSVLogger
 ```python
@@ -189,12 +179,6 @@ keras.callbacks.CSVLogger(filename, separator=',', append=False)
 - separator：字符串，csv分隔符
 - append：默认为False，为True时csv文件如果存在则继续写入，为False时总是覆盖csv文件
 
-### 示例
-
-```python
-csv_logger = CSVLogger('training.log')
-model.fit(X_train, Y_train, callbacks=[csv_logger])
-```
 
 ## LambdaCallback
 ```python
@@ -217,18 +201,26 @@ keras.callbacks.LambdaCallback(on_epoch_begin=None, on_epoch_end=None, on_batch_
 
 ```python
 # Print the batch number at the beginning of every batch.
-batch_print_callback = LambdaCallback(on_batch_begin=lambda batch, logs: print(batch))
+batch_print_callback = LambdaCallback(
+    on_batch_begin=lambda batch,logs: print(batch))
 
 # Plot the loss after every epoch.
 import numpy as np
 import matplotlib.pyplot as plt
-plot_loss_callback = LambdaCallback(on_epoch_end=lambda epoch, logs: plt.plot(np.arange(epoch), logs['loss']))
+plot_loss_callback = LambdaCallback(
+    on_epoch_end=lambda epoch, logs: plt.plot(np.arange(epoch),
+                      logs['loss']))
 
 # Terminate some processes after having finished model training.
 processes = ...
-cleanup_callback = LambdaCallback(on_train_end=lambda logs: [p.terminate() for p in processes if p.is_alive()])
+cleanup_callback = LambdaCallback(
+    on_train_end=lambda logs: [
+    p.terminate() for p in processes if p.is_alive()])
 
-model.fit(..., callbacks=[batch_print_callback, plot_loss_callback, cleanup_callback])
+model.fit(...,
+      callbacks=[batch_print_callback,
+         plot_loss_callback,
+         cleanup_callback])
 ```
 
 ## 编写自己的回调函数
@@ -261,7 +253,7 @@ model.add(Activation('softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='rmsprop')
 
 history = LossHistory()
-model.fit(X_train, Y_train, batch_size=128, nb_epoch=20, verbose=0, callbacks=[history])
+model.fit(X_train, Y_train, batch_size=128, epochs=20, verbose=0, callbacks=[history])
 
 print history.losses
 # outputs
@@ -282,7 +274,7 @@ model.compile(loss='categorical_crossentropy', optimizer='rmsprop')
 saves the model weights after each epoch if the validation loss decreased
 '''
 checkpointer = ModelCheckpoint(filepath="/tmp/weights.hdf5", verbose=1, save_best_only=True)
-model.fit(X_train, Y_train, batch_size=128, nb_epoch=20, verbose=0, validation_data=(X_test, Y_test), callbacks=[checkpointer])
+model.fit(X_train, Y_train, batch_size=128, epochs=20, verbose=0, validation_data=(X_test, Y_test), callbacks=[checkpointer])
 ```
 
 

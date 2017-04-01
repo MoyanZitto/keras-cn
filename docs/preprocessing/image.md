@@ -18,7 +18,7 @@ keras.preprocessing.image.ImageDataGenerator(featurewise_center=False,
     horizontal_flip=False,
     vertical_flip=False,
     rescale=None,
-    dim_ordering=K.image_dim_ordering())
+    data_format=K.image_data_format())
 ```
 用以生成一个batch的图像数据，支持实时数据提升。训练时该函数会无限生成数据，直到达到规定的epoch次数为止。
 
@@ -56,7 +56,7 @@ keras.preprocessing.image.ImageDataGenerator(featurewise_center=False,
 
 * rescale: 重放缩因子,默认为None. 如果为None或0则不进行放缩,否则会将该数值乘到数据上(在应用其他变换之前)
 
-* dim_ordering：‘tf’和‘th’之一，规定数据的维度顺序。‘tf’模式下数据的形状为```samples, height, width, channels```，‘th’下形状为```(samples, channels, height, width).```该参数的默认值是Keras配置文件```~/.keras/keras.json```的```image_dim_ordering```值,如果你从未设置过的话,就是'tf'
+* data_format：字符串，“channel_first”或“channel_last”之一，代表图像的通道维的位置。该参数是Keras 1.x中的image_dim_ordering，“channel_last”对应原本的“tf”，“channel_first”对应原本的“th”。以128x128的RGB图像为例，“channel_first”应将数据组织为（3,128,128），而“channel_last”应将数据组织为（128,128,3）。该参数的默认值是```~/.keras/keras.json```中设置的值，若从未设置过，则为“channel_last”
 
 ***
 
@@ -113,8 +113,8 @@ keras.preprocessing.image.ImageDataGenerator(featurewise_center=False,
 使用```.flow()```的例子
 ```python
 (X_train, y_train), (X_test, y_test) = cifar10.load_data()
-Y_train = np_utils.to_categorical(y_train, nb_classes)
-Y_test = np_utils.to_categorical(y_test, nb_classes)
+Y_train = np_utils.to_categorical(y_train, num_classes)
+Y_test = np_utils.to_categorical(y_test, num_classes)
 
 datagen = ImageDataGenerator(
     featurewise_center=True,
@@ -130,10 +130,10 @@ datagen.fit(X_train)
 
 # fits the model on batches with real-time data augmentation:
 model.fit_generator(datagen.flow(X_train, Y_train, batch_size=32),
-                    samples_per_epoch=len(X_train), nb_epoch=nb_epoch)
+                    steps_per_epoch=len(X_train), epochs=epochs)
 
 # here's a more "manual" example
-for e in range(nb_epoch):
+for e in range(epochs):
     print 'Epoch', e
     batches = 0
     for X_batch, Y_batch in datagen.flow(X_train, Y_train, batch_size=32):
@@ -169,10 +169,10 @@ validation_generator = test_datagen.flow_from_directory(
 
 model.fit_generator(
         train_generator,
-        samples_per_epoch=2000,
-        nb_epoch=50,
+        steps_per_epoch=2000,
+        epochs=50,
         validation_data=validation_generator,
-        nb_val_samples=800)
+        validation_steps=800)
 ```
 
 同时变换图像和mask
@@ -208,6 +208,6 @@ train_generator = zip(image_generator, mask_generator)
 
 model.fit_generator(
     train_generator,
-    samples_per_epoch=2000,
-    nb_epoch=50)
+    steps_per_epoch=2000,
+    epochs=50)
 ```

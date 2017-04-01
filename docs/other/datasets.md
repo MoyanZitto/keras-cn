@@ -122,7 +122,9 @@ word_index = reuters.get_word_index(path="reuters_word_index.pkl")
 ```
 上面代码的返回值是一个以单词为关键字，以其下标为值的字典。例如，```word_index['giraffe']```的值可能为```1234```
 
-数据库将会被下载到```'~/.keras/datasets/'+path```
+### 参数
+
+* path：如果你在本机上已有此数据集（位于```'~/.keras/datasets/'+path```），则载入。否则数据将下载到该目录下
 
 ***
 
@@ -136,6 +138,9 @@ from keras.datasets import mnist
 
 (X_train, y_train), (X_test, y_test) = mnist.load_data()
 ```
+### 参数
+
+* path：如果你在本机上已有此数据集（位于```'~/.keras/datasets/'+path```），则载入。否则数据将下载到该目录下
 
 ### 返回值
 
@@ -148,3 +153,28 @@ from keras.datasets import mnist
 数据库将会被下载到```'~/.keras/datasets/'+path```
 
 ***
+
+## Boston房屋价格回归数据集
+
+本数据集由StatLib库取得，由CMU维护。每个样本都是1970s晚期波士顿郊区的不同位置，每条数据含有13个属性，目标值是该位置房子的房价中位数（千dollar）。
+
+
+### 使用方法
+```python
+from keras.datasets import boston_housing
+
+(x_train, y_train), (x_test, y_test) = boston_housing.load_data()
+```
+
+### 参数
+
+* path：数据存放位置，默认```'~/.keras/datasets/'+path```
+
+* seed：随机数种子
+
+* test_split：分割测试集的比例
+
+### 返回值
+
+两个Tuple,```(X_train, y_train), (X_test, y_test)```
+
