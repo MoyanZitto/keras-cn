@@ -38,7 +38,7 @@ keras.layers.convolutional.Conv1D(filters, kernel_size, strides=1, padding='vali
 
 * kernel_constraints：施加在权重上的约束项，为[Constraints](../other/constraints)对象
 
-* bias_constraints：施加在偏置上的约束项，为[<font color='FF0000'>Constraints](../other/constraints)对象
+* bias_constraints：施加在偏置上的约束项，为[Constraints](../other/constraints)对象
 
 ### 输入shape
 
