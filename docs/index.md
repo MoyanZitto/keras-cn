@@ -69,6 +69,8 @@ Keras的设计原则是
 
 * 目前，“深度学习与Keras”一节中的示例代码尚未调整到Keras 2版本，敬请注意。
 
+* 如果想查看Keras1和Keras2的API变动，请访问[这里](https://github.com/fchollet/keras/wiki/Keras-2.0-release-notes)
+
 注意，keras在github上的master往往要高于当前的release版本，如果你从源码编译keras，可能某些模块与文档说明不相符，请以官方Github代码为准
 
 ***

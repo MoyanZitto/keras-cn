@@ -253,9 +253,9 @@ model.summary()
 ```
 
 ### 参考文献
-* [<font color='#FF0000'>A guide to convolution arithmetic for deep learning</font>](https://arxiv.org/abs/1603.07285)
-* [<font color='#FF0000'>Transposed convolution arithmetic </font>](http://deeplearning.net/software/theano_versions/dev/tutorial/conv_arithmetic.html#transposed-convolution-arithmetic)
-* [<font color='#FF0000'>Deconvolutional Networks </font>](http://www.matthewzeiler.com/pubs/cvpr2010/cvpr2010.pdf)
+* [A guide to convolution arithmetic for deep learning](https://arxiv.org/abs/1603.07285)
+* [Transposed convolution arithmetic](http://deeplearning.net/software/theano_versions/dev/tutorial/conv_arithmetic.html#transposed-convolution-arithmetic)
+* [Deconvolutional Networks](http://www.matthewzeiler.com/pubs/cvpr2010/cvpr2010.pdf)
 
 ***
 
