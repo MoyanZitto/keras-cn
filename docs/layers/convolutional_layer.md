@@ -237,20 +237,6 @@ keras.layers.convolutional.Conv2DTranspose(filters, kernel_size, strides=(1, 1),
 
 输出的行列数可能会因为填充方法而改变
 
-### 例子
-
-```python
-# apply a 3x3 transposed convolution with stride 1x1 and 3 output filters on a 12x12 image:
-model = Sequential()
-model.add(Deconvolution2D(3, 3, 3, output_shape=(None, 3, 14, 14), border_mode='valid', input_shape=(3, 12, 12)))
-# output_shape will be (None, 3, 14, 14)
-
-# apply a 3x3 transposed convolution with stride 2x2 and 3 output filters on a 12x12 image:
-model = Sequential()
-model.add(Deconvolution2D(3, 3, 3, output_shape=(None, 3, 25, 25), subsample=(2, 2), border_mode='valid', input_shape=(3, 12, 12)))
-model.summary()
-# output_shape will be (None, 3, 25, 25)
-```
 
 ### 参考文献
 * [A guide to convolution arithmetic for deep learning](https://arxiv.org/abs/1603.07285)
