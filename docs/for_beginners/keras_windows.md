@@ -69,7 +69,7 @@ CUDA Toolkit是NVIDIA公司面向GPU编程提供的基础工具包，也是驱�
 ## 6. 加速库CuDNN
 从官网下载需要注册 Nvidia 开发者账号，网盘搜索一般也能找到。
 Windows目前最新版v6.0，但是keras尚未支持此版本，请下载v5.1版本，即 cudnn-8.0-win-x64-v5.1.zip。
-下载解压出来是名为cuda的文件夹里面有bin、include、lib，将三个文件夹复制到安装CUDA的地方覆盖对应文件夹，默认文件夹在：`C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\8.0`
+下载解压出来是名为cuda的文件夹，里面有bin、include、lib，将三个文件夹复制到安装CUDA的地方覆盖对应文件夹，默认文件夹在：`C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\8.0`
 
 ---
 
