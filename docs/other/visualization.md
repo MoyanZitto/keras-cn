@@ -1,6 +1,6 @@
 # 模型可视化
 
-```keras.utils.visualize_util```模块提供了画出Keras模型的函数（利用graphviz）
+```keras.utils.vis_utils```模块提供了画出Keras模型的函数（利用graphviz）
 
 该函数将画出模型结构图，并保存成图片：
 
