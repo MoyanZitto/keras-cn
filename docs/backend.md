@@ -570,11 +570,6 @@ __you need to assign it.__
 ```python
 update(x, new_x)
 ```
-
-### update
-```python
-update(x, new_x)
-```
 用new_x更新x
 
 ### update_add
@@ -686,14 +681,14 @@ array([[ 1.,  4.],
 ```python
 gather(reference, indices)
 ```
-在给定的2D张量中检索给定下标的向量
+在给定的张量中检索给定下标的向量
 
 参数：
 
-* reference：2D张量
+* reference：张量
 * indices：整数张量，其元素为要查询的下标
 
-返回值：一个与```reference```数据类型相同的3D张量
+返回值：一个与```reference```数据类型相同的张量
 
 ### max
 ```python
