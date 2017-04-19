@@ -67,9 +67,9 @@ CUDA Toolkit是NVIDIA公司面向GPU编程提供的基础工具包，也是驱�
 在下载之后，按照步骤安装，**不建议新手修改安装目录**，同上，环境不需要配置，安装程序会自动配置好。
 
 ## 6. 加速库CuDNN
-从官网下载需要注册账号申请，两三天批准。网盘搜索一般也能找到最新版。
-Windows目前就是cudnn-8.0-win-x64-v5.1-prod.zip。
-下载解压出来是名为cuda的文件夹，里面有bin、include、lib，将三个文件夹复制到安装CUDA的地方覆盖对应文件夹，默认文件夹在：`C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA`
+从官网下载需要注册 Nvidia 开发者账号，网盘搜索一般也能找到。
+Windows目前最新版v6.0，但是keras尚未支持此版本，请下载v5.1版本，即 cudnn-8.0-win-x64-v5.1.zip。
+下载解压出来是名为cuda的文件夹，里面有bin、include、lib，将三个文件夹复制到安装CUDA的地方覆盖对应文件夹，默认文件夹在：`C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\8.0`
 
 ---
 
@@ -79,10 +79,10 @@ Windows目前就是cudnn-8.0-win-x64-v5.1-prod.zip。
 在CMD命令行或者Powershell中输入：
 ``` powershell
 # GPU 版本
->>> pip install --upgrade https://storage.googleapis.com/tensorflow/windows/gpu/tensorflow_gpu-1.0.0-cp35-cp35m-win_amd64.whl
+>>> pip install --upgrade https://storage.googleapis.com/tensorflow/windows/gpu/tensorflow_gpu-1.0.1-cp35-cp35m-win_amd64.whl
 
 # CPU 版本
->>> pip install --upgrade https://storage.googleapis.com/tensorflow/windows/cpu/tensorflow-1.0.0-cp35-cp35m-win_amd64.whl
+>>> pip install --upgrade https://storage.googleapis.com/tensorflow/windows/cpu/tensorflow-1.0.1-cp35-cp35m-win_amd64.whl
 
 # Keras 安装
 >>> pip install keras -U --pre
