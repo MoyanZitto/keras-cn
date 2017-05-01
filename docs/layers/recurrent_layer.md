@@ -15,7 +15,7 @@ keras.layers.recurrent.Recurrent(return_sequences=False, go_backwards=False, sta
 
 * return_sequences：布尔值，默认```False```，控制返回类型。若为```True```则返回整个序列，否则仅返回输出序列的最后一个输出
 
-* go_backwards：布尔值，默认为```False```，若为```True```，则逆向处理输入序列
+* go_backwards：布尔值，默认为```False```，若为```True```，则逆向处理输入序列并返回逆序后的序列
 
 * stateful：布尔值，默认为```False```，若为```True```，则一个batch中下标为i的样本的最终状态将会用作下一个batch同样下标的样本的初始状态。
 
@@ -49,9 +49,23 @@ model.add(LSTM(32, input_shape=(10, 64)))
 model = Sequential()
 model.add(LSTM(32, input_dim=64, input_length=10))
 
-# for subsequent layers, not need to specify the input size:
-model.add(LSTM(16))
+# for subsequent layers, no need to specify the input size:
+         model.add(LSTM(16))
+
+# to stack recurrent layers, you must use return_sequences=True
+# on any recurrent layer that feeds into another recurrent layer.
+# note that you only need to specify the input size on the first layer.
+model = Sequential()
+model.add(LSTM(64, input_dim=64, input_length=10, return_sequences=True))
+model.add(LSTM(32, return_sequences=True))
+model.add(LSTM(10))
 ```
+
+### 指定RNN初始状态的注意事项
+
+可以通过设置`initial_state`用符号式的方式指定RNN层的初始状态。即，`initial_stat`的值应该为一个tensor或一个tensor列表，代表RNN层的初始状态。
+
+也可以通过设置`reset_states`参数用数值的方法设置RNN的初始状态，状态的值应该为numpy数组或numpy数组的列表，代表RNN层的初始状态。
 
 ### 屏蔽输入数据（Masking）
 

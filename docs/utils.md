@@ -118,23 +118,32 @@ eserialize_keras_object(identifier, module_objects=None, custom_objects=None, pr
 ### get_file
 
 ```python
-get_file(fname, origin, untar=False, md5_hash=None, cache_subdir='datasets')
+get_file(fname, origin, untar=False, md5_hash=None, file_hash=None, cache_subdir='datasets', hash_algorithm='auto', extract=False, archive_format='auto', cache_dir=None)
 ```
 
 从给定的URL中下载文件, 可以传递MD5值用于数据校验(下载后或已经缓存的数据均可)
 
+默认情况下文件会被下载到`~/.keras`中的`cache_subdir`文件夹，并将其文件名设为`fname`，因此例如一个文件`example.txt`最终将会被存放在`~/.keras/datasets/example.txt~
+
+tar,tar.gz.tar.bz和zip格式的文件可以被提取，提供哈希码可以在下载后校验文件。命令喊程序`shasum`和`sha256sum`可以计算哈希值。
+
+
 ### 参数
 
-* fname: 文件名
+* fname: 文件名，如果指定了绝对路径`/path/to/file.txt`,则文件将会保存到该位置。
 
 * origin: 文件的URL地址
 
 * untar: 布尔值,是否要进行解压
 
-* md5_hash: MD5哈希值,用于数据校验
+* md5_hash: MD5哈希值,用于数据校验，支持`sha256`和`md5`哈希
 
-* cache_subdir: 用于缓存数据的文件夹
+* cache_subdir: 用于缓存数据的文件夹，若指定绝对路径`/path/to/folder`则将存放在该路径下。
 
+* hash_algorithm: 选择文件校验的哈希算法，可选项有'md5', 'sha256', 和'auto'. 默认'auto'自动检测使用的哈希算法
+* extract: 若为True则试图提取文件，例如tar或zip tries extracting the file as an Archive, like tar or zip.
+* archive_format: 试图提取的文件格式，可选为'auto', 'tar', 'zip', 和None. 'tar' 包括tar, tar.gz, tar.bz文件. 默认'auto'是['tar', 'zip']. None或空列表将返回没有匹配。 
+* cache_dir: 缓存文件存放地在，参考[FAQ](for_beginners/FAQ/#where_config)
 ### 返回值
 
 下载后的文件地址

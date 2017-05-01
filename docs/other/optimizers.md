@@ -174,4 +174,8 @@ Nesterov Adam optimizer: Adam本质上像是带有动量项的RMSprop，Nadam就
 
 * [On the importance of initialization and momentum in deep learning](http://www.cs.toronto.edu/~fritz/absps/momentum.pdf)
 
-
+## TFOptimizer
+```python
+keras.optimizers.TFOptimizer(optimizer)
+```
+TF优化器的包装器

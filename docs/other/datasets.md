@@ -56,7 +56,7 @@ from keras.datasets import cifar100
 ```python
 from keras.datasets import imdb
 
-(X_train, y_train), (X_test, y_test) = imdb.load_data(path="imdb_full.pkl",
+(X_train, y_train), (X_test, y_test) = imdb.load_data(path="imdb.npz",
                                                       nb_words=None,
                                                       skip_top=0,
                                                       maxlen=None,
@@ -71,9 +71,9 @@ from keras.datasets import imdb
 
 * path：如果你在本机上已有此数据集（位于```'~/.keras/datasets/'+path```），则载入。否则数据将下载到该目录下
 
-* nb_words：整数或None，要考虑的最常见的单词数，任何出现频率更低的单词将会被编码到0的位置。
+* nb_words：整数或None，要考虑的最常见的单词数，序列中任何出现频率更低的单词将会被编码为`oov_char`的值。
 
-* skip_top：整数，忽略最常出现的若干单词，这些单词将会被编码为0
+* skip_top：整数，忽略最常出现的若干单词，这些单词将会被编码为`oov_char`的值
 
 * maxlen：整数，最大序列长度，任何长度大于此值的序列将被截断
 
@@ -81,7 +81,7 @@ from keras.datasets import imdb
 
 * start_char：字符，序列的起始将以该字符标记，默认为1因为0通常用作padding
 
-* oov_char：字符，因```nb_words```或```skip_top```限制而cut掉的单词将被该字符代替
+* oov_char：整数，因```nb_words```或```skip_top```限制而cut掉的单词将被该字符代替
 
 * index_from：整数，真实的单词（而不是类似于```start_char```的特殊占位符）将从这个下标开始
 
@@ -104,7 +104,7 @@ from keras.datasets import imdb
 from keras.datasets import reuters
 
 
-(X_train, y_train), (X_test, y_test) = reuters.load_data(path="reuters.pkl",
+(X_train, y_train), (X_test, y_test) = reuters.load_data(path="reuters.npz",
                                                          nb_words=None,
                                                          skip_top=0,
                                                          maxlen=None,
@@ -118,7 +118,7 @@ from keras.datasets import reuters
 参数的含义与IMDB同名参数相同，唯一多的参数是：
 ```test_split```，用于指定从原数据中分割出作为测试集的比例。该数据库支持获取用于编码序列的词下标：
 ```python
-word_index = reuters.get_word_index(path="reuters_word_index.pkl")
+word_index = reuters.get_word_index(path="reuters_word_index.json")
 ```
 上面代码的返回值是一个以单词为关键字，以其下标为值的字典。例如，```word_index['giraffe']```的值可能为```1234```
 

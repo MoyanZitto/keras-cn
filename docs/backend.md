@@ -209,14 +209,13 @@ True
 ```python
 get_uid(prefix='')
 ```
-依据给定的前缀提供一个唯一的UID，参数为表示前缀的字符串，返回值为整数，示例：
-```python
->>> keras.backend.get_uid('dense')
->>> 1
->>> keras.backend.get_uid('dense')
->>> 2
-```
+获得默认计算图的uid，依据给定的前缀提供一个唯一的UID，参数为表示前缀的字符串，返回值为整数.
 
+### reset_uids
+```python
+reset_uids()
+```
+重置图的标识符
 ### is_keras_tensor
 ```python
 is_keras_tensor(x)
@@ -714,6 +713,17 @@ prod(x, axis=None, keepdims=False)
 ```
 在给定轴上计算张量中元素之积
 
+### cumsum
+```python
+cumsum(x, axis=0)
+```
+在给定轴上求张量的累积和
+
+### cumprod
+```python
+cumprod(x, axis=0)
+```
+在给定轴上求张量的累积积
 ### var
 ```python
 var(x, axis=None, keepdims=False)
@@ -785,6 +795,12 @@ exp(x)
 log(x)
 ```
 逐元素求自然对数
+
+###logsumexp
+```python
+logsumexp(x, axis=None, keepdims=False)
+```
+在给定轴上计算log(sum(exp()))，该函数在数值稳定性上超过直接计算log(sum(exp()))，可以避免由exp和log导致的上溢和下溢
 
 ###round
 ```python

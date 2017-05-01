@@ -15,6 +15,7 @@
 * [如何从Sequential模型中去除一个层？](#pop)
 * [如何在Keras中使用预训练的模型](#pretrain)
 * [如何在Keras中使用HDF5输入？](#hdf5)
+* [Keras的配置文件存储在哪里？](#where_config)
 ***
 
 <a name='citation'>
@@ -27,7 +28,7 @@
 
 ```python
 @misc{chollet2015keras,
-  author = {Chollet, François},
+  author = {Chollet, François and others},
   title = {Keras},
   year = {2015},
   publisher = {GitHub},
@@ -450,3 +451,39 @@ with h5py.File('input/file.hdf5', 'r') as f:
     X_data = f['X_data']
     model.predict(X_data)
 ```
+
+***
+<a name='where_config'>
+<font color='#404040'>
+## Keras的配置文件存储在哪里？
+</font>
+</a>
+
+所有的Keras数据默认存储在：
+```bash
+$HOME/.keras/
+```
+
+对windows用户而言，`$HOME`应替换为`%USERPROFILE%`
+
+当Keras无法在上面的位置创建文件夹时（例如由于权限原因），备用的地址是`/tmp/.keras/`
+
+Keras配置文件为JSON格式的文件，保存在`$HOME/.keras/keras.json`。默认的配置文件长这样：
+
+```
+{
+    "image_data_format": "channels_last",
+    "epsilon": 1e-07,
+    "floatx": "float32",
+    "backend": "tensorflow"
+}
+```
+该文件包含下列字段：
+
+
+- 默认的图像数据格式`channels_last`或`channels_first`
+- 用于防止除零错误的`epsilon`
+- 默认的浮点数类型
+- 默认的后端
+
+类似的，缓存的数据集文件，即由`get_file()`下载的文件，默认保存在`$HOME/.keras/datasets/`

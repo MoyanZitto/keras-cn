@@ -81,7 +81,7 @@ x = Dense(1024, activation='relu')(x)
 predictions = Dense(200, activation='softmax')(x)
 
 # this is the model we will train
-model = Model(input=base_model.input, output=predictions)
+model = Model(inputs=base_model.input, outputs=predictions)
 
 # first: train only the top layers (which were randomly initialized)
 # i.e. freeze all convolutional InceptionV3 layers
@@ -159,7 +159,7 @@ Xception V1 模型, 权重由ImageNet训练而言
 
 在ImageNet上,该模型取得了验证集top1 0.790和top5 0.945的正确率
 
-注意,该模型目前仅能以TensorFlow为后端使用,由于它依赖于"SeparableConvolution"层,目前该模型只支持tf的维度顺序(width, height, channels)
+注意,该模型目前仅能以TensorFlow为后端使用,由于它依赖于"SeparableConvolution"层,目前该模型只支持channels_last的维度顺序(width, height, channels)
 
 默认输入图片大小为299x299
 
@@ -200,7 +200,7 @@ keras.applications.vgg16.VGG16(include_top=True, weights='imagenet',
 
 VGG16模型,权重由ImageNet训练而来
 
-该模型再Theano和TensorFlow后端均可使用,并接受th和tf两种输入维度顺序
+该模型再Theano和TensorFlow后端均可使用,并接受channels_first和channels_last两种输入维度顺序
 
 模型的默认输入尺寸时224x224
 
@@ -237,7 +237,7 @@ keras.applications.vgg19.VGG19(include_top=True, weights='imagenet',
 ```
 VGG19模型,权重由ImageNet训练而来
 
-该模型再Theano和TensorFlow后端均可使用,并接受th和tf两种输入维度顺序
+该模型在Theano和TensorFlow后端均可使用,并接受channels_first和channels_last两种输入维度顺序
 
 模型的默认输入尺寸时224x224
 ### 参数
@@ -275,7 +275,7 @@ keras.applications.resnet50.ResNet50(include_top=True, weights='imagenet',
 
 50层残差网络模型,权重训练自ImageNet
 
-该模型再Theano和TensorFlow后端均可使用,并接受th和tf两种输入维度顺序
+该模型在Theano和TensorFlow后端均可使用,并接受channels_first和channels_last两种输入维度顺序
 
 模型的默认输入尺寸时224x224
 
@@ -314,7 +314,7 @@ keras.applications.inception_v3.InceptionV3(include_top=True,
 ```
 InceptionV3网络,权重训练自ImageNet
 
-该模型再Theano和TensorFlow后端均可使用,并接受th和tf两种输入维度顺序
+该模型在Theano和TensorFlow后端均可使用,并接受channels_first和channels_last两种输入维度顺序
 
 模型的默认输入尺寸时299x299
 ### 参数

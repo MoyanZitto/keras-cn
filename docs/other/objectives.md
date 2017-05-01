@@ -36,6 +36,8 @@ model.compile(loss=losses.mean_squared_error, optimizer='sgd')
 
 * binary_crossentropy（亦称作对数损失，logloss）
 
+* logcosh
+
 * categorical_crossentropy：亦称作多类的对数损失，注意使用该目标函数时，需要将标签转化为形如```(nb_samples, nb_classes)```的二值序列
 
 * sparse_categorical_crossentrop：如上，但接受稀疏标签。注意，使用该函数时仍然需要你的标签与输出值的维度相同，你可能需要在标签数据上增加一个维度：```np.expand_dims(y,-1)```
