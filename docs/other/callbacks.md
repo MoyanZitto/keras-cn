@@ -138,7 +138,7 @@ TensorBoard是TensorFlow提供的可视化工具，该回调函数将日志信�
 ```python
 tensorboard --logdir=/full_path_to_your_logs
 ```
-更多的参考信息，请点击[这里](https://keras.io/https__://www.tensorflow.org/get_started/summaries_and_tensorboard)
+更多的参考信息，请点击[这里](https://www.tensorflow.org/get_started/summaries_and_tensorboard)
 
 ### 参数
 

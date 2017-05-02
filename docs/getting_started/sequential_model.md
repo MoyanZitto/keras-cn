@@ -20,7 +20,7 @@ Activation('softmax'),
 
 ```python
 model = Sequential()
-model.add(Dense(32, units=784))
+model.add(Dense(32, input_shape=(784,)))
 model.add(Activation('relu'))
 ```
 
