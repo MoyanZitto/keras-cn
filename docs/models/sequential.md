@@ -246,7 +246,7 @@ model.fit_generator(generate_arrays_from_file('/my_file.txt'),
 
 ### evaluate_generator
 ```python
-evaluate(self, x, y, batch_size=32, verbose=1, sample_weight=None)
+evaluate_generator(self, generator, steps, max_q_size=10, workers=1, pickle_safe=False)
 ```
 本函数使用一个生成器作为数据源评估模型，生成器应返回与```test_on_batch```的输入数据相同类型的数据。该函数的参数与```fit_generator```同名参数含义相同，steps是生成器要返回数据的轮数。
 
