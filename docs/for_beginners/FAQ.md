@@ -186,7 +186,7 @@ model = ...  # create the original model
 layer_name = 'my_layer'
 intermediate_layer_model = Model(input=model.input,
                                  output=model.get_layer(layer_name).output)
-intermediate_output = intermediate_layer_model.predict(data
+intermediate_output = intermediate_layer_model.predict(data)
 ```
 
 此外，我们也可以建立一个Keras的函数来达到这一目的：
