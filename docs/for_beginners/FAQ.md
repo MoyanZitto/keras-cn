@@ -115,6 +115,7 @@ from keras.models import model_from_json
 model = model_from_json(json_string)
 
 # model reconstruction from YAML
+from keras.models import model_from_yaml
 model = model_from_yaml(yaml_string)
 ```
 
