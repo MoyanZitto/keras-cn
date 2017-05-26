@@ -34,7 +34,8 @@ keras.layers.local.LocallyConnected1D(filters, kernel_size, strides=1, padding='
 
 * kernel_constraints：施加在权重上的约束项，为[Constraints](../other/constraints)对象
 
-* bias_constraints：施加在偏置上的约束项，为[<font color='FF0000'>Constraints](../other/constraints)对象
+* bias_constraints：施加在偏置上的约束项，为[Constraints](../other/constraints)对象
+
 ### 输入shape
 
 形如（samples，steps，input_dim）的3D张量
