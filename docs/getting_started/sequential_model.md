@@ -36,11 +36,11 @@ model.add(Activation('relu'))
 
 * 如果你需要为输入指定一个固定大小的batch_size（常用于stateful RNN网络），可以传递```batch_size```参数到一个层中，例如你想指定输入张量的batch大小是32，数据shape是（6，8），则你需要传递```batch_size=32```和```input_shape=(6,8)```。
 
-下面的两个指定输入数据shape的方法是严格等价的：
+
 
 ```python
 model = Sequential()
-model.add(Dense(32, input_shape=(784,)))
+model.add(Dense(32, input_dim=784))
 ```
 ```python
 model = Sequential()
