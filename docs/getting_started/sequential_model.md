@@ -44,7 +44,7 @@ model.add(Dense(32, input_dim=784))
 ```
 ```python
 model = Sequential()
-model.add(Dense(32, input_shape=(784,))
+model.add(Dense(32, input_dim=784))
 ```
 
 ***
