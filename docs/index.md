@@ -1,9 +1,7 @@
 # Keras:基于Theano和TensorFlow的深度学习库
 
-
-
 ## 这就是Keras
-Keras是一个高层神经网络API，Keras由纯Python编写而成并基Tensorflow或Theano。Keras
+Keras是一个高层神经网络API，Keras由纯Python编写而成并基Tensorflow、Theano或CNTK。Keras
 为支持快速实验而生，能够把你的idea迅速转换为结果，如果你有如下需求，请选择Keras：
 
 * 简易和快速的原型设计（keras具有高度模块化，极简，和可扩充特性）
@@ -44,8 +42,8 @@ Keras的设计原则是
 * Keras资源：在这个页面，我们罗列一些Keras可用的资源，本页面会不定期更新，请注意关注
 
 * 深度学习与Keras：位于导航栏最下方的该模块翻译了来自Keras作者博客[keras.io](http://blog.keras.io/)
-和其他Keras相关博客的文章，该栏目的文章提供了对深度学习的理解和大量使用Keras的例子，您也可以向这个栏目投稿。
-所有的文章均在醒目位置标志标明来源与作者，本文档对该栏目文章的原文不具有任何处置权。如您仍觉不妥，请联系本人（moyan_work@foxmail.com）删除。
+  和其他Keras相关博客的文章，该栏目的文章提供了对深度学习的理解和大量使用Keras的例子，您也可以向这个栏目投稿。
+  所有的文章均在醒目位置标志标明来源与作者，本文档对该栏目文章的原文不具有任何处置权。如您仍觉不妥，请联系本人（moyan_work@foxmail.com）删除。
 
 ***
 
@@ -97,7 +95,7 @@ model.add(Activation("softmax"))
 完成模型的搭建后，我们需要使用<code>.compile\(\)</code>方法来编译模型：
 ```python
 model.compile(loss='categorical_crossentropy', optimizer='sgd', metrics=['accuracy'])
-```	
+```
 编译模型时必须指明损失函数和优化器，如果你需要的话，也可以自己定制损失函数。Keras的一个核心理念就是简明易用同时，保证用户对Keras的绝对控制力度，用户可以根据自己的需要定制自己的模型、网络层，甚至修改源代码。
 ```python
 from keras.optimizers import SGD
@@ -116,11 +114,11 @@ model.train_on_batch(x_batch, y_batch)
 随后，我们可以使用一行代码对我们的模型进行评估，看看模型的指标是否满足我们的要求：
 ```python
 loss_and_metrics = model.evaluate(x_test, y_test, batch_size=128)
-```	
+```
 或者，我们可以使用我们的模型，对新的数据进行预测：
 ```python
 classes = model.predict(x_test, batch_size=128)
-```	
+```
 搭建一个问答系统、图像分类模型，或神经图灵机、word2vec词嵌入器就是这么快。支撑深度学习的基本想法本就是简单的，现在让我们把它的实现也变的简单起来！
 
 为了更深入的了解Keras，我们建议你查看一下下面的两个tutorial
@@ -163,7 +161,7 @@ Keras使用了下面的依赖包：
 安装Keras时，请<code>cd</code>到Keras的文件夹中，并运行下面的安装命令：
 ```python
 sudo python setup.py install
-```	
+```
 你也可以使用PyPI来安装Keras
 ```python
 sudo pip install keras
@@ -172,7 +170,7 @@ sudo pip install keras
 **详细的Windows和Linux安装教程请参考“Keras新手指南”中给出的安装教程，特别鸣谢SCP-173编写了这些教程**
 
 ***
-	
+
 ##在Theano和TensorFlow间切换
 
 Keras默认使用TensorFlow作为后端来进行张量操作，如需切换到Theano，请查看[这里](backend)

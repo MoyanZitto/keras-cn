@@ -4,11 +4,11 @@
 
 Keras是一个模型级的库，提供了快速构建深度学习网络的模块。Keras并不处理如张量乘法、卷积等底层操作。这些操作依赖于某种特定的、优化良好的张量操作库。Keras依赖于处理张量的库就称为“后端引擎”。Keras提供了两种后端引擎Theano/Tensorflow，并将其函数统一封装，使得用户可以以同一个接口调用不同后端引擎的函数
 
-* Theano是一个开源的符号主义张量操作框架，由蒙特利尔大学LISA/MILA实验室开发
+* Theano是一个开源的符号主义张量操作框架，由蒙特利尔大学LISA/MILA实验室开发。
+* TensorFlow是一个符号主义的张量操作框架，由Google开发。
+* CNTK是一个开源的商业级深度学习工作包，由微软开发。
 
-* TensorFlow是一个符号主义的张量操作框架，由Google开发
-
-在未来，我们有可能要添加更多的后端选项。下一步我们很可能加入的是CNTK后端。
+在未来，我们有可能要添加更多的后端选项。
 
 ## 切换后端
 
@@ -180,14 +180,14 @@ set_image_data_format(data_format)
 设置图像的维度顺序（‘tf’或‘th’）,示例：
 >>> from keras import backend as K
 >>> K.image_data_format()
-'channels_first'
+>>> 'channels_first'
 >>> K.set_image_data_format('channels_last')
 >>> K.image_data_format()
-'channels_last'
+>>> 'channels_last'
 ```
 
 ### is_keras_tensor()
-```python
+​```python
 is_keras_tensor(x)
 ```
 判断x是否是keras tensor对象的谓词函数
@@ -1089,12 +1089,12 @@ rnn(step_function, inputs, initial_states, go_backwards=False, mask=None, consta
 
 * inputs： 形如```(samples, time, ...) ```的时域信号的张量，阶数至少为3
 * step_function：每个时间步要执行的函数
-	其参数：	
-	* input：形如```(samples, ...)```的张量，不含时间维，代表某个时间步时一个batch的样本	
-	* states：张量列表
-  	其返回值：
-	* output：形如```(samples, ...)```的张量
-	* new_states：张量列表，与‘states’的长度相同		
+ 其参数：	
+ * input：形如```(samples, ...)```的张量，不含时间维，代表某个时间步时一个batch的样本	
+ * states：张量列表
+  其返回值：
+ * output：形如```(samples, ...)```的张量
+  * new_states：张量列表，与‘states’的长度相同	
 * initial_states：形如```(samples, ...)```的张量，包含了```step_function```状态的初始值。
 * go_backwards：布尔值，若设为True，则逆向迭代序列
 * mask：形如```(samples, time, 1) ```的二值张量，需要屏蔽的数据元素上值为1
@@ -1427,7 +1427,7 @@ foldr(fn, elems, initializer=None, name=None)
 参数：
 
 * fn：函数，例如：lambda acc, x: acc + x
-* elems：张量	
+ * elems：张量
 * initializer：初始化的值（elems[-1]）
 * name：节点名
 
