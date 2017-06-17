@@ -6,7 +6,7 @@
 ```python
 keras.layers.core.Dense(units, activation=None, use_bias=True, kernel_initializer='glorot_uniform', bias_initializer='zeros', kernel_regularizer=None, bias_regularizer=None, activity_regularizer=None, kernel_constraint=None, bias_constraint=None)
 ```
-Dense就是常用的全连接层，所实现的运算是```output = activation(dot(input, kernel)+bias)```。其中```activation```是逐元素计算的激活函数，```kernel````是本层的权值矩阵，```bias```为偏置向量，只有当```use_bias=True```才会添加。
+Dense就是常用的全连接层，所实现的运算是```output = activation(dot(input, kernel)+bias)```。其中```activation```是逐元素计算的激活函数，```kernel```是本层的权值矩阵，```bias```为偏置向量，只有当```use_bias=True```才会添加。
 
 如果本层的输入数据的维度大于2，则会先被压为与```kernel```相匹配的大小。
 
