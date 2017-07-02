@@ -17,7 +17,7 @@ plot_model(model, to_file='model.png')
 我们也可以直接获取一个```pydot.Graph```对象，然后按照自己的需要配置它，例如，如果要在ipython中展示图片
 ```python
 from IPython.display import SVG
-from keras.utils.visualize_util import model_to_dot
+from keras.utils.vis_utils import model_to_dot
 
 SVG(model_to_dot(model).create(prog='dot', format='svg'))
 ```
