@@ -227,7 +227,7 @@ autoencoder = Model(input_img, decoded)
 autoencoder.compile(optimizer='adadelta', loss='binary_crossentropy')
 ```
 
-我们使用28*28*3的原始MNIST图像（尽管看起来还是灰度图）训练网络，图片的像素被归一化到0~1之间。
+我们使用28\*28\*3的原始MNIST图像（尽管看起来还是灰度图）训练网络，图片的像素被归一化到0~1之间。
 
 ```python
 from keras.datasets import mnist
@@ -289,7 +289,7 @@ plt.show()
 
 ![deep_conv_ae_128.png](../images/deep_conv_ae_128.png)
 
-我们也可以看看中间的码字长什么样，这些码字的shape是8*4*4，我们可以将其reshape成4*32看
+我们也可以看看中间的码字长什么样，这些码字的shape是8\*4\*4，我们可以将其reshape成4\*32看
 
 ```python
 n = 10
