@@ -7,11 +7,11 @@
 ## **推荐配置**
 如果您是高校学生或者高级研究人员，并且实验室或者个人资金充沛，建议您采用如下配置：
 
- - 主板：X99型号或Z170型号
- - CPU:  i7-5830K或i7-6700K 及其以上高级型号
+ - 主板：X299型号或Z270型号
+ - CPU:  i7-6950X或i7-7700K 及其以上高级型号
  - 内存：品牌内存，总容量32G以上，根据主板组成4通道或8通道
  - SSD： 品牌固态硬盘，容量256G以上
- - <font color=#FF0000>显卡：NVIDIA GTX 1080ti、NVIDIA GTX TITAN、NVIDIA GTX 1080、NVIDIA GTX 1070、NVIDIA GTX 1060 (顺序为优先建议，并且建议同一显卡，可以根据主板插槽数量购买多块，例如X99型号主板最多可以采用×4的显卡)</font>
+ - <font color=#FF0000>显卡：NVIDIA GTX TITAN(XP) NVIDIA GTX 1080ti、NVIDIA GTX TITAN、NVIDIA GTX 1080、NVIDIA GTX 1070、NVIDIA GTX 1060 (顺序为优先建议，并且建议同一显卡，可以根据主板插槽数量购买多块，例如X299型号主板最多可以采用×4的显卡)</font>
  - 电源：由主机机容量的确定，一般有显卡总容量后再加200W即可
 ## **最低配置**
 如果您是仅仅用于自学或代码调试，亦或是条件所限仅采用自己现有的设备进行开发，那么您的电脑至少满足以下几点：
@@ -22,7 +22,7 @@
 ## <font color=#FF0000>CPU说明</font>
  - 大多数CPU目前支持多核多线程，那么如果您采用CPU加速，就可以使用多线程运算。这方面的优势对于服务器CPU志强系列尤为关键
 ## <font color=#FF0000>显卡说明</font>
- - 如果您的显卡是非NVIDIA公司的产品或是NVIDIA GTX系列中型号的第一个数字低于6或NVIDIA的GT系列，都不建议您采用此类显卡进行加速计算，例如`NVIDIA GT 910`、`NVIDIA GTX 450` 等等。
+ - 如果您的显卡是非NVIDIA公司的产品或是NVIDIA GTX系列中型号的第一个数字低于6或NVIDIA的GT系列，都不建议您采用此类显卡进行加速计算，例如`NVIDIA GT 910`、`NVIDIA GTX 460` 等等。
  - 如果您的显卡为笔记本上的GTX移动显卡（型号后面带有标识M），那么请您慎重使用显卡加速，因为移动版GPU容易发生过热烧毁现象。
  - 如果您的显卡，显示的是诸如 `HD5000`,`ATI 5650` 等类型的显卡，那么您只能使用CPU加速
  - 如果您的显卡芯片为Pascal架构（`NVIDIA GTX 1080`,`NVIDIA GTX 1070`等），您只能在之后的配置中选择`CUDA 8.0`
@@ -64,57 +64,62 @@ Ubuntu 16.04 LTS<font color=#FF0000>下载地址</font>：http://www.ubuntu.org.
 之后打开`终端`输入：
 
 ```
->>> sudo dpkg -i cuda-repo-ubuntu1604-8-0-local_8.0.44-1_amd64.deb
+>>> sudo dpkg -i cuda-repo-ubuntu1604-8-0-local-ga2_8.0.61-1_amd64.deb
 >>> sudo apt update
->>> sudo apt install cuda
+>>> sudo apt -y install cuda
 ```
 自动配置成功就好。
 
  - 将CUDA路径添加至环境变量
 在`终端`输入：
 ```
->>> sudo gedit /etc/bash.bashrc
+>>> sudo gedit /etc/profile
 ```
-在`bash.bashrc`文件中添加：
+在`profile`文件中添加：
 ```bash
 export CUDA_HOME=/usr/local/cuda-8.0
 export PATH=/usr/local/cuda-8.0/bin${PATH:+:${PATH}}
 export LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 ```
-之后`source gedit /etc/bash.bashrc`即可
-同样，在`终端`输入：
-```
->>> sudo gedit ~/.bashrc
-```
-在`.bashrc`中添加如上相同内容
-（如果您使用的是`zsh`，在`~/.zshrc`添加即可）
+之后`source /etc/profile`即可
 
  - 测试
 在`终端`输入：
 ```
 >>> nvcc -V
 ```
-会得到相应的nvcc编译器相应的信息，那么CUDA配置成功了。
-记得重启系统
+会得到相应的nvcc编译器相应的信息，那么CUDA配置成功了。(**记得重启系统**)
+
+如果要进行`cuda性能测试`，可以进行：
+```shell
+>>> cd /usr/local/cuda/samples
+>>> sudo make -j8
+```
+编译完成后，可以进`samples/bin/.../.../...`的底层目录，运行各类实例。
+
 
 ## 4. 加速库cuDNN（可选）
 从官网下载需要注册账号申请，两三天批准。网盘搜索一般也能找到最新版。
-Linux目前就是cudnn-8.0-win-x64-v5.1-prod.zip。
+Linux目前最新的版本是cudnn V6，但对于tensorflow的预编译版本还不支持这个最近版本，建议采用5.1版本，即是cudnn-8.0-win-x64-v5.1-prod.zip。
 下载解压出来是名为cuda的文件夹，里面有bin、include、lib，将三个文件夹复制到安装CUDA的地方覆盖对应文件夹，在终端中输入：
 ```shell
->>> sudo cp include/cudnn.h /usr/local/cuda-8.0/include/
->>> sudo cp lib64/* /usr/local/cuda-8.0/lib64/
+>>> sudo cp include/cudnn.h /usr/local/cuda/include/
+>>> sudo cp lib64/* /usr/local/cuda/lib64/
+>>> cd /usr/local/cuda/lib64
+>>> sudo ln -sf libcudnn.so.5.1.10 libcudnn.so.5
+>>> sudo ln -sf libcudnn.so.5 libcudnn.so
+>>> sudo ldconfig -v
 ```
 
 # Keras框架搭建
 
 ## 相关开发包安装
 在`终端`中输入:
-```
+```shell
 >>> sudo pip install -U --pre pip setuptools wheel
 >>> sudo pip install -U --pre numpy scipy matplotlib scikit-learn scikit-image
 >>> sudo pip install -U --pre tensorflow-gpu
-# >>> sudo pip install -U --pre tensorflow
+# >>> sudo pip install -U --pre tensorflow ## CPU版本
 >>> sudo pip install -U --pre keras
 ```
 安装完毕后，输入`python`，然后输入：
@@ -127,10 +132,10 @@ Linux目前就是cudnn-8.0-win-x64-v5.1-prod.zip。
 
 ## Keras中mnist数据集测试
  下载Keras开发包
-```
-git clone https://github.com/fchollet/keras.git
-cd keras/examples/
-python mnist_mlp.py
+```shell
+>>> git clone https://github.com/fchollet/keras.git
+>>> cd keras/examples/
+>>> python mnist_mlp.py
 ```
 程序无错进行，至此，keras安装完成。
 

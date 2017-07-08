@@ -8,25 +8,26 @@
 ## **推荐配置**
 如果您是高校学生或者高级研究人员，并且实验室或者个人资金充沛，建议您采用如下配置：
 
- - 主板：X99型号、Z270型号
- - CPU:  i7-6850K或i7-7500K 及其以上高级型号
+ - 主板：X299型号或Z270型号
+ - CPU:  i7-6950X或i7-7700K 及其以上高级型号
  - 内存：品牌内存，总容量32G以上，根据主板组成4通道或8通道
  - SSD： 品牌固态硬盘，容量256G以上
- - <font color=#FF0000>显卡：NVIDIA GTX 1080ti、NVIDIA GTX TITAN（Pascal）、NVIDIA GTX 1080、NVIDIA GTX 1070、NVIDIA GTX 1060 (顺序为优先性价比建议，并且建议同一显卡，可以根据主板插槽数量购买多块，例如X99型号主板最多可以采用×4的显卡)</font>
+ - <font color=#FF0000>显卡：NVIDIA GTX TITAN(XP) NVIDIA GTX 1080ti、NVIDIA GTX TITAN、NVIDIA GTX 1080、NVIDIA GTX 1070、NVIDIA GTX 1060 (顺序为优先建议，并且建议同一显卡，可以根据主板插槽数量购买多块，例如X299型号主板最多可以采用×4的显卡)</font>
  - 电源：由主机机容量的确定，一般有显卡总容量后再加200W即可
 ## **最低配置**
 如果您是仅仅用于自学或代码调试，亦或是条件所限仅采用自己现有的设备进行开发，那么您的电脑至少满足以下几点：
 
- - CPU：Intel第四代i5和i7以上系列产品或同性能AMD公司产品
- - 显卡：计算能力高于NVIDIA GTX 750Ti的英伟达显卡
- - 内存：总容量8G以上
+ - CPU：Intel第三代i5和i7以上系列产品或同性能AMD公司产品
+ - 内存：总容量4G以上
 
 ## <font color=#FF0000>CPU说明</font>
- - 大多数CPU目前支持多核多线程，那么如果您采用CPU加速，就可以使用多线程运算。这方面的优势对于服务器CPU Xeon系列尤为明显
+ - 大多数CPU目前支持多核多线程，那么如果您采用CPU加速，就可以使用多线程运算。这方面的优势对于服务器CPU志强系列尤为关键
 ## <font color=#FF0000>显卡说明</font>
- - 如果您的显卡是非NVIDIA公司的产品或是NVIDIA GTX系列中型号的第一个数字低于4或NVIDIA的GT系列，都不建议您采用此类显卡进行加速计算，例如`NVIDIA GT 910`、`NVIDIA GTX 450` 等等。
- - 如果您的显卡为笔记本上的GTX移动显卡（型号后面带有标识M），那么请您慎重使用显卡加速，因为移动版GPU很容易发生过热烧毁现象。
+ - 如果您的显卡是非NVIDIA公司的产品或是NVIDIA GTX系列中型号的第一个数字低于6或NVIDIA的GT系列，都不建议您采用此类显卡进行加速计算，例如`NVIDIA GT 910`、`NVIDIA GTX 460` 等等。
+ - 如果您的显卡为笔记本上的GTX移动显卡（型号后面带有标识M），那么请您慎重使用显卡加速，因为移动版GPU容易发生过热烧毁现象。
  - 如果您的显卡，显示的是诸如 `HD5000`,`ATI 5650` 等类型的显卡，那么您只能使用CPU加速
+ - 如果您的显卡芯片为Pascal架构（`NVIDIA GTX 1080`,`NVIDIA GTX 1070`等），您只能在之后的配置中选择`CUDA 8.0`
+ ---
 
 # 基本开发环境搭建
 ## 1. Microsoft Windows 版本
@@ -44,7 +45,7 @@
 ## 2. 编译环境Microsoft Visual Studio 2015 Update 3
 *<font color=#FF0000>(安装CPU版本非必须安装)</font>*
 
-CUDA编译器为Microsoft Visual Studio，版本从2010-2015，其中`cuda7.5`仅支持2010、2012、2013，`cuda8.0`仅支持2015版本，本文采用`Visual Studio 2015 Update 3`。
+CUDA编译器为Microsoft Visual Studio，版本从2010-2015，`cuda8.0`仅支持2015版本，暂不支持VS2017，本文采用`Visual Studio 2015 Update 3`。
 同样直接贴出迅雷热链：
 
     ed2k://|file|cn_visual_studio_professional_2015_with_update_3_x86_x64_dvd_8923256.iso|7745202176|DD35D3D169D553224BE5FB44E074ED5E|/
@@ -79,10 +80,10 @@ Windows目前最新版v6.0，但是keras尚未支持此版本，请下载v5.1版
 在CMD命令行或者Powershell中输入：
 ``` powershell
 # GPU 版本
->>> pip install --upgrade https://storage.googleapis.com/tensorflow/windows/gpu/tensorflow_gpu-1.0.1-cp35-cp35m-win_amd64.whl
+>>> pip install --upgrade tensorflow-gpu
 
 # CPU 版本
->>> pip install --upgrade https://storage.googleapis.com/tensorflow/windows/cpu/tensorflow-1.0.1-cp35-cp35m-win_amd64.whl
+>>> pip install --upgrade tensorflow
 
 # Keras 安装
 >>> pip install keras -U --pre
