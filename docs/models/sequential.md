@@ -131,27 +131,6 @@ predict(self, x, batch_size=32, verbose=0)
 
 ***
 
-### predict_classes
-
-```python
-predict_classes(self, x, batch_size=32, verbose=1)
-```
-本函数按batch产生输入数据的类别预测结果
-
-函数的返回值是类别预测结果的numpy array或numpy
-
-***
-
-### predict_proba
-```python
-predict_proba(self, x, batch_size=32, verbose=1)
-```
-本函数按batch产生输入数据属于各个类别的概率
-
-函数的返回值是类别概率的numpy array
-
-***
-
 ### train_on_batch
 ```python
 train_on_batch(self, x, y, class_weight=None, sample_weight=None)
