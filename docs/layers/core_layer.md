@@ -50,11 +50,11 @@ model.add(Dense(32))
 
 ### 输入
 
-形如(nb_samples, ..., input_shape[1])的nD张量，最常见的情况为(nb_samples, input_dim)的2D张量
+形如(batch_size, ..., input_dim)的nD张量，最常见的情况为(batch_size, input_dim)的2D张量
 
 ### 输出
 
-形如(nb_samples, ..., units)的nD张量，最常见的情况为(nb_samples, output_dim)的2D张量
+形如(batch_size, ..., units)的nD张量，最常见的情况为(batch_size, units)的2D张量
 
 ***
 
@@ -87,7 +87,7 @@ keras.layers.core.Activation(activation)
 ```python
 keras.layers.core.Dropout(rate, noise_shape=None, seed=None)
 ```
-为输入数据施加Dropout。Dropout将在训练过程中每次更新参数时随机断开一定百分比（rate）的输入神经元，Dropout层用于防止过拟合。
+为输入数据施加Dropout。Dropout将在训练过程中每次更新参数时按一定概率（rate）随机断开输入神经元，Dropout层用于防止过拟合。
 
 ### 参数
 
