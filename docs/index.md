@@ -3,7 +3,7 @@
 
 
 ## 这就是Keras
-Keras是一个高层神经网络API，Keras由纯Python编写而成并基Tensorflow或Theano。Keras
+Keras是一个高层神经网络API，Keras由纯Python编写而成并基[Tensorflow](https://github.com/tensorflow/tensorflow)、[Theano](https://github.com/Theano/Theano)以及[CNTK](https://github.com/Microsoft/cntk)后端。Keras
 为支持快速实验而生，能够把你的idea迅速转换为结果，如果你有如下需求，请选择Keras：
 
 * 简易和快速的原型设计（keras具有高度模块化，极简，和可扩充特性）
@@ -156,6 +156,10 @@ Keras使用了下面的依赖包：
 
 * [Theano](http://deeplearning.net/software/theano/install.html#install)
 
+当使用CNTK作为后端时：
+
+* [CNTK](https://docs.microsoft.com/en-us/cognitive-toolkit/setup-cntk-on-your-machine)
+
 
 “后端”翻译自backend，指的是Keras依赖于完成底层的张量运算的软件包。
 
@@ -173,7 +177,7 @@ sudo pip install keras
 
 ***
 	
-##在Theano和TensorFlow间切换
+##在Theano、CNTK、TensorFlow间切换
 
 Keras默认使用TensorFlow作为后端来进行张量操作，如需切换到Theano，请查看[这里](backend)
 
