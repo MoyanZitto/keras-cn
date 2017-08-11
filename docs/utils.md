@@ -57,7 +57,7 @@ normalize(x, axis=-1, order=2)
 
 对numpy数组规范化，返回规范化后的数组
 
-###参数
+### 参数
 * x：待规范化的数据
 * axis: 规范化的轴
 * order：规范化方法，如2为L2范数
@@ -70,13 +70,13 @@ convert_all_kernels_in_model(model)
 
 将模型中全部卷积核在Theano和TensorFlow模式中切换
 
-### plot_model
+## plot_model
 ```python
 plot_model(model, to_file='model.png', show_shapes=False, show_layer_names=True)
 ```
 绘制模型图
 
-### custom_object_scope
+## custom_object_scope
 ```python
 custom_object_scope()
 ```
@@ -91,7 +91,7 @@ with custom_object_scope({"MyObject":MyObject}):
 	# save, load, etc. will recognize custom object by name
 ```
 
-### get_custom_objects
+## get_custom_objects
 ```python
 get_custom_objects()
 ```
@@ -103,19 +103,19 @@ get_custom_objects().clear()
 get_custom_objects()["MyObject"] = MyObject
 ```
 
-### serialize_keras_object
+## serialize_keras_object
 ```python
 serialize_keras_object(instance)
 ```
 将keras对象序列化
 
-### deserialize_keras_object
+## deserialize_keras_object
 ```python
 eserialize_keras_object(identifier, module_objects=None, custom_objects=None, printable_module_name='object')
 ```
 从序列中恢复keras对象
 
-### get_file
+## get_file
 
 ```python
 get_file(fname, origin, untar=False, md5_hash=None, file_hash=None, cache_subdir='datasets', hash_algorithm='auto', extract=False, archive_format='auto', cache_dir=None)
@@ -141,8 +141,11 @@ tar,tar.gz.tar.bz和zip格式的文件可以被提取，提供哈希码可以在
 * cache_subdir: 用于缓存数据的文件夹，若指定绝对路径`/path/to/folder`则将存放在该路径下。
 
 * hash_algorithm: 选择文件校验的哈希算法，可选项有'md5', 'sha256', 和'auto'. 默认'auto'自动检测使用的哈希算法
+
 * extract: 若为True则试图提取文件，例如tar或zip tries extracting the file as an Archive, like tar or zip.
+
 * archive_format: 试图提取的文件格式，可选为'auto', 'tar', 'zip', 和None. 'tar' 包括tar, tar.gz, tar.bz文件. 默认'auto'是['tar', 'zip']. None或空列表将返回没有匹配。 
+
 * cache_dir: 缓存文件存放地在，参考[FAQ](for_beginners/FAQ/#where_config)
 ### 返回值
 
