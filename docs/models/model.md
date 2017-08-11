@@ -160,10 +160,12 @@ predict_on_batch(self, x)
 
 ### fit_generator
 ```python
-fit_generator(self, generator, steps_per_epoch, epochs=1, verbose=1, callbacks=None, validation_data=None, validation_steps=None, class_weight=None, max_q_size=10, workers=1, pickle_safe=False, initial_epoch=0)
+fit_generator(self, generator, steps_per_epoch, epochs=1, verbose=1, callbacks=None, validation_data=None, validation_steps=None, class_weight=None, max_queue_size=10, workers=1, use_multiprocessing=False, shuffle=True, initial_epoch=0)
 ```
 
 利用Python的生成器，逐个生成数据的batch并进行训练。生成器与模型将并行执行以提高效率。例如，该函数允许我们在CPU上进行实时的数据提升，同时在GPU上进行模型训练
+
+当```use_multiprocessing=True```时, 使用```keras.utils.Sequence```可以保证顺序以及每个epoch中每次输入的单独使用
 
 函数的参数是：
 
@@ -189,13 +191,13 @@ fit_generator(self, generator, steps_per_epoch, epochs=1, verbose=1, callbacks=N
 	
 * class_weight：规定类别权重的字典，将类别映射为权重，常用于处理样本不均衡问题。
 
-* sample_weight：权值的numpy array，用于在训练时调整损失函数（仅用于训练）。可以传递一个1D的与样本等长的向量用于对样本进行1对1的加权，或者在面对时序数据时，传递一个的形式为（samples，sequence_length）的矩阵来为每个时间步上的样本赋不同的权。这种情况下请确定在编译模型时添加了```sample_weight_mode='temporal'```。
+* max_queue_size：生成器队列的最大容量
 
 * workers：最大进程数
 
-* max_q_size：生成器队列的最大容量
+* use_multiprocessing: 若为真，则使用基于进程的线程。由于该实现依赖多进程，不能传递non picklable（无法被pickle序列化）的参数到生成器中，因为无法轻易将它们传入子进程中。
 
-* pickle_safe: 若为真，则使用基于进程的线程。由于该实现依赖多进程，不能传递non picklable（无法被pickle序列化）的参数到生成器中，因为无法轻易将它们传入子进程中。
+* shuffle：布尔值，表示是否在训练过程中每个epoch前随机打乱输入样本的顺序。只有当使用```Sequence'''(keras.utils.Sequence)的实例时使用。
 
 * initial_epoch: 从该参数指定的epoch开始训练，在继续之前的训练时有用。
 
@@ -222,7 +224,7 @@ model.fit_generator(generate_arrays_from_file('/my_file.txt'),
 
 ### evaluate_generator
 ```python
-evaluate_generator(self, generator, steps, max_q_size=10, workers=1, pickle_safe=False)
+evaluate_generator(self, generator, steps, max_queue_size=10, workers=1, use_multiprocessing=False)
 ```
 本函数使用一个生成器作为数据源，来评估模型，生成器应返回与```test_on_batch```的输入数据相同类型的数据。
 
@@ -230,21 +232,21 @@ evaluate_generator(self, generator, steps, max_q_size=10, workers=1, pickle_safe
 
 * generator：生成输入batch数据的生成器
 
-* val_samples：生成器应该返回的总样本数
-
 * steps：生成器要返回数据的轮数
 
-* max_q_size：生成器队列的最大容量
+* max_queue_size：生成器队列的最大容量
 
-* nb_worker：使用基于进程的多线程处理时的进程数
+* workers：使用基于进程的多线程处理时的进程数
 
-* pickle_safe：若设置为True，则使用基于进程的线程。注意因为它的实现依赖于多进程处理，不可传递不可pickle的参数到生成器中，因为它们不能轻易的传递到子进程中。
+* use_multiprocessing：若设置为True，则使用基于进程的线程。注意因为它的实现依赖于多进程处理，不可传递不可pickle的参数到生成器中，因为它们不能轻易的传递到子进程中。
+
+返回一个标量(模型model只有一个输出并且没有检测值metrics)或者一个tuple(多个输出或者具有检测值metrics)
 
 ***
 
 ### predict_generator
 ```python
-fit_generator(self, generator, steps_per_epoch, epochs=1, verbose=1, callbacks=None, validation_data=None, validation_steps=None, class_weight=None, max_q_size=10, workers=1, pickle_safe=False, initial_epoch=0)
+predict_generator(self, generator, steps, max_queue_size=10, workers=1, use_multiprocessing=False, verbose=0)
 ```
 从一个生成器上获取数据并进行预测，生成器应返回与```predict_on_batch```输入类似的数据
 
@@ -252,13 +254,29 @@ fit_generator(self, generator, steps_per_epoch, epochs=1, verbose=1, callbacks=N
 
 * generator：生成输入batch数据的生成器
 
-* val_samples：生成器应该返回的总样本数
+* steps：生成器要返回数据的轮数
 
-* max_q_size：生成器队列的最大容量
+* max_queue_size：生成器队列的最大容量
 
-* nb_worker：使用基于进程的多线程处理时的进程数
+* workers：使用基于进程的多线程处理时的进程数
 
-* pickle_safe：若设置为True，则使用基于进程的线程。注意因为它的实现依赖于多进程处理，不可传递不可pickle的参数到生成器中，因为它们不能轻易的传递到子进程中。
+* use_multiprocessing：若设置为True，则使用基于进程的线程。注意因为它的实现依赖于多进程处理，不可传递不可pickle的参数到生成器中，因为它们不能轻易的传递到子进程中。
+
+* verbose：含义同```fit```的同名参数，但只能取0或1
 
 ***
 
+### get_layer
+```python
+get_layer(self, name=None, index=None)
+```
+
+基于名字或索引返回中间层，其中索引根据层创建顺序进行索引
+
+函数的参数是：
+
+* name：字符串，创建层时name的参数
+
+* index：整数，用以指代的层索引
+
+函数返回一layer的实例
