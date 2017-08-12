@@ -85,9 +85,14 @@ Windows目前最新版v6.0，但是keras尚未支持此版本，请下载v5.1版
 # CPU 版本
 >>> pip install --upgrade tensorflow
 
+# 如果您安装了conda:
+>>> conda install tensorflow-gpu #GPU版本
+>>> conda install tensorflow
+
 # Keras 安装
 >>> pip install keras -U --pre
 ```
+如果Tensorflow使用conda来进行安装，只需要完成上述要求即可。（不用多余设置cudnn等）
 
 之后可以验证keras是否安装成功,在命令行中输入Python命令进入Python变成命令行环境：
 ```python
