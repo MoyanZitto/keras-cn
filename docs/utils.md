@@ -106,11 +106,7 @@ convert_all_kernels_in_model(model)
 
 将模型中全部卷积核在Theano和TensorFlow模式中切换
 
-### plot_model
-```python
-plot_model(model, to_file='model.png', show_shapes=False, show_layer_names=True)
-```
-绘制模型图
+
 
 ### custom_object_scope
 ```python
@@ -183,3 +179,15 @@ tar,tar.gz.tar.bz和zip格式的文件可以被提取，提供哈希码可以在
 ### 返回值
 
 下载后的文件地址
+
+### plot_model
+```python
+plot_model(model, to_file='model.png', show_shapes=False, show_layer_names=True)
+```
+绘制模型图，并且保存图片
+
+参数：
+* model: Keras模型
+* to_file: 保存图片的名字
+* show_shapes: 是否显示形状shape的信息
+* show_layer_names：是否显示layer的名字
