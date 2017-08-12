@@ -180,6 +180,12 @@ tar,tar.gz.tar.bz和zip格式的文件可以被提取，提供哈希码可以在
 
 下载后的文件地址
 
+### `convert_all_kernels_in_model`
+```python
+convert_all_kernels_in_model(model)
+```
+转化所有卷积核模型从theano/TensorFlow。
+
 ### plot_model
 ```python
 plot_model(model, to_file='model.png', show_shapes=False, show_layer_names=True)
