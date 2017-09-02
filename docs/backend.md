@@ -1065,7 +1065,7 @@ function(inputs, outputs, updates=[])
 
 * inputs:：列表，其元素为占位符或张量变量
 * outputs：输出张量的列表
-* updates：列表，其元素是形如```(old_tensor, new_tensor)```的tuple.
+* updates：列表，其元素是形如```<tf.Tensor 'AssignAdd_9:0' shape=() dtype=float32_ref>```的张量.
 
 ###gradients
 ```python
