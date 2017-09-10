@@ -21,7 +21,7 @@ Embedding层只能作为模型的第一层
 
 * embeddings_constraint: 嵌入矩阵的约束项，为[Constraints](../other/constraints)对象
 
-* mask_zero：布尔值，确定是否将输入中的‘0’看作是应该被忽略的‘填充’（padding）值，该参数在使用[递归层](recurrent_layer)处理变长输入时有用。设置为```True```的话，模型中后续的层必须都支持masking，否则会抛出异常。如果该值为True，则下标0在字典中不可用，input_dim应设置为|vocabulary| + 2。 
+* mask_zero：布尔值，确定是否将输入中的‘0’看作是应该被忽略的‘填充’（padding）值，该参数在使用[递归层](recurrent_layer)处理变长输入时有用。设置为```True```的话，模型中后续的层必须都支持masking，否则会抛出异常。如果该值为True，则下标0在字典中不可用，input_dim应设置为|vocabulary| + 1。 
 
 * input_length：当输入序列的长度固定时，该值为其长度。如果要在该层后接```Flatten```层，然后接```Dense```层，则必须指定该参数，否则```Dense```层的输出维度无法自动推断。
 

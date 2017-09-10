@@ -2,6 +2,7 @@
 
 * [如何引用Keras？](#citation)
 * [如何使Keras调用GPU？](#GPU)
+* ["batch", "epoch"和"sample"都是啥意思？](#batch)
 * [如何保存Keras模型？](#save_model)
 * [为什么训练误差(loss)比测试误差高很多？](#loss)
 * [如何获取中间层的输出？](#intermediate_layer)
@@ -16,6 +17,7 @@
 * [如何在Keras中使用预训练的模型](#pretrain)
 * [如何在Keras中使用HDF5输入？](#hdf5)
 * [Keras的配置文件存储在哪里？](#where_config)
+* [在使用Keras开发过程中，我如何获得可复现的结果？](#reproduce)
 ***
 
 <a name='citation'>
@@ -66,7 +68,22 @@ THEANO_FLAGS=device=gpu,floatX=float32 python my_keras_script.py
 	theano.config.device = 'gpu'
 	theano.config.floatX = 'float32'
 ```
-	
+
+
+***
+
+<a name='batch'>
+<font color='#404040'>
+## "batch", "epoch"和"sample"都是啥意思？？
+</font>
+</a>
+
+下面是一些使用keras时常会遇到的概念，我们来简单解释。
+
+- Sample：样本，数据集中的一条数据。例如图片数据集中的一张图片，语音数据中的一段音频。
+- Batch：中文为批，一个batch由若干条数据构成。batch是进行网络优化的基本单位，网络参数的每一轮优化需要使用一个batch。batch中的样本是被并行处理的。与单个样本相比，一个batch的数据能更好的模拟数据集的分布，batch越大则对输入数据分布模拟的越好，反应在网络训练上，则体现为能让网络训练的方向“更加正确”。但另一方面，一个batch也只能让网络的参数更新一次，因此网络参数的迭代会较慢。在测试网络的时候，应该在条件的允许的范围内尽量使用更大的batch，这样计算效率会更高。
+- Epoch，epoch可译为“轮次”。如果说每个batch对应网络的一次更新的话，一个epoch对应的就是网络的一轮更新。每一轮更新中网络更新的次数可以随意，但通常会设置为遍历一遍数据集。因此一个epoch的含义是模型完整的看了一遍数据集。
+	设置epoch的主要作用是把模型的训练的整个训练过程分为若干个段，这样我们可以更好的观察和调整模型的训练。Keras中，当指定了验证集时，每个epoch执行完后都会运行一次验证集以确定模型的性能。另外，我们可以使用回调函数在每个epoch的训练前后执行一些操作，如调整学习率，打印目前模型的一些信息等，详情请参考Callback一节。
 ***
 
 <a name='save_model'>
@@ -487,3 +504,57 @@ Keras配置文件为JSON格式的文件，保存在`$HOME/.keras/keras.json`。�
 - 默认的后端
 
 类似的，缓存的数据集文件，即由`get_file()`下载的文件，默认保存在`$HOME/.keras/datasets/`
+
+***
+<a name='reproduce'>
+<font color='#404040'>
+## 在使用Keras开发过程中，我如何获得可复现的结果?
+</font>
+</a>
+
+在开发模型中，有时取得可复现的结果是很有用的。例如，这可以帮助我们定位模型性能的改变是由模型本身引起的还是由于数据上的变化引起的。下面的代码展示了如何获得可复现的结果，该代码基于Python3的tensorflow后端
+
+```python
+import numpy as np
+import tensorflow as tf
+import random as rn
+
+# The below is necessary in Python 3.2.3 onwards to
+# have reproducible behavior for certain hash-based operations.
+# See these references for further details:
+# https://docs.python.org/3.4/using/cmdline.html#envvar-PYTHONHASHSEED
+# https://github.com/fchollet/keras/issues/2280#issuecomment-306959926
+
+import os
+os.environ['PYTHONHASHSEED'] = '0'
+
+# The below is necessary for starting Numpy generated random numbers
+# in a well-defined initial state.
+
+np.random.seed(42)
+
+# The below is necessary for starting core Python generated random numbers
+# in a well-defined state.
+
+rn.seed(12345)
+
+# Force TensorFlow to use single thread.
+# Multiple threads are a potential source of
+# non-reproducible results.
+# For further details, see: https://stackoverflow.com/questions/42022950/which-seeds-have-to-be-set-where-to-realize-100-reproducibility-of-training-res
+
+session_conf = tf.ConfigProto(intra_op_parallelism_threads=1, inter_op_parallelism_threads=1)
+
+from keras import backend as K
+
+# The below tf.set_random_seed() will make random number generation
+# in the TensorFlow backend have a well-defined initial state.
+# For further details, see: https://www.tensorflow.org/api_docs/python/tf/set_random_seed
+
+tf.set_random_seed(1234)
+
+sess = tf.Session(graph=tf.get_default_graph(), config=session_conf)
+K.set_session(sess)
+
+# Rest of code follows ...
+```

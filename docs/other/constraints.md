@@ -22,3 +22,5 @@ model.add(Dense(64, kernel_constraint=max_norm(2.)))
 * non_neg()：非负性约束
 
 * unit_norm()：单位范数约束, 强制矩阵沿最后一个轴拥有单位范数
+
+* min_max_norm(min_value=0.0, max_value=1.0, rate=1.0, axis=0): 最小/最大范数约束

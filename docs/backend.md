@@ -2,17 +2,17 @@
 
 ## 什么是“后端”
 
-Keras是一个模型级的库，提供了快速构建深度学习网络的模块。Keras并不处理如张量乘法、卷积等底层操作。这些操作依赖于某种特定的、优化良好的张量操作库。Keras依赖于处理张量的库就称为“后端引擎”。Keras提供了两种后端引擎Theano/Tensorflow，并将其函数统一封装，使得用户可以以同一个接口调用不同后端引擎的函数
+Keras是一个模型级的库，提供了快速构建深度学习网络的模块。Keras并不处理如张量乘法、卷积等底层操作。这些操作依赖于某种特定的、优化良好的张量操作库。Keras依赖于处理张量的库就称为“后端引擎”。Keras提供了三种后端引擎Theano/Tensorflow/CNTK，并将其函数统一封装，使得用户可以以同一个接口调用不同后端引擎的函数
 
-* Theano是一个开源的符号主义张量操作框架，由蒙特利尔大学LISA/MILA实验室开发。
-* TensorFlow是一个符号主义的张量操作框架，由Google开发。
-* CNTK是一个由微软开发的商业级工具包。
+* [Theano](http://deeplearning.net/software/theano/)是一个开源的符号主义张量操作框架，由蒙特利尔大学LISA/MILA实验室开发。
+* [TensorFlow](http://www.tensorflow.org/)是一个符号主义的张量操作框架，由Google开发。
+* [CNTK](https://www.microsoft.com/en-us/cognitive-toolkit/)是一个由微软开发的商业级工具包。
 
-在未来，我们有可能要添加更多的后端选项。下一步我们很可能加入的是CNTK后端。
+在未来，我们有可能要添加更多的后端选项。
 
 ## 切换后端
 
-注意：Windows用户请把`$Home`换为`%USERPROFILE%`
+注意：Windows用户请把`$Home`改为`%USERPROFILE%`
 
 如果你至少运行过一次Keras，你将在下面的目录下找到Keras的配置文件：
 

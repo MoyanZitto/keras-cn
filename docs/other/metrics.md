@@ -37,6 +37,7 @@ model.compile(loss='mean_squared_error',
 * categorical_accuracy:对多分类问题,计算再所有预测值上的平均正确率
 * sparse_categorical_accuracy:与`categorical_accuracy`相同,在对稀疏的目标值预测时有用
 * top_k_categorical_accracy: 计算top-k正确率,当预测值的前k个值中存在目标类别即认为预测正确
+* sparse_top_k_categorical_accuracy：与top_k_categorical_accracy作用相同，但适用于稀疏情况
 
 ## 定制评估函数
 

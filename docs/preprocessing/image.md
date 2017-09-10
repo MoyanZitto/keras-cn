@@ -7,6 +7,7 @@ keras.preprocessing.image.ImageDataGenerator(featurewise_center=False,
     featurewise_std_normalization=False,
     samplewise_std_normalization=False,
     zca_whitening=False,
+    zca_epsilon=1e-6,
     rotation_range=0.,
     width_shift_range=0.,
     height_shift_range=0.,
@@ -34,6 +35,8 @@ keras.preprocessing.image.ImageDataGenerator(featurewise_center=False,
 * samplewise_std_normalization：布尔值，将输入的每个样本除以其自身的标准差
 
 * zca_whitening：布尔值，对输入数据施加ZCA白化
+
+* zca_epsilon: ZCA使用的eposilon，默认1e-6
 
 * rotation_range：整数，数据提升时图片随机转动的角度
 
@@ -74,7 +77,7 @@ keras.preprocessing.image.ImageDataGenerator(featurewise_center=False,
 	
 	* seed: 整数,随机数种子
 	
-* flow(self, X, y, batch_size=32, shuffle=True, seed=None, save_to_dir=None, save_prefix='', save_format='jpeg')：接收numpy数组和标签为参数,生成经过数据提升或标准化后的batch数据,并在一个无限循环中不断的返回batch数据
+* flow(self, X, y, batch_size=32, shuffle=True, seed=None, save_to_dir=None, save_prefix='', save_format='png')：接收numpy数组和标签为参数,生成经过数据提升或标准化后的batch数据,并在一个无限循环中不断的返回batch数据
 
 	* x：样本数据，秩应为4.在黑白图像的情况下channel轴的值为1，在彩色图像情况下值为3
 	

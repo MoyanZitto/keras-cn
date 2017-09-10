@@ -3,7 +3,7 @@
 ## 句子分割text_to_word_sequence
 ```python
 keras.preprocessing.text.text_to_word_sequence(text,
-                                               filters='!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n',
+                                               filters='!"#$%&()*+,-./:;<=>?@[\]^_`{|}~\t\n',
                                                lower=True,
                                                split=" ")
 ```
@@ -29,7 +29,7 @@ keras.preprocessing.text.text_to_word_sequence(text,
 ```python
 keras.preprocessing.text.one_hot(text,
                                  n,
-                                 filters='!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n',
+                                 filters='!"#$%&()*+,-./:;<=>?@[\]^_`{|}~\t\n',
                                  lower=True,
                                  split=" ")
 ```
@@ -56,7 +56,7 @@ keras.preprocessing.text.one_hot(text,
 keras.preprocessing.text.hashing_trick(text,
                                        n,
                                        hash_function=None,
-                                       filters='!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n',
+                                       filters='!"#$%&()*+,-./:;<=>?@[\]^_`{|}~\t\n',
                                        lower=True,
                                        split=' ')
 ```
@@ -75,7 +75,7 @@ keras.preprocessing.text.hashing_trick(text,
 ## 分词器Tokenizer
 ```python
 keras.preprocessing.text.Tokenizer(num_words=None,
-                                   filters='!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n',
+                                   filters='!"#$%&()*+,-./:;<=>?@[\]^_`{|}~\t\n',
                                    lower=True,
                                    split=" ",
                                    char_level=False)

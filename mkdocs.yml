@@ -8,7 +8,6 @@ pages:
 - ['for_beginners/trap.md','keras新手指南','Keras使用陷阱']
 - ['getting_started/sequential_model.md','快速开始','序贯模型']
 - ['getting_started/functional_API.md','快速开始','函数式模型']
-
 - ['models/about_model.md','模型','关于Keras模型']
 - ['models/sequential.md','模型','序贯模型API']
 - ['models/model.md','模型','函数式模型API']
@@ -42,11 +41,6 @@ pages:
 - ['utils.md','协助使用Keras','工具']
 - ['backend.md','keras后端Backend']
 - ['scikit-learn_API.md','scikit-learn接口']
-- ['blog/cnn_see_world.md','深度学习与Keras','CNN眼中的世界']
-- ['blog/autoencoder.md','深度学习与Keras','花式自动编码器']
-- ['blog/image_classification_using_very_little_data.md','深度学习与Keras','面向小数据集构建图像分类模型']
-- ['blog/word_embedding.md','深度学习与Keras','在Keras模型中使用预训练的词向量']
-- ['blog/keras_and_tensorflow.md','深度学习与Keras','将Keras作为tensorflow的精简接口']
 - ['acknowledgement.md','致谢']
 theme: readthedocs
 site_author: BigMoyan

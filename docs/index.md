@@ -1,4 +1,4 @@
-# Keras:基于Theano和TensorFlow的深度学习库
+# Keras:基于Python的深度学习库
 
 
 
@@ -57,19 +57,16 @@ Keras的设计原则是
 
 * 我们的中文文档没有及时更新：如果是这种情况，请发邮件给我，我会尽快更新
 
-目前文档的版本号是2.0.4，对应于官方的2.0.4 release 版本, 本次更新的主要内容是：
+目前文档的版本号是2.0.8，对应于官方的2.0.8 release 版本, 本次更新的主要内容是……等等，应该是这么长时间都没更新后从2.0.4-2.0.8的内容😊：
 
-* 文档全面升级为Keras2，绝大多数API均得到更新，请及时查看。对于Keras 1的用户，请从[github](https://github.com/MoyanZitto/keras-cn)下载本文档源代码，在legacy中将Markdown文件生成为pdf查看，同时如果哪位同学做了keras1.2.2文档的pdf版也请发邮件告诉我
-
-* 新增模块“keras新手指南”，敬请关注
-
-* 补充了原文档中缺失，但源代码中确实可用的类和函数
-
-* 重新整理了文档风格和栏目，使得文档更容易阅读，改变了一些词的译法
-
-* 目前，“深度学习与Keras”一节中的示例代码尚未调整到Keras 2版本，敬请注意。
-
-* 如果想查看Keras1和Keras2的API变动，请访问[这里](https://github.com/fchollet/keras/wiki/Keras-2.0-release-notes)
+* FAQ新增了关于可复现模型的支持
+* application中新增了模型MobileNet
+* constraints新增min_max_norm
+* 新增了激活函数selu和与之配合的层AlphaDropout
+* 新增损失函数categorical_hinge
+* 由于年久失修，**深度学习与Keras**栏目中的很多内容的代码已经不再可用，我们决定在新的文档中移除这部分。仍然想访问这些内容（以及已经被移除的一些层，如Maxout）的文档的同学，请下载[中文文档](https://github.com/MoyanZitto/keras-cn)的legacy文件夹，并使用文本编辑器（如sublime）打开对应.md文件。
+* 修正了一些错误，感谢@zhangxiaoyu，@Yang Song，@唐文威，@Jackie，@锈子，的宝贵意见
+* 此外，感谢@zh777k制作了Keras2.0.4中文文档的离线版本，对于许多用户而言，这个版本的keras已经足够使用了。下载地址在[百度云盘](http://pan.baidu.com/s/1geHmOpH)
 
 注意，keras在github上的master往往要高于当前的release版本，如果你从源码编译keras，可能某些模块与文档说明不相符，请以官方Github代码为准
 
@@ -138,7 +135,7 @@ classes = model.predict(x_test, batch_size=128)
 
 ##安装
 
-Keras使用了下面的依赖包：
+Keras使用了下面的依赖包，三种后端必须至少选择一种，我们建议选择tensorflow。
 
 * numpy，scipy
 
@@ -164,7 +161,11 @@ Keras使用了下面的依赖包：
 “后端”翻译自backend，指的是Keras依赖于完成底层的张量运算的软件包。
 
 
-安装Keras时，请<code>cd</code>到Keras的文件夹中，并运行下面的安装命令：
+从源码安装Keras时，首先git clone keras的代码：
+```sh
+git clone https://github.com/fchollet/keras.git
+```
+接着<code>cd</code>到Keras的文件夹中，并运行下面的安装命令：
 ```python
 sudo python setup.py install
 ```	
@@ -172,6 +173,7 @@ sudo python setup.py install
 ```python
 sudo pip install keras
 ```
+如果你用的是virtualenv虚拟环境，不要用sudo就好。
 
 **详细的Windows和Linux安装教程请参考“Keras新手指南”中给出的安装教程，特别鸣谢SCP-173编写了这些教程**
 

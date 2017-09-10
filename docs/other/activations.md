@@ -15,7 +15,7 @@ model.add(Activation('tanh'))
 model.add(Dense(64, activation='tanh'))
 ```
 
-也可以通过传递一个逐元素运算的Theano/TensorFlow函数来作为激活函数：
+也可以通过传递一个逐元素运算的Theano/TensorFlow/CNTK函数来作为激活函数：
 ```python
 from keras import backend as K
 
@@ -34,6 +34,8 @@ model.add(Activation(tanh)
 
 * elu
 
+* selu: 可伸缩的指数线性单元（Scaled Exponential Linear Unit），参考[Self-Normalizing Neural Networks](https://arxiv.org/abs/1706.02515)
+
 * softplus
 
 * softsign
@@ -50,7 +52,7 @@ model.add(Activation(tanh)
 
 ## 高级激活函数
 
-对于简单的Theano/TensorFlow不能表达的复杂激活函数，如含有可学习参数的激活函数，可通过[高级激活函数](../layers/advanced_activation_layer)实现，如PReLU，LeakyReLU等
+对于简单的Theano/TensorFlow/CNTK不能表达的复杂激活函数，如含有可学习参数的激活函数，可通过[高级激活函数](../layers/advanced_activation_layer)实现，如PReLU，LeakyReLU等
 
 
 

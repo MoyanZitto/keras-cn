@@ -12,9 +12,13 @@ Kera的应用模块Application提供了带有预训练权重的Keras模型，这
 * [VGG19](#vgg19)
 * [ResNet50](#resnet50)
 * [InceptionV3](#inceptionv3)
+* [MobileNet](#mobilenet)
 
-所有的这些模型(除了Xception)都兼容Theano和Tensorflow，并会自动基于```~/.keras/keras.json```的Keras的图像维度进行自动设置。例如，如果你设置```data_format="channel_last"```，则加载的模型将按照TensorFlow的维度顺序来构造，即“Width-Height-Depth”的顺序
+所有的这些模型(除了Xception和MobileNet)都兼容Theano和Tensorflow，并会自动基于```~/.keras/keras.json```的Keras的图像维度进行自动设置。例如，如果你设置```data_format="channel_last"```，则加载的模型将按照TensorFlow的维度顺序来构造，即“Width-Height-Depth”的顺序
 
+Xception模型仅在TensorFlow下可用，因为它依赖的SeparableConvolution层仅在TensorFlow可用。MobileNet仅在TensorFlow下可用，因为它依赖的DepethwiseConvolution层仅在TF下可用。
+
+以上模型（暂时除了MobileNet）的预训练权重可以在我的[百度网盘](http://pan.baidu.com/s/1geHmOpH)下载，如果有更新的话会在这里报告
 
 ***
 
@@ -81,7 +85,7 @@ x = preprocess_input(x)
 block4_pool_features = model.predict(x)
 ```
 
-###在新类别上精细调节inceptionV3
+###在新类别上fine-tune inceptionV3
 ```python
 from keras.applications.inception_v3 import InceptionV3
 from keras.preprocessing import image
@@ -124,10 +128,10 @@ for i, layer in enumerate(base_model.layers):
    print(i, layer.name)
 
 # we chose to train the top 2 inception blocks, i.e. we will freeze
-# the first 172 layers and unfreeze the rest:
-for layer in model.layers[:172]:
+# the first 249 layers and unfreeze the rest:
+for layer in model.layers[:249]:
    layer.trainable = False
-for layer in model.layers[172:]:
+for layer in model.layers[249:]:
    layer.trainable = True
 
 # we need to recompile the model for these modifications to take effect
@@ -159,7 +163,7 @@ model = InceptionV3(input_tensor=input_tensor, weights='imagenet', include_top=T
 * [VGG19](#vgg19)
 * [ResNet50](#resnet50)
 * [InceptionV3](#inceptionv3)
-* [MusicTaggerCRNN](#music)
+* [MobileNet](#mobilenet)
 
 
 ***
@@ -341,6 +345,7 @@ InceptionV3网络,权重训练自ImageNet
 * include_top：是否保留顶层的全连接网络
 * weights：None代表随机初始化，即不加载预训练权重。'imagenet'代表加载预训练权重
 * input_tensor：可填入Keras tensor作为模型的图像输出tensor
+* input_shape：可选，仅当`include_top=False`有效，应为长为3的tuple，指明输入图片的shape，图片的宽高必须大于197，如(200,200,3)
 * pooling：当include_top=False时，该参数指定了池化方式。None代表不池化，最后一个卷积层的输出为4D张量。‘avg’代表全局平均池化，‘max’代表全局最大值池化。
 * classes：可选，图片分类的类别数，仅当`include_top=True`并且不加载预训练权重时可用。
 ### 返回值
@@ -357,5 +362,46 @@ Keras 模型对象
 ***
 
 
+<a name='mobilenet'>
+<font color='#404040'>
+## MobileNet模型
+</font>
+</a>
+```python
+keras.applications.mobilenet.MobileNet(input_shape=None, alpha=1.0, depth_multiplier=1, dropout=1e-3, include_top=True, weights='imagenet', input_tensor=None, pooling=None, classes=1000)
+```
+MobileNet网络,权重训练自ImageNet
 
+该模型仅在TensorFlow后端均可使用,因此仅channels_last维度顺序可用。当需要以`load_model()`加载MobileNet时，需要在`custom_object`中传入`relu6`和`DepthwiseConv2D`，即：
+
+```python
+model = load_model('mobilenet.h5', custom_objects={
+                   'relu6': mobilenet.relu6,
+                   'DepthwiseConv2D': mobilenet.DepthwiseConv2D})
+```
+
+模型的默认输入尺寸时224x224
+### 参数
+* include_top：是否保留顶层的全连接网络
+* weights：None代表随机初始化，即不加载预训练权重。'imagenet'代表加载预训练权重
+* input_tensor：可填入Keras tensor作为模型的图像输出tensor
+* input_shape：可选，仅当`include_top=False`有效，应为长为3的tuple，指明输入图片的shape，图片的宽高必须大于197，如(200,200,3)
+* pooling：当include_top=False时，该参数指定了池化方式。None代表不池化，最后一个卷积层的输出为4D张量。‘avg’代表全局平均池化，‘max’代表全局最大值池化。
+* classes：可选，图片分类的类别数，仅当`include_top=True`并且不加载预训练权重时可用。
+* alpha: 控制网络的宽度：
+  * 如果alpha<1，则同比例的减少每层的滤波器个数
+  * 如果alpha>1，则同比例增加每层的滤波器个数
+  * 如果alpha=1，使用默认的滤波器个数
+* depth_multiplier：depthwise卷积的深度乘子，也称为（分辨率乘子）
+* dropout：dropout比例
+### 返回值
+
+Keras 模型对象
+
+### 参考文献
+
+* [MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications](https://arxiv.org/pdf/1704.04861.pdf)：如果在研究中使用了MobileNet，请引用该文
+
+### License
+预训练基于[Apache License](https://github.com/tensorflow/models/blob/master/LICENSE)发布
 

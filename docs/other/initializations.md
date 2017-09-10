@@ -126,6 +126,21 @@ LeCun均匀分布初始化方法，参数由[-limit, limit]的区间中均匀采
 
 参考文献：[LeCun 98, Efficient Backprop](http://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf)
 
+### lecun_normal
+```python
+lecun_normal(seed=None)
+```
+LeCun正态分布初始化方法，参数由0均值，标准差为stddev = sqrt(1 / fan_in)的正态分布产生，其中fan_in和fan_out是权重张量的扇入扇出（即输入和输出单元数目）
+
+* seed：随机数种子
+
+参考文献：
+
+[Self-Normalizing Neural Networks](https://arxiv.org/abs/1706.02515)
+[Efficient Backprop](http://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf)
+
+
+
 ### glorot_normal
 ```python
 glorot_normal(seed=None)
@@ -137,12 +152,23 @@ Glorot正态分布初始化方法，也称作Xavier正态分布初始化，参�
 
 参考文献：[Glorot & Bengio, AISTATS 2010](http://jmlr.org/proceedings/papers/v9/glorot10a/glorot10a.pdf)
 
+###glorot_uniform
+
+```python
+glorot_uniform(seed=None)
+```
+Glorot均匀分布初始化方法，又成Xavier均匀初始化，参数从[-limit, limit]的均匀分布产生，其中limit为`sqrt(6 / (fan_in + fan_out))`。fan_in为权值张量的输入单元数，fan_out是权重张量的输出单元数。
+
+* seed：随机数种子
+
+参考文献：[Glorot & Bengio, AISTATS 2010](http://jmlr.org/proceedings/papers/v9/glorot10a/glorot10a.pdf)
+
 ### he_normal
 ```python
 he_normal(seed=None)
 ```
 
-He正态分布初始化方法，也称作Xavier正态分布初始化，参数由0均值，标准差为sqrt(2 / fan_in) 的正态分布产生，其中fan_in权重张量的扇入
+He正态分布初始化方法，参数由0均值，标准差为sqrt(2 / fan_in) 的正态分布产生，其中fan_in权重张量的扇入
 
 * seed：随机数种子
 

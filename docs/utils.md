@@ -15,6 +15,7 @@ with CustomObjectScope({"MyObject":MyObject}):
     layer = Dense(..., W_regularizer="MyObject")
     # save, load, etc. will recognize custom object by name
 ```
+***
 
 ## HDF5Matrix
 
@@ -37,6 +38,44 @@ model.predict(x_data)
 * end: 整数，想要的数据切片终点
 * normalizer: 在每个切片数据检索时自动调用的函数对象
 
+***
+
+## Sequence
+```
+keras.utils.data_utils.Sequence()
+```
+序列数据的基类，例如一个数据集。
+每个Sequence必须实现`__getitem__`和`__len__`方法
+
+下面是一个例子：
+```python
+from skimage.io import imread
+from skimage.transform import resize
+import numpy as np
+
+__Here, `x_set` is list of path to the images__
+
+# and `y_set` are the associated classes.
+
+class CIFAR10Sequence(Sequence):
+def __init__(self, x_set, y_set, batch_size):
+    self.X,self.y = x_set,y_set
+    self.batch_size = batch_size
+
+def __len__(self):
+    return len(self.X) // self.batch_size
+
+def __getitem__(self,idx):
+    batch_x = self.X[idx*self.batch_size:(idx+1)*self.batch_size]
+    batch_y = self.y[idx*self.batch_size:(idx+1)*self.batch_size]
+
+    return np.array([
+    resize(imread(file_name), (200,200))
+       for file_name in batch_x]), np.array(batch_y)
+
+```
+
+***
 
 ## to_categorical
 ```python
@@ -50,6 +89,8 @@ to_categorical(y, num_classes=None)
 * y: 类别向量
 * num_classes:总共类别数
 
+***
+
 ## normalize
 ```python
 normalize(x, axis=-1, order=2)
@@ -62,19 +103,7 @@ normalize(x, axis=-1, order=2)
 * axis: 规范化的轴
 * order：规范化方法，如2为L2范数
 
-
-## convert_all_kernels_in_model
-```python
-convert_all_kernels_in_model(model)
-```
-
-将模型中全部卷积核在Theano和TensorFlow模式中切换
-
-### plot_model
-```python
-plot_model(model, to_file='model.png', show_shapes=False, show_layer_names=True)
-```
-绘制模型图
+***
 
 ### custom_object_scope
 ```python
@@ -91,6 +120,8 @@ with custom_object_scope({"MyObject":MyObject}):
 	# save, load, etc. will recognize custom object by name
 ```
 
+***
+
 ### get_custom_objects
 ```python
 get_custom_objects()
@@ -102,6 +133,24 @@ get_custom_objects()
 get_custom_objects().clear()
 get_custom_objects()["MyObject"] = MyObject
 ```
+***
+
+## convert_all_kernels_in_model
+```python
+convert_all_kernels_in_model(model)
+```
+
+将模型中全部卷积核在Theano和TensorFlow模式中切换
+
+***
+
+### plot_model
+```python
+plot_model(model, to_file='model.png', show_shapes=False, show_layer_names=True)
+```
+绘制模型的结构图
+
+***
 
 ### serialize_keras_object
 ```python
@@ -109,11 +158,15 @@ serialize_keras_object(instance)
 ```
 将keras对象序列化
 
+***
+
 ### deserialize_keras_object
 ```python
 eserialize_keras_object(identifier, module_objects=None, custom_objects=None, printable_module_name='object')
 ```
 从序列中恢复keras对象
+
+***
 
 ### get_file
 

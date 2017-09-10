@@ -34,6 +34,8 @@ model.compile(loss=losses.mean_squared_error, optimizer='sgd')
 
 * hinge
 
+* categorical_hinge
+
 * binary_crossentropy（亦称作对数损失，logloss）
 
 * logcosh
