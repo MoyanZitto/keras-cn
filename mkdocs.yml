@@ -30,7 +30,7 @@ pages:
 - ['other/objectives.md','网络配置','损失函数loss']
 - ['other/optimizers.md','网络配置','优化器Optimizer']
 - ['other/activations.md','网络配置','激活函数Activation']
-- ['other/metrices.md','网络配置','性能评估Metrices']
+- ['other/metrics.md','网络配置','性能评估Metrices']
 - ['other/initializations.md','网络配置','初始化方法Initializers']
 - ['other/regularizers.md','网络配置','正则项Regularizer']
 - ['other/constraints.md','网络配置','约束项Constraint']
