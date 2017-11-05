@@ -2,6 +2,7 @@
 
 * [如何引用Keras？](#citation)
 * [如何使Keras调用GPU？](#GPU)
+* [如何在多张GPU卡上使用Keras](#multi-GPU)
 * ["batch", "epoch"和"sample"都是啥意思？](#batch)
 * [如何保存Keras模型？](#save_model)
 * [为什么训练误差(loss)比测试误差高很多？](#loss)
@@ -70,6 +71,64 @@ THEANO_FLAGS=device=gpu,floatX=float32 python my_keras_script.py
 ```
 
 
+<a name='multi-GPU'>
+<font color='#404040'>
+## 如何在多张GPU卡上使用Keras？
+</font>
+</a>
+
+我们建议有多张GPU卡可用时，使用TnesorFlow后端。
+
+有两种方法可以在多张GPU上运行一个模型：数据并行/设备并行
+
+大多数情况下，你需要的很可能是“数据并行”
+
+
+### 数据并行
+
+数据并行将目标模型在多个设备上各复制一份，并使用每个设备上的复制品处理整个数据集的不同部分数据。Keras在`keras.utils.multi_gpu_model`中提供有内置函数，该函数可以产生任意模型的数据并行版本，最高支持在8片GPU上并行。
+请参考[utils](../utils.md)中的multi_gpu_model文档。 下面是一个例子：
+
+```python
+from keras.utils import multi_gpu_model
+
+# Replicates `model` on 8 GPUs.
+# This assumes that your machine has 8 available GPUs.
+parallel_model = multi_gpu_model(model, gpus=8)
+parallel_model.compile(loss='categorical_crossentropy',
+                       optimizer='rmsprop')
+
+# This `fit` call will be distributed on 8 GPUs.
+# Since the batch size is 256, each GPU will process 32 samples.
+parallel_model.fit(x, y, epochs=20, batch_size=256)
+```
+
+### 设备并行
+
+设备并行是在不同设备上运行同一个模型的不同部分，当模型含有多个并行结构，例如含有两个分支时，这种方式很适合。
+
+这种并行方法可以通过使用TensorFlow device scopes实现，下面是一个例子：
+
+
+```python
+# Model where a shared LSTM is used to encode two different sequences in parallel
+input_a = keras.Input(shape=(140, 256))
+input_b = keras.Input(shape=(140, 256))
+
+shared_lstm = keras.layers.LSTM(64)
+
+# Process the first sequence on one GPU
+with tf.device_scope('/gpu:0'):
+    encoded_a = shared_lstm(tweet_a)
+# Process the next sequence on another GPU
+with tf.device_scope('/gpu:1'):
+    encoded_b = shared_lstm(tweet_b)
+
+# Concatenate results on CPU
+with tf.device_scope('/cpu:0'):
+    merged_vector = keras.layers.concatenate([encoded_a, encoded_b],
+                                             axis=-1)
+```
 ***
 
 <a name='batch'>

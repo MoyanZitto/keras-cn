@@ -10,7 +10,7 @@ Keras是一个高层神经网络API，Keras由纯Python编写而成并基[Tensor
 * 支持CNN和RNN，或二者的结合
 * 无缝CPU和GPU切换
 
-Keras适用的Python版本是：Python 2.7-3.5
+Keras适用的Python版本是：Python 2.7-3.6
 
 Keras的设计原则是
 
@@ -57,16 +57,17 @@ Keras的设计原则是
 
 * 我们的中文文档没有及时更新：如果是这种情况，请发邮件给我，我会尽快更新
 
-目前文档的版本号是2.0.8，对应于官方的2.0.8 release 版本, 本次更新的主要内容是……等等，应该是这么长时间都没更新后从2.0.4-2.0.8的内容😊：
+目前文档的版本号是2.0.9，对应于官方的2.0.9 release 版本, 本次更新的主要内容是：
 
-* FAQ新增了关于可复现模型的支持
-* application中新增了模型MobileNet
-* constraints新增min_max_norm
-* 新增了激活函数selu和与之配合的层AlphaDropout
-* 新增损失函数categorical_hinge
+* recurrent新增ConvLSTM2D,SimpleRNNCell, LSTMCell, GRUCell, StackedRNNCells, CuDNNGRE, CuDNNLSTM层
+* application中新增了模型InceptionResNetV2
+* datasets新增fasion mnist
+* FAQ新增Keras的多GPU卡运行指南
+* utils新增多卡支持函数multi_gpu_model
+* model.compile和model.fit API更新
 * 由于年久失修，**深度学习与Keras**栏目中的很多内容的代码已经不再可用，我们决定在新的文档中移除这部分。仍然想访问这些内容（以及已经被移除的一些层，如Maxout）的文档的同学，请下载[中文文档](https://github.com/MoyanZitto/keras-cn)的legacy文件夹，并使用文本编辑器（如sublime）打开对应.md文件。
-* 修正了一些错误，感谢@zhangxiaoyu，@Yang Song，@唐文威，@Jackie，@锈子，的宝贵意见
-* 此外，感谢@zh777k制作了Keras2.0.4中文文档的离线版本，对于许多用户而言，这个版本的keras已经足够使用了。下载地址在[百度云盘](http://pan.baidu.com/s/1geHmOpH)
+* 修正了一些错误，感谢@孙永海，@Feng Ying的指正
+* 此外，感谢@zh777k制作了Keras2.0.4中文文档的离线版本，对于许多用户而言，这个版本的keras对大多数用户而言已经足够使用了。下载地址在[百度云盘](http://pan.baidu.com/s/1geHmOpH)
 
 注意，keras在github上的master往往要高于当前的release版本，如果你从源码编译keras，可能某些模块与文档说明不相符，请以官方Github代码为准
 

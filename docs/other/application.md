@@ -12,6 +12,7 @@ Kera的应用模块Application提供了带有预训练权重的Keras模型，这
 * [VGG19](#vgg19)
 * [ResNet50](#resnet50)
 * [InceptionV3](#inceptionv3)
+* [InceptionResNetV2](#inceptionresnetv2)
 * [MobileNet](#mobilenet)
 
 所有的这些模型(除了Xception和MobileNet)都兼容Theano和Tensorflow，并会自动基于```~/.keras/keras.json```的Keras的图像维度进行自动设置。例如，如果你设置```data_format="channel_last"```，则加载的模型将按照TensorFlow的维度顺序来构造，即“Width-Height-Depth”的顺序
@@ -157,13 +158,19 @@ model = InceptionV3(input_tensor=input_tensor, weights='imagenet', include_top=T
 
 ***
 
-## 模型文档
-* [Xception](#xception)
-* [VGG16](#vgg16)
-* [VGG19](#vgg19)
-* [ResNet50](#resnet50)
-* [InceptionV3](#inceptionv3)
-* [MobileNet](#mobilenet)
+## 模型信息
+|模型|大小|Top1准确率|Top5准确率|参数数目|深度|
+|:-:|:-:|:-:|:-:|:-:|:-:|
+|Xception|88MB|0.790|0.945|22,910,480|126|
+|VGG16|528MB|0.715|0.901|138,357,544|23|
+|VGG19|549MB|0.727|0.910|143,667,240|26|
+|ResNet50|99MB|0.759|0.929|25,636,712|168|
+|InceptionV3|92MB|0.788|0.944|23,851,784|159|
+|IncetionResNetV2|215MB|0.804|0.953|55,873,736|572|
+|MobileNet|17MB|0.665|0.871|4,253,864|88|
+
+
+
 
 
 ***
@@ -361,7 +368,38 @@ Keras 模型对象
 
 ***
 
+<a name='inceptionresnetv2'>
+<font color='#404040'>
+## InceptionResNetV2模型
+</font>
+</a>
+```python
+keras.applications.inception_resnet_v2.InceptionResNetV2(include_top=True, weights='imagenet', input_tensor=None, input_shape=None, pooling=None, classes=1000)
+```
+InceptionResNetV2网络,权重训练自ImageNet
 
+该模型在Theano、TensorFlow和CNTK后端均可使用,并接受channels_first和channels_last两种输入维度顺序
+
+模型的默认输入尺寸时299x299
+### 参数
+* include_top：是否保留顶层的全连接网络
+* weights：None代表随机初始化，即不加载预训练权重。'imagenet'代表加载预训练权重
+* input_tensor：可填入Keras tensor作为模型的图像输出tensor
+* input_shape：可选，仅当`include_top=False`有效，应为长为3的tuple，指明输入图片的shape，图片的宽高必须大于197，如(200,200,3)
+* pooling：当include_top=False时，该参数指定了池化方式。None代表不池化，最后一个卷积层的输出为4D张量。‘avg’代表全局平均池化，‘max’代表全局最大值池化。
+* classes：可选，图片分类的类别数，仅当`include_top=True`并且不加载预训练权重时可用。
+### 返回值
+
+Keras 模型对象
+
+### 参考文献
+
+* [Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning](https://arxiv.org/abs/1602.07261)：如果在研究中使用了InceptionV3，请引用该文
+
+### License
+预训练权重基于[the Apache License](https://github.com/tensorflow/models/blob/master/LICENSE)
+
+***
 <a name='mobilenet'>
 <font color='#404040'>
 ## MobileNet模型
