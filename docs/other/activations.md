@@ -23,7 +23,7 @@ def tanh(x):
     return K.tanh(x)
 
 model.add(Dense(64, activation=tanh))
-model.add(Activation(tanh)
+model.add(Activation(tanh))
 ```
 
 ***

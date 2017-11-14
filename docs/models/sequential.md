@@ -44,7 +44,10 @@ compile(self, optimizer, loss, metrics=None, sample_weight_mode=None)
 
 * sample_weight_mode：如果你需要按时间步为样本赋权（2D权矩阵），将该值设为“temporal”。默认为“None”，代表按样本赋权（1D权）。在下面```fit```函数的解释中有相关的参考内容。
 
-* kwargs：使用TensorFlow作为后端请忽略该参数，若使用Theano作为后端，kwargs的值将会传递给 K.function
+* weighted_metrics: metrics列表，在训练和测试过程中，这些metrics将由`sample_weight`或`clss_weight`计算并赋权
+* target_tensors: 默认情况下，Keras将为模型的目标创建一个占位符，该占位符在训练过程中将被目标数据代替。如果你想使用自己的目标张量（相应的，Keras将不会在训练时期望为这些目标张量载入外部的numpy数据），你可以通过该参数手动指定。目标张量可以是一个单独的张量（对应于单输出模型），也可以是一个张量列表，或者一个name->tensor的张量字典。
+
+* kwargs：使用TensorFlow作为后端请忽略该参数，若使用Theano/CNTK作为后端，kwargs的值将会传递给 K.function。如果使用TensorFlow为后端，这里的值会被传给tf.Session.run
 
 ```python
 model = Sequential()
@@ -70,7 +73,7 @@ fit(self, x, y, batch_size=32, epochs=10, verbose=1, callbacks=None, validation_
 
 * batch_size：整数，指定进行梯度下降时每个batch包含的样本数。训练时一个batch的样本会被计算一次梯度下降，使目标函数优化一步。
 
-* epochs：整数，训练的轮数，每个epoch会把训练集轮一遍。
+* epochs：整数，训练终止时的epoch值，训练将在达到该epoch值时停止，当没有设置initial_epoch时，它就是训练的总轮数，否则训练的总轮数为epochs - inital_epoch
 
 * verbose：日志显示，0为不在标准输出流输出日志信息，1为输出进度条记录，2为每个epoch输出一行记录
 

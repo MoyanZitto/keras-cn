@@ -32,7 +32,7 @@ model = Model(inputs=[a1, a2], outputs=[b1, b3, b3])
 ### compile
 
 ```python
-compile(self, optimizer, loss, metrics=None, loss_weights=None, sample_weight_mode=None)
+compile(self, optimizer, loss, metrics=None, loss_weights=None, sample_weight_mode=None, weighted_metrics=None, target_tensors=None)
 ```
 本函数编译模型以供训练，参数有
 
@@ -44,7 +44,10 @@ compile(self, optimizer, loss, metrics=None, loss_weights=None, sample_weight_mo
 
 * sample_weight_mode：如果你需要按时间步为样本赋权（2D权矩阵），将该值设为“temporal”。默认为“None”，代表按样本赋权（1D权）。如果模型有多个输出，可以向该参数传入指定sample_weight_mode的字典或列表。在下面```fit```函数的解释中有相关的参考内容。
 
-* kwargs：使用TensorFlow作为后端请忽略该参数，若使用Theano作为后端，kwargs的值将会传递给 K.function
+* weighted_metrics: metrics列表，在训练和测试过程中，这些metrics将由`sample_weight`或`clss_weight`计算并赋权
+* target_tensors: 默认情况下，Keras将为模型的目标创建一个占位符，该占位符在训练过程中将被目标数据代替。如果你想使用自己的目标张量（相应的，Keras将不会在训练时期望为这些目标张量载入外部的numpy数据），你可以通过该参数手动指定。目标张量可以是一个单独的张量（对应于单输出模型），也可以是一个张量列表，或者一个name->tensor的张量字典。
+
+* kwargs：使用TensorFlow作为后端请忽略该参数，若使用Theano/CNTK作为后端，kwargs的值将会传递给 K.function。如果使用TensorFlow为后端，这里的值会被传给tf.Session.run
 
 当为参数传入非法值时会抛出异常
 
@@ -54,7 +57,7 @@ compile(self, optimizer, loss, metrics=None, loss_weights=None, sample_weight_mo
 ### fit
 
 ```python
-fit(self, x=None, y=None, batch_size=32, epochs=1, verbose=1, callbacks=None, validation_split=0.0, validation_data=None, shuffle=True, class_weight=None, sample_weight=None, initial_epoch=0)
+fit(self, x=None, y=None, batch_size=None, epochs=1, verbose=1, callbacks=None, validation_split=0.0, validation_data=None, shuffle=True, class_weight=None, sample_weight=None, initial_epoch=0, steps_per_epoch=None, validation_steps=None)
 ```
 本函数用以训练模型，参数有：
 
@@ -64,7 +67,7 @@ fit(self, x=None, y=None, batch_size=32, epochs=1, verbose=1, callbacks=None, va
 
 * batch_size：整数，指定进行梯度下降时每个batch包含的样本数。训练时一个batch的样本会被计算一次梯度下降，使目标函数优化一步。
 
-* nb_epoch：整数，训练的轮数，训练数据将会被遍历nb_epoch次。Keras中nb开头的变量均为"number of"的意思
+* epochs：整数，训练终止时的epoch值，训练将在达到该epoch值时停止，当没有设置initial_epoch时，它就是训练的总轮数，否则训练的总轮数为epochs - inital_epoch
 
 * verbose：日志显示，0为不在标准输出流输出日志信息，1为输出进度条记录，2为每个epoch输出一行记录
 
@@ -81,6 +84,9 @@ fit(self, x=None, y=None, batch_size=32, epochs=1, verbose=1, callbacks=None, va
 * sample_weight：权值的numpy array，用于在训练时调整损失函数（仅用于训练）。可以传递一个1D的与样本等长的向量用于对样本进行1对1的加权，或者在面对时序数据时，传递一个的形式为（samples，sequence_length）的矩阵来为每个时间步上的样本赋不同的权。这种情况下请确定在编译模型时添加了```sample_weight_mode='temporal'```。
 
 * initial_epoch: 从该参数指定的epoch开始训练，在继续之前的训练时有用。
+
+* steps_per_epoch: 一个epoch包含的步数（每一步是一个batch的数据送入），当使用如TensorFlow数据Tensor之类的输入张量进行训练时，默认的None代表自动分割，即数据集样本数/batch样本数。
+* validation_steps: 仅当steps_per_epoch被指定时有用，在验证集上的step总数。
 
 输入数据与规定数据不匹配时会抛出错误
 
@@ -244,7 +250,7 @@ evaluate_generator(self, generator, steps, max_q_size=10, workers=1, pickle_safe
 
 ### predict_generator
 ```python
-fit_generator(self, generator, steps_per_epoch, epochs=1, verbose=1, callbacks=None, validation_data=None, validation_steps=None, class_weight=None, max_q_size=10, workers=1, pickle_safe=False, initial_epoch=0)
+predict_generator(self, generator, steps, max_queue_size=10, workers=1, use_multiprocessing=False, verbose=0)
 ```
 从一个生成器上获取数据并进行预测，生成器应返回与```predict_on_batch```输入类似的数据
 

@@ -200,3 +200,62 @@ tar,tar.gz.tar.bz和zip格式的文件可以被提取，提供哈希码可以在
 ### 返回值
 
 下载后的文件地址
+
+
+### multi_gpu_model
+```python
+keras.utils.multi_gpu_model(model, gpus)
+```
+
+将模型在多个GPU上复制
+
+特别地，该函数用于单机多卡的数据并行支持，它按照下面的方式工作：
+
+（1）将模型的输入分为多个子batch
+（2）在每个设备上调用各自的模型，对各自的数据集运行
+（3）将结果连接为一个大的batch（在CPU上）
+
+例如，你的batch_size是64而gpus=2，则输入会被分为两个大小为32的子batch，在两个GPU上分别运行，通过连接后返回大小为64的结果。 该函数线性的增加了训练速度，最高支持8卡并行。
+
+该函数只能在tf后端下使用
+
+参数如下：
+
+* model: Keras模型对象，为了避免OOM错误（内存不足），该模型应在CPU上构建，参考下面的例子。
+* gpus: 大或等于2的整数，要并行的GPU数目。
+
+该函数返回Keras模型对象，它看起来跟普通的keras模型一样，但实际上分布在多个GPU上。
+
+例子：
+```python
+import tensorflow as tf
+from keras.applications import Xception
+from keras.utils import multi_gpu_model
+import numpy as np
+
+num_samples = 1000
+height = 224
+width = 224
+num_classes = 1000
+
+# Instantiate the base model
+# (here, we do it on CPU, which is optional).
+with tf.device('/cpu:0'):
+    model = Xception(weights=None,
+                     input_shape=(height, width, 3),
+                     classes=num_classes)
+
+# Replicates the model on 8 GPUs.
+# This assumes that your machine has 8 available GPUs.
+parallel_model = multi_gpu_model(model, gpus=8)
+parallel_model.compile(loss='categorical_crossentropy',
+                       optimizer='rmsprop')
+
+# Generate dummy data.
+x = np.random.random((num_samples, height, width, 3))
+y = np.random.random((num_samples, num_classes))
+
+# This `fit` call will be distributed on 8 GPUs.
+# Since the batch size is 256, each GPU will process 32 samples.
+parallel_model.fit(x, y, epochs=20, batch_size=256)
+```

@@ -4,7 +4,7 @@ Keras有两种类型的模型，[序贯模型（Sequential）](sequential.md)和
 
 两类模型有一些方法是相同的：
 
-* ```model.summary()```：打印出模型概况
+* ```model.summary()```：打印出模型概况，它实际调用的是keras.utils.print_summary
 
 * ```model.get_config()```:返回包含模型配置信息的Python字典。模型也可以从它的config信息中重构回去
 

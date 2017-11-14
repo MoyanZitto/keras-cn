@@ -154,6 +154,45 @@ from keras.datasets import mnist
 
 ***
 
+## Fashion-MNIST数据集
+
+本数据集包含60,000个28x28灰度图像，共10个时尚分类作为训练集。测试集包含10,000张图片。该数据集可作为MNIST数据集的进化版本，10个类别标签分别是： 
+
+|类别|描述|
+|:-:|:-:|
+|0|T恤/上衣|
+|1|裤子|
+|2|套头衫|
+|3|连衣裙|
+|4|大衣|
+|5|凉鞋|
+|6|衬衫|
+|7|帆布鞋|
+|8|包|
+|9|短靴|
+
+### 使用方法
+```python
+from keras.datasets import fashion_mnist
+
+(x_train, y_train), (x_test, y_test) = fashion_mnist.load_data()
+```
+### 参数
+
+* path：如果你在本机上已有此数据集（位于```'~/.keras/datasets/'+path```），则载入。否则数据将下载到该目录下
+
+### 返回值
+
+两个Tuple,```(X_train, y_train), (X_test, y_test)```，其中
+
+* X_train和X_test：是形如（nb_samples, 28, 28）的灰度图片数据，数据类型是无符号8位整形（uint8）
+
+* y_train和y_test：是形如（nb_samples,）标签数据，标签的范围是0~9
+
+数据库将会被下载到```'~/.keras/datasets/'+path```
+
+***
+
 ## Boston房屋价格回归数据集
 
 本数据集由StatLib库取得，由CMU维护。每个样本都是1970s晚期波士顿郊区的不同位置，每条数据含有13个属性，目标值是该位置房子的房价中位数（千dollar）。
