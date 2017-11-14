@@ -29,9 +29,9 @@ model = keras.models.Model(inputs=[input1, input2], outputs=out)
 ```python
 keras.layers.Subtract()
 ```
-减去两个输入的层。
+两个输入的层相减。
 
-它将大小为2相同的Shape的列表张量作为输入，并返回一个张量（输入[0] - 输入[1]），也是相同的Shape。
+它将大小至少为2，相同Shape的列表张量作为输入，并返回一个张量（输入[0] - 输入[1]），也是相同的Shape。
 
 
 ### Example
