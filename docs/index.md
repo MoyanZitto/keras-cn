@@ -1,8 +1,7 @@
 # Keras:基于Python的深度学习库
 
-
-
 ## 这就是Keras
+
 Keras是一个高层神经网络API，Keras由纯Python编写而成并基[Tensorflow](https://github.com/tensorflow/tensorflow)、[Theano](https://github.com/Theano/Theano)以及[CNTK](https://github.com/Microsoft/cntk)后端。Keras
 为支持快速实验而生，能够把你的idea迅速转换为结果，如果你有如下需求，请选择Keras：
 
@@ -15,13 +14,9 @@ Keras适用的Python版本是：Python 2.7-3.6
 Keras的设计原则是
 
 * 用户友好：Keras是为人类而不是天顶星人设计的API。用户的使用体验始终是我们考虑的首要和中心内容。Keras遵循减少认知困难的最佳实践：Keras提供一致而简洁的API， 能够极大减少一般应用下用户的工作量，同时，Keras提供清晰和具有实践意义的bug反馈。
-
 * 模块性：模型可理解为一个层的序列或数据的运算图，完全可配置的模块可以用最少的代价自由组合在一起。具体而言，网络层、损失函数、优化器、初始化策略、激活函数、正则化方法都是独立的模块，你可以使用它们来构建自己的模型。
-
 * 易扩展性：添加新模块超级容易，只需要仿照现有的模块编写新的类或函数即可。创建新模块的便利性使得Keras更适合于先进的研究工作。
-
 * 与Python协作：Keras没有单独的模型配置文件类型（作为对比，caffe有），模型由python代码描述，使其更紧凑和更易debug，并提供了扩展的便利性。
-
 
 ***
 
@@ -40,9 +35,7 @@ Keras的设计原则是
 本文档相对于原文档有更多的使用指导和概念澄清，请在使用时关注文档中的Tips，特别的，本文档的额外模块还有：
 
 * Keras新手指南：我们新提供了“Keras新手指南”的页面，在这里我们对Keras进行了感性介绍，并简单介绍了Keras配置方法、一些小知识与使用陷阱，新手在使用前应该先阅读本部分的文档。
-
 * Keras资源：在这个页面，我们罗列一些Keras可用的资源，本页面会不定期更新，请注意关注
-
 * 深度学习与Keras：位于导航栏最下方的该模块翻译了来自Keras作者博客[keras.io](http://blog.keras.io/)
 和其他Keras相关博客的文章，该栏目的文章提供了对深度学习的理解和大量使用Keras的例子，您也可以向这个栏目投稿。
 所有的文章均在醒目位置标志标明来源与作者，本文档对该栏目文章的原文不具有任何处置权。如您仍觉不妥，请联系本人（moyan_work@foxmail.com）删除。
@@ -54,7 +47,6 @@ Keras的设计原则是
 如果你发现本文档提供的信息有误，有两种可能：
 
 * 你的Keras版本过低：记住Keras是一个发展迅速的深度学习框架，请保持你的Keras与官方最新的release版本相符
-
 * 我们的中文文档没有及时更新：如果是这种情况，请发邮件给我，我会尽快更新
 
 目前文档的版本号是2.0.9，对应于官方的2.0.9 release 版本, 本次更新的主要内容是：
@@ -73,17 +65,20 @@ Keras的设计原则是
 
 ***
 
-##快速开始：30s上手Keras
+## 快速开始：30s上手Keras
 
 Keras的核心数据结构是“模型”，模型是一种组织网络层的方式。Keras中主要的模型是Sequential模型，Sequential是一系列网络层按顺序构成的栈。你也可以查看[函数式模型](getting_started/functional_API.md)来学习建立更复杂的模型
 
 Sequential模型如下
+
 ```python
 from keras.models import Sequential
 
 model = Sequential()
 ```
+
 将一些网络层通过<code>.add\(\)</code>堆叠起来，就构成了一个模型：
+
 ```python
 from keras.layers import Dense, Activation
 
@@ -92,33 +87,44 @@ model.add(Activation("relu"))
 model.add(Dense(units=10))
 model.add(Activation("softmax"))
 ```
+
 完成模型的搭建后，我们需要使用<code>.compile\(\)</code>方法来编译模型：
+
 ```python
 model.compile(loss='categorical_crossentropy', optimizer='sgd', metrics=['accuracy'])
-```	
-编译模型时必须指明损失函数和优化器，如果你需要的话，也可以自己定制损失函数。Keras的一个核心理念就是简明易用同时，保证用户对Keras的绝对控制力度，用户可以根据自己的需要定制自己的模型、网络层，甚至修改源代码。
+```
+
+编译模型时必须指明损失函数和优化器，如果你需要的话，也可以自己定制损失函数。Keras的一个核心理念就是简明易用，同时保证用户对Keras的绝对控制力度，用户可以根据自己的需要定制自己的模型、网络层，甚至修改源代码。
+
 ```python
 from keras.optimizers import SGD
 model.compile(loss='categorical_crossentropy', optimizer=SGD(lr=0.01, momentum=0.9, nesterov=True))
 ```
-完成模型编译后，我们在训练数据上按batch进行一定次数的迭代来训练网络
 
+完成模型编译后，我们在训练数据上按batch进行一定次数的迭代来训练网络
 
 ```python
 model.fit(x_train, y_train, epochs=5, batch_size=32)
 ```
+
 当然，我们也可以手动将一个个batch的数据送入网络中训练，这时候需要使用：
+
 ```python
 model.train_on_batch(x_batch, y_batch)
 ```
+
 随后，我们可以使用一行代码对我们的模型进行评估，看看模型的指标是否满足我们的要求：
+
 ```python
 loss_and_metrics = model.evaluate(x_test, y_test, batch_size=128)
-```	
+```
+
 或者，我们可以使用我们的模型，对新的数据进行预测：
+
 ```python
 classes = model.predict(x_test, batch_size=128)
-```	
+```
+
 搭建一个问答系统、图像分类模型，或神经图灵机、word2vec词嵌入器就是这么快。支撑深度学习的基本想法本就是简单的，现在让我们把它的实现也变的简单起来！
 
 为了更深入的了解Keras，我们建议你查看一下下面的两个tutorial
@@ -134,16 +140,13 @@ classes = model.predict(x_test, batch_size=128)
 
 ***
 
-##安装
+## 安装
 
 Keras使用了下面的依赖包，三种后端必须至少选择一种，我们建议选择tensorflow。
 
 * numpy，scipy
-
 * pyyaml
-
 * HDF5, h5py（可选，仅在模型的save/load函数中使用）
-
 * 如果使用CNN的推荐安装cuDNN
 
 当使用TensorFlow为后端时：
@@ -161,32 +164,37 @@ Keras使用了下面的依赖包，三种后端必须至少选择一种，我们
 
 “后端”翻译自backend，指的是Keras依赖于完成底层的张量运算的软件包。
 
-
 从源码安装Keras时，首先git clone keras的代码：
+
 ```sh
 git clone https://github.com/fchollet/keras.git
 ```
-接着<code>cd</code>到Keras的文件夹中，并运行下面的安装命令：
+
+接着 `cd` 到Keras的文件夹中，并运行下面的安装命令：
+
 ```python
 sudo python setup.py install
-```	
+```
+
 你也可以使用PyPI来安装Keras
+
 ```python
 sudo pip install keras
 ```
+
 如果你用的是virtualenv虚拟环境，不要用sudo就好。
 
 **详细的Windows和Linux安装教程请参考“Keras新手指南”中给出的安装教程，特别鸣谢SCP-173编写了这些教程**
 
 ***
 	
-##在Theano、CNTK、TensorFlow间切换
+## 在Theano、CNTK、TensorFlow间切换
 
 Keras默认使用TensorFlow作为后端来进行张量操作，如需切换到Theano，请查看[这里](backend)
 
 ***
 
-##技术支持
+## 技术支持
 
 你可以在下列网址提问或加入Keras开发讨论:
 
@@ -206,4 +214,3 @@ Keras默认使用TensorFlow作为后端来进行张量操作，如需切换到Th
 如果你觉得本文档对你的研究和使用有所帮助，欢迎扫下面的二维码对作者进行小额赞助，以鼓励作者进一步完善文档内容，提高文档质量。同时，不妨为[本文档的github](https://github.com/MoyanZitto/keras-cn)加颗星哦
 
 ![付款二维码](images/moyan.png)
-
