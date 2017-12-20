@@ -32,7 +32,7 @@ model.add(Activation('relu'))
 
 * 传递一个```input_shape```的关键字参数给第一层，```input_shape```是一个tuple类型的数据，其中也可以填入```None```，如果填入```None```则表示此位置可能是任何正整数。数据的batch大小不应包含在其中。
 
-* 有些2D层，如```Dense```，支持通过指定其输入维度```input_dim```来隐含的指定输入数据shape。一些3D的时域层支持通过参数```input_dim```和```input_length```来指定输入shape。
+* 有些2D层，如```Dense```，支持通过指定其输入维度```input_dim```来隐含的指定输入数据shape,是一个Int类型的数据。一些3D的时域层支持通过参数```input_dim```和```input_length```来指定输入shape。
 
 * 如果你需要为输入指定一个固定大小的batch_size（常用于stateful RNN网络），可以传递```batch_size```参数到一个层中，例如你想指定输入张量的batch大小是32，数据shape是（6，8），则你需要传递```batch_size=32```和```input_shape=(6,8)```。
 
@@ -44,7 +44,7 @@ model.add(Dense(32, input_dim=784))
 ```
 ```python
 model = Sequential()
-model.add(Dense(32, input_shape=784))
+model.add(Dense(32, input_shape=(784,)))
 ```
 
 ***
