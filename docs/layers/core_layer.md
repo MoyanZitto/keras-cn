@@ -35,7 +35,7 @@ model.add(Dense(32))
 
 * kernel_initializer：权值初始化方法，为预定义初始化方法名的字符串，或用于初始化权重的初始化器。参考[initializers](../other/initializations)
 
-* bias_initializer：权值初始化方法，为预定义初始化方法名的字符串，或用于初始化权重的初始化器。参考[initializers](../other/initializations)
+* bias_initializer：偏置向量初始化方法，为预定义初始化方法名的字符串，或用于初始化偏置向量的初始化器。参考[initializers](../other/initializations)
 
 * kernel_regularizer：施加在权重上的正则项，为[Regularizer](../other/regularizers)对象
 
