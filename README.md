@@ -1,6 +1,6 @@
 # keras-cn
 
-本项目由BigMoyan于2016-4-29发起，旨在建立一个[keras.io](keras.io)的中文版文档，并提供更多用户友好的支持与建议。
+本项目由BigMoyan于2016-4-29发起，旨在建立一个[keras.io](https://keras.io/)的中文版文档，并提供更多用户友好的支持与建议。
 
 本项目目前已完成2.x版本，文档网址为[keras-cn](http://keras-cn.readthedocs.io/en/latest/)
 
