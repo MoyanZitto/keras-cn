@@ -409,7 +409,7 @@ model.reset_states()
 model.layers[0].reset_states()
 ```
 注意，```predict```，```fit```，```train_on_batch```
-，```predict_classes```等方法都会更新模型中状态层的状态。这使得你可以不但可以进行状态网络的训练，也可以进行状态网络的预测。
+，```predict_classes```等方法都会更新模型中状态层的状态。这使得你不但可以进行状态网络的训练，也可以进行状态网络的预测。
 
 ***
 
