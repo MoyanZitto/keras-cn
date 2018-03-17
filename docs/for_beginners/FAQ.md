@@ -12,7 +12,7 @@
 * [验证集是如何从训练集中分割出来的？](#validation_spilt)
 * [训练数据在训练时会被随机洗乱吗？](#shuffle)
 * [如何在每个epoch后记录训练/测试的loss和正确率？](#history)
-* [如何使用状态RNN（statful RNN）？](#statful_RNN)
+* [如何使用状态RNN（stateful RNN）？](#stateful_RNN)
 * [如何“冻结”网络的层？](#freeze)
 * [如何从Sequential模型中去除一个层？](#pop)
 * [如何在Keras中使用预训练的模型](#pretrain)
@@ -359,9 +359,9 @@ print(hist.history)
 	
 ***
 
-<a name='statful_RNN'>
+<a name='stateful_RNN'>
 <font color='#404040'>
-## 如何使用状态RNN（statful RNN）？
+## 如何使用状态RNN（stateful RNN）？
 </font>
 </a>
 
