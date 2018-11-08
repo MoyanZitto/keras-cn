@@ -1,5 +1,5 @@
 site_name: Keras中文文档
-pages:
+r"pages":
 - ['index.md','主页']
 - ['for_beginners/concepts.md','keras新手指南','一些基本概念']
 - ['for_beginners/FAQ.md','keras新手指南','常见问题与解答']
