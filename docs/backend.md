@@ -51,7 +51,7 @@ Using TensorFlow backend.
 ```
 你可以更改以上`~/.keras/keras.json`中的配置
 
-- `iamge_data_format`：字符串，"channels_last"或"channels_first"，该选项指定了Keras将要使用的维度顺序，可通过`keras.backend.image_data_format()`来获取当前的维度顺序。对2D数据来说，"channels_last"假定维度顺序为(rows,cols,channels)而"channels_first"假定维度顺序为(channels, rows, cols)。对3D数据而言，"channels_last"假定(conv_dim1, conv_dim2, conv_dim3, channels)，"channels_first"则是(channels, conv_dim1, conv_dim2, conv_dim3)
+- `image_data_format`：字符串，"channels_last"或"channels_first"，该选项指定了Keras将要使用的维度顺序，可通过`keras.backend.image_data_format()`来获取当前的维度顺序。对2D数据来说，"channels_last"假定维度顺序为(rows,cols,channels)而"channels_first"假定维度顺序为(channels, rows, cols)。对3D数据而言，"channels_last"假定(conv_dim1, conv_dim2, conv_dim3, channels)，"channels_first"则是(channels, conv_dim1, conv_dim2, conv_dim3)
 
 - `epsilon`：浮点数，防止除0错误的小数字
 - `floatx`：字符串，`"float16"`, `"float32"`, `"float64"`之一，为浮点数精度
