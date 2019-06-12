@@ -91,7 +91,7 @@ keras.initializers.VarianceScaling(scale=1.0, mode='fan_in', distribution='norma
 当```distribution="uniform"```时，权重从[-limit, limit]范围内均匀采样，其中limit = limit = sqrt(3 * scale / n)
 
 * scale: 放缩因子，正浮点数
-* mode: 字符串，“fan_in”，“fan_out”或“fan_avg”fan_in", "fan_out", "fan_avg".
+* mode: 字符串，“fan_in”，“fan_out”或"fan_avg".
 * distribution: 字符串，“normal”或“uniform”.
 * seed: 随机数种子
 
