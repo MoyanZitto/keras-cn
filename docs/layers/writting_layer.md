@@ -9,7 +9,7 @@
 
 * ```call(x)```：这是定义层功能的方法，除非你希望你写的层支持masking，否则你只需要关心```call```的第一个参数：输入张量
 
-* ```compute_output_shape(input_shape)```：如果你的层修改了输入数据的shape，你应该在这里指定shape变化的方法，这个函数使得Keras可以做自动shape推断
+* ```compute_output_shape(input_shape)```：如果你的层修改了输出数据的shape，你应该在这里指定shape变化的方法，这个函数使得Keras可以做自动shape推断
 
 ```python
 from keras import backend as K
